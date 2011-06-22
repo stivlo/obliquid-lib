@@ -13,7 +13,7 @@ The following classes are committed to date:
 
 == Maven Quick Start ==
 
-Read the [http://maven.apache.org/guides/getting-started/index.html Maven Getting Started Guide].
+This project uses Maven, if you know it already you can stop reading now. Otherwise read the [http://maven.apache.org/guides/getting-started/index.html Maven Getting Started Guide].
 
 In short, supposing that Maven is already installed on your system, here are some useful commands:
 
@@ -24,7 +24,7 @@ target/classes directory.
 
 ''mvn clean'' deletes the target/ directory with all generated artifacts
 
-''mvn eclipse:eclipse'' generates or updates eclipse project files, run this command every time a new dependency is added to pom.xml - I've blogged in more details about [http://www.stefanolocati.it/blog/?p=917 external dependencies].
+''mvn eclipse:eclipse'' generates or updates eclipse project files, run this command every time a new dependency is added to pom.xml - I've blogged in more details about [http://www.stefanolocati.it/blog/?p=917 external dependencies]
 
 ''mvn package'' generates a jar file in the target/ directory
 
