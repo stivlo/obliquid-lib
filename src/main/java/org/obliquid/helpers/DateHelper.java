@@ -75,7 +75,6 @@ public class DateHelper {
      *            a Joda ReadableDateTime
      * @return the formatted date
      */
-
     public static String formatIsoDate(final ReadableDateTime aDate) {
         return isoFormatForJodaDate.print(aDate);
     }
@@ -91,8 +90,9 @@ public class DateHelper {
         Calendar cal = new GregorianCalendar();
         cal.setTime(aDate);
         int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        return null;
+        int month = cal.get(Calendar.MONTH) + 1;
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        return String.format("%04d-%02d-%02d", year, month, day);
     }
 
     /**
@@ -178,10 +178,10 @@ public class DateHelper {
      *             when the format of isoDate is not valid
      */
     public static LocalDate buildLocalDateFromIsoDate(final String isoDate) {
-       ReadableDateTime dateTime = isoFormatForJodaDate.parseDateTime(isoDate);
-       LocalDate date = new LocalDate(dateTime.getYear(), dateTime.getMonthOfYear(),
-             dateTime.getDayOfMonth());
-       return date;
+        ReadableDateTime dateTime = isoFormatForJodaDate.parseDateTime(isoDate);
+        LocalDate date = new LocalDate(dateTime.getYear(), dateTime.getMonthOfYear(),
+                dateTime.getDayOfMonth());
+        return date;
     }
 
     /**
@@ -281,6 +281,45 @@ public class DateHelper {
         MutableDateTime nextDay = DateHelper.buildReadableDateTimeFromIsoDate(isoDate).toMutableDateTime();
         nextDay.addDays(-1);
         return DateHelper.formatIsoDate(nextDay);
+    }
+
+    /**
+     * Extract the year part from a Java date, such as 2011
+     * 
+     * @param javaDate
+     *            the Date to consider
+     * @return the year
+     */
+    public static int extractYear(Date javaDate) {
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(javaDate);
+        return calendar.get(Calendar.YEAR);
+    }
+
+    /**
+     * Extract the month part from a Java date
+     * 
+     * @param javaDate
+     *            the Date to consider
+     * @return the month
+     */
+    public static int extractMonth(Date javaDate) {
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(javaDate);
+        return calendar.get(Calendar.MONTH) + 1;
+    }
+
+    /**
+     * Extract the day part from a Java date
+     * 
+     * @param javaDate
+     *            the Date to consider
+     * @return the day
+     */
+    public static int extractDay(Date javaDate) {
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(javaDate);
+        return calendar.get(Calendar.DAY_OF_MONTH);
     }
 
 }

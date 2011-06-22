@@ -31,8 +31,16 @@ public class DateHelperShould {
     }
 
     @Test
-    public void formatIsoDate() {
+    public void formatIsoDateFromDateTime() {
         assertEquals("2011-07-26", DateHelper.formatIsoDate(new DateTime(2011, 7, 26, 22, 56, 0, 0)));
+    }
+
+    @Test
+    public void formatIsoDateFromJavaDate() {
+        String isoDate = "2009-09-24";
+        assertEquals(isoDate, DateHelper.formatIsoDate(DateHelper.buildJavaDateFromIsoDate(isoDate)));
+        isoDate = "2011-02-09";
+        assertEquals(isoDate, DateHelper.formatIsoDate(DateHelper.buildJavaDateFromIsoDate(isoDate)));
     }
 
     @Test
@@ -62,16 +70,17 @@ public class DateHelperShould {
 
     @Test
     public void daysBetweenTheSameDateIsZero() {
-        assertEquals(0,
-                DateHelper.computeDaysBetween(DateHelper.computeCurrentDateTime(), DateHelper.computeCurrentDateTime()));
+        assertEquals(
+                0,
+                DateHelper.computeDaysBetween(DateHelper.computeCurrentDateTime(),
+                        DateHelper.computeCurrentDateTime()));
     }
 
     @Test
     public void daysBetweenTheseTwoDaysAreTwo() {
-        assertEquals(
-                2,
-                DateHelper.computeDaysBetween(DateHelper.buildReadableDateTimeFromIsoDate("2011-12-01"),
-                        DateHelper.buildReadableDateTimeFromIsoDate("2011-12-03")));
+        assertEquals(2, DateHelper.computeDaysBetween(
+                DateHelper.buildReadableDateTimeFromIsoDate("2011-12-01"),
+                DateHelper.buildReadableDateTimeFromIsoDate("2011-12-03")));
     }
 
     @Test
@@ -88,7 +97,8 @@ public class DateHelperShould {
     @Test
     public void getEndOfCurrentYear() {
         String endOfYear = Calendar.getInstance().get(Calendar.YEAR) + "-12-31";
-        assertEquals(DateHelper.buildReadableDateTimeFromIsoDate(endOfYear), DateHelper.buildReadableDateTimeOfTheEndOfCurrentYear());
+        assertEquals(DateHelper.buildReadableDateTimeFromIsoDate(endOfYear),
+                DateHelper.buildReadableDateTimeOfTheEndOfCurrentYear());
     }
 
     @Test
@@ -160,6 +170,24 @@ public class DateHelperShould {
         assertEquals(2007, localDate.getYear());
         assertEquals(11, localDate.getMonthOfYear());
         assertEquals(29, localDate.getDayOfMonth());
+    }
+
+    @Test
+    public void extractYear() {
+        Date javaDate = DateHelper.buildJavaDateFromIsoDate("2009-12-09");
+        assertEquals(2009, DateHelper.extractYear(javaDate));
+    }
+
+    @Test
+    public void extractMonth() {
+        Date javaDate = DateHelper.buildJavaDateFromIsoDate("2009-12-09");
+        assertEquals(12, DateHelper.extractMonth(javaDate));
+    }
+
+    @Test
+    public void extractDay() {
+        Date javaDate = DateHelper.buildJavaDateFromIsoDate("2009-12-09");
+        assertEquals(9, DateHelper.extractDay(javaDate));
     }
 
 }
