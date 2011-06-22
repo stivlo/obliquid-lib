@@ -9,5 +9,5 @@ The following classes are committed to date:
 ;DateHelper
 : Helper Class for Dates, both Java Dates and Joda Dates.
 ;SimpleStopWatch 
-: Simple Stop Watch with seconds and milliseconds timings and sleep function wrapped to ignore exceptions.
+: Simple Stop Watch with seconds and milliseconds timings and sleep functions wrapped to ignore exceptions.
 
