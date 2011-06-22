@@ -26,4 +26,4 @@ target/classes directory.
 
 '''mvn package''' generates a jar file in the target/ directory
 
-
+'''mvn javadoc:javadoc''' generates the Javadoc files in target/site/apidocs/
