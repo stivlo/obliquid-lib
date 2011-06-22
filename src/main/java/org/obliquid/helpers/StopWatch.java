@@ -1,7 +1,8 @@
 package org.obliquid.helpers;
 
 /**
- * Simple StopWatch with seconds and milliseconds timing.
+ * Simple Stop Watch with seconds and milliseconds timings and sleep functions wrapped to ignore
+ * exceptions.
  * 
  * @author stivlo
  */
@@ -17,7 +18,7 @@ public class StopWatch {
     }
 
     /**
-     * Reset the StopWatch to zero ms
+     * Reset the StopWatch to zero milli seconds
      */
     private void reset() {
         startTime = System.currentTimeMillis();
