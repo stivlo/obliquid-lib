@@ -190,4 +190,57 @@ public class DateHelperShould {
         assertEquals(9, DateHelper.extractDay(javaDate));
     }
 
+    @Test
+    public void compareOnlyTheDatePartShouldReturnANegativeIntWhenFirstDateIsOlder1() {
+        Date firstDate = DateHelper.buildJavaDateFromIsoDate("2010-02-01");
+        Date secondDate = DateHelper.buildJavaDateFromIsoDate("2011-02-02");
+        assertTrue(DateHelper.compareOnlyTheDatePart(firstDate, secondDate) < 0);
+    }
+
+    @Test
+    public void compareOnlyTheDatePartShouldReturnANegativeIntWhenFirstDateIsOlder2() {
+        Date firstDate = DateHelper.buildJavaDateFromIsoDate("2011-01-01");
+        Date secondDate = DateHelper.buildJavaDateFromIsoDate("2011-02-02");
+        assertTrue(DateHelper.compareOnlyTheDatePart(firstDate, secondDate) < 0);
+    }
+
+    @Test
+    public void compareOnlyTheDatePartShouldReturnANegativeIntWhenFirstDateIsOlder3() {
+        Date firstDate = DateHelper.buildJavaDateFromIsoDate("2011-02-01");
+        Date secondDate = DateHelper.buildJavaDateFromIsoDate("2011-02-02");
+        assertTrue(DateHelper.compareOnlyTheDatePart(firstDate, secondDate) < 0);
+    }
+
+    /**
+     * Unless this test is run a second before midnight, it shouldn't fail.
+     */
+    @Test
+    public void compareOnlyTheDatePartShouldReturnZeroWhenTheDatesAreTheSame() {
+        Date firstDate = new Date();
+        StopWatch.sleepSeconds(1);
+        Date secondDate = new Date();
+        assertTrue(DateHelper.compareOnlyTheDatePart(firstDate, secondDate) == 0);
+    }
+
+    @Test
+    public void compareOnlyTheDatePartShouldReturnAPositiveIntWhenFirstDateIsNewer1() {
+        Date firstDate = DateHelper.buildJavaDateFromIsoDate("2012-01-01");
+        Date secondDate = DateHelper.buildJavaDateFromIsoDate("2011-02-02");
+        assertTrue(DateHelper.compareOnlyTheDatePart(firstDate, secondDate) > 0);
+    }
+
+    @Test
+    public void compareOnlyTheDatePartShouldReturnAPositiveIntWhenFirstDateIsNewer2() {
+        Date firstDate = DateHelper.buildJavaDateFromIsoDate("2011-03-01");
+        Date secondDate = DateHelper.buildJavaDateFromIsoDate("2011-02-02");
+        assertTrue(DateHelper.compareOnlyTheDatePart(firstDate, secondDate) > 0);
+    }
+
+    @Test
+    public void compareOnlyTheDatePartShouldReturnAPositiveIntWhenFirstDateIsNewer3() {
+        Date firstDate = DateHelper.buildJavaDateFromIsoDate("2011-02-03");
+        Date secondDate = DateHelper.buildJavaDateFromIsoDate("2011-02-02");
+        assertTrue(DateHelper.compareOnlyTheDatePart(firstDate, secondDate) > 0);
+    }
+
 }

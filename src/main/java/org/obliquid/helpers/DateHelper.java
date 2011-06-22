@@ -17,10 +17,10 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 /**
- * Helper class for Date functions, both Java Dates and Joda Dates. It doesn't mean to be
- * comprehensive, it contains the functions I need in my development. Most of them are simple,
- * however they give me a simple interface that it's easier to memorize without going into the
- * details of different implementations of Java and Joda Dates.
+ * Helper class for Dates, both Java Dates and Joda Dates. It doesn't mean to be comprehensive, it
+ * contains the functions I need in my development. Most of them are simple, however they give me a
+ * simple interface that it's easier to memorize without going into the details of different
+ * implementations of Java and Joda Dates.
  * 
  * Joda Dates are great, but in real life I've to deal with Java Dates too.
  * 
@@ -310,7 +310,7 @@ public class DateHelper {
     }
 
     /**
-     * Extract the day part from a Java date
+     * Extract the day part from a Java Date
      * 
      * @param javaDate
      *            the Date to consider
@@ -320,6 +320,31 @@ public class DateHelper {
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(javaDate);
         return calendar.get(Calendar.DAY_OF_MONTH);
+    }
+
+    /**
+     * Compare only the date part of two Java Dates. Implementation adapted from Jorn answer on
+     * stackoverflow.com #1439779
+     * 
+     * @param firstDate
+     *            the first date to compare
+     * @param secondDate
+     *            the second date to compare
+     * @return a negative integer if firstDate precedes secondDate, zero if they are the same, a
+     *         positive integer if firstDate follow secondDate.
+     */
+    public static int compareOnlyTheDatePart(Date firstDate, Date secondDate) {
+        Calendar c1 = new GregorianCalendar();
+        Calendar c2 = new GregorianCalendar();
+        c1.setTime(firstDate);
+        c2.setTime(secondDate);
+        if (c1.get(Calendar.YEAR) != c2.get(Calendar.YEAR)) {
+            return c1.get(Calendar.YEAR) - c2.get(Calendar.YEAR);
+        }
+        if (c1.get(Calendar.MONTH) != c2.get(Calendar.MONTH)) {
+            return c1.get(Calendar.MONTH) - c2.get(Calendar.MONTH);
+        }
+        return c1.get(Calendar.DAY_OF_MONTH) - c2.get(Calendar.DAY_OF_MONTH);
     }
 
 }
