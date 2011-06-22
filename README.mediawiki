@@ -11,3 +11,20 @@ The following classes are committed to date:
 ;SimpleStopWatch 
 : Simple Stop Watch with seconds and milliseconds timings and sleep functions wrapped to ignore exceptions.
 
+== Maven Quick Start ==
+
+Read the [http://maven.apache.org/guides/getting-started/index.html Maven Getting Started Guide].
+
+In short, supposing that Maven is already installed on your system, here are some useful commands:
+
+''mvn compile'' downloads dependencies and compiles the project, classes are generated in
+target/classes directory.
+
+''mvn test'' runs the test suite, thus running all tests
+
+''mvn clean'' deletes the target/ directory with all generated artifacts
+
+''mvn eclipse:eclipse'' generates or updates eclipse project files, run this command every time a new dependency is added to pom.xml - I've blogged in more details about [http://www.stefanolocati.it/blog/?p=917 external dependencies].
+
+''mvn package'' generates a jar file in the target/ directory
+
