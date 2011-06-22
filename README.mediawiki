@@ -1,0 +1,13 @@
+= org.obliquid.helpers = 
+
+org.obliquid.helpers are static Java helper classes released with LGPL3 licence.
+Maven is used to pull dependencies and build the project. All classes are not
+meant to be comprehensive, but they contain what I need, YAGNI style.
+
+The following classes are committed to date:
+
+;DateHelper
+: Helper Class for Dates, both Java Dates and Joda Dates.
+;SimpleStopWatch 
+: Simple Stop Watch with seconds and milliseconds timings and sleep function wrapped to ignore exceptions.
+
