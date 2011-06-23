@@ -7,7 +7,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 
 /**
- * Analyze Apache .htaccess file: listAuthorizedAddresses(), buildAllowFrom()
+ * Analyze Apache .htaccess files: listAuthorizedAddresses(), buildAllowFrom()
  * 
  * @author stivlo
  * 
