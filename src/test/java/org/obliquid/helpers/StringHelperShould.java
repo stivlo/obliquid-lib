@@ -65,14 +65,13 @@ public class StringHelperShould {
     @Test
     public void repeatAStringZeroTimesShouldReturnAnEmptyString() {
         String sentence = "any";
-        String result = StringHelper.repeat(sentence, 0);
-        assertEquals("", result);
+        assertEquals("", StringHelper.repeat(sentence, 0));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void repeatAStringNegativeTimesShouldThrowException() {
+    @Test
+    public void repeatAStringNegativeTimesShouldReturnAnEmptyString() {
         String sentence = "heya";
-        StringHelper.repeat(sentence, -1);
+        assertEquals("", StringHelper.repeat(sentence, -1));
     }
 
     @Test
@@ -85,15 +84,13 @@ public class StringHelperShould {
     @Test
     public void repeatWithSeparatorZeroTimesShouldReturnAnEmptyString() {
         String sentence = "very good";
-        String result = StringHelper.repeatWithSeparator(sentence, 0, ", ");
-        assertEquals("", result);
+        assertEquals("", StringHelper.repeatWithSeparator(sentence, 0, ", "));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void repeatWithSeparatorNegativeTimesShouldThrowException() {
+    @Test
+    public void repeatWithSeparatorNegativeTimesShouldReturnAnEmptyString() {
         String sentence = "very good";
-        String result = StringHelper.repeatWithSeparator(sentence, -1, ", ");
-        assertEquals("", result);
+        assertEquals("", StringHelper.repeatWithSeparator(sentence, -1, ", "));
     }
 
     @Test

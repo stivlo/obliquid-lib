@@ -225,13 +225,8 @@ public class StringHelper {
      * @param separator
      *            a separator String to be inserted between repetitions
      * @return the resulting String
-     * @throws IllegalArgumentException
-     *             if multiplier is negative
      */
     public static String repeatWithSeparator(final String input, final int multiplier, final String separator) {
-        if (multiplier < 0) {
-            throw new IllegalArgumentException("multiplier can't be negative");
-        }
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < multiplier; i++) {
             if (i > 0) {
