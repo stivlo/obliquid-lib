@@ -20,6 +20,8 @@ The following classes are committed to date:
 : Helper Class for Dates, both Java Dates and Joda Dates.
 ;ExecHelper
 : Run system commands, provides an exec function that returns an exit value
+;FileHelper
+: File management class: mkdir, rm, rmdir, touch, readFileToByteArray, writeByteArrayToFile
 ;SqlHelper
 : SQL related utils: build a prepared statement, methods to close a ResultSet or Statement checking for null and Exceptions, methods to extract values from a ResultSet including blobs.
 ;StopWatch 

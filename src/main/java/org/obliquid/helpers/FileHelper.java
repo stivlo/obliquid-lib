@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.apache.commons.io.FileUtils;
 
 /**
- * File management class, mkdir, rm, rmdir, touch, readFileToByteArray, writeByteArrayToFile
+ * File management class: mkdir, rm, rmdir, touch, readFileToByteArray, writeByteArrayToFile
  * 
  * @author stivlo
  * 
@@ -102,8 +102,8 @@ public class FileHelper {
      * Touch the file, when the file doesn't exist a new file will be created, when the file exists,
      * the file last modified timestamp will be changed.
      * 
-     * @param fileName
-     *            the fileName to be touched
+     * @param file
+     *            the file to be touched
      * @throws IOException
      *             if the permissions don't allow to create or modify the file
      */
@@ -119,7 +119,6 @@ public class FileHelper {
      * @throws IOException
      *             if the file could not be removed (permissions), if the file doesn't exist, if
      *             it's not a file but a directory.
-     * 
      */
     public static void rm(String fileName) throws IOException {
         File file = new File(fileName);
@@ -129,12 +128,11 @@ public class FileHelper {
     /**
      * Removes the file named by the fileName provided.
      * 
-     * @param fileName
-     *            fileName to be removed
+     * @param file
+     *            file to be removed
      * @throws IOException
      *             if the file could not be removed (permissions), if the file doesn't exist, if
      *             it's not a file but a directory.
-     * 
      */
     public static void rm(File file) throws IOException {
         if (!file.isFile()) {
@@ -164,7 +162,7 @@ public class FileHelper {
     /**
      * Creates a file from a byte array
      * 
-     * @param fileName
+     * @param file
      *            the file to be created
      * @param contents
      *            the byte-content to be written
@@ -192,7 +190,7 @@ public class FileHelper {
     /**
      * Reads a file into a byte array
      * 
-     * @param fileName
+     * @param file
      *            the file to be read
      * @return the byte-contents for the file
      * @throws IOException
