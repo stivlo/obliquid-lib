@@ -51,12 +51,81 @@ The following classes are committed to date:
 === org.obliquid.db package ===
 
 ;DbNull
-: Represent a NULL value in a database field, and holds the type from java.sql.Types
+: Represents a NULL value in a database field, and holds the type from java.sql.Types
 ;MetaDb
 : Manage interactions with DB
 ;HasDb
 : Base class for Objects needing a DB connection
 
+----
+
+=== org.obliquid.datatype package ===
+
+;DataType
+: Abstract base class for scalar data types. set()/get() the data safely and check if isValid()
+;BooleanType
+: Represents a boolean value, raw as Y/N
+;CountryCode
+: Hold and validate a two letter ISO Country code
+;EmailAddrees
+: Hold and validate an email address
+;EmailList
+: Hold and validate a comma separated list of email addresses (spaces allowed)
+;IpAddress
+: Hold and validate an IP address
+;IsoDate
+: Hold and validate a date in ISO format yyyy-MM-dd
+;ItalianPostCode
+: Hold and validate an Italian postcode (5 digits)
+;LanguageType
+: Hold and validate ISO language codes, only IT/EN for now
+;Password
+: Hold and validate a password, according to my rules
+;PathName
+: Hold and validate a relative path, according to my rules
+;PhoneNumber
+: Hold, validate and normalize a phone number
+;UrlType
+: Hold and validate a URL
+;Username
+: Hold and validate a Username
+
+----
+
+=== org.obliquid.datatype.companytaxid ===
+
+;CompanyTaxId
+: Base class for Company Tax Ids
+;ItalianCompanyTaxId
+: Hold and validate an Italian Company Tax Id (PI). Allowed values are a valid VatId or a PersonalTaxId.
+;SpanishCompanyTaxId
+: Hold and validate a Spanish Company Tax Id (NIF). Allowed values is a valid VatId.
+
+----
+
+=== org.obliquid.datatype.personaltaxid ===
+
+;PersonalTaxId
+: Base class for PersonalTaxIds
+;ItalianPersonalTaxId
+: Hold and validate an Italian Personal Tax Id (codice fiscale), also verifies the check digit
+;FrenchPersonalTaxId
+: Just a stub always returning true
+
+----
+
+=== org.obliquid.datatype.vatid ===
+
+;VatId
+: Hold and validate a EU VAT Id
+;ItalianVatId
+: Hold and verify an Italian VAT Id, also verifies the check digit
+;FrenchVatId
+: Just a stub always returning true
+;GermanVatId
+: Just a stub always returning true
+;SpanishVatId
+: Hold and verify a Spanish VAT Id. It doesn't verify the check digit, just the general format
 
 == Maven Quick Start ==
 
