@@ -8,6 +8,8 @@ The following classes are committed to date:
 
 '''org.obliquid.helpers''' package:
 
+;ArrayHelper
+: Helper Class for Arrays and Collections: buil HashMap from two arrys, build an ArrayList from one or two Arrays
 ;BdHelper
 : Make it easier to do some operations with BigDecimals
 ;DateHelper
