@@ -155,8 +155,8 @@ public class SqlHelper {
      * 
      * @param orderBy
      *            the ORDER BY string. Examples: "id", "id DESC"
-     * @return WHERE and ORDER BY clause. Examples "id" => "WHERE id>'' ORDER BY id", "id DESC" =>
-     *         "WHERE id>'' ORDER BY id DESC"
+     * @return WHERE and ORDER BY clause. Examples "id" => " WHERE id>='' ORDER BY id", "id DESC" =>
+     *         " WHERE id>='' ORDER BY id DESC"
      */
     public static String buildWhereAndOrderByForSdb(final String orderBy) {
         String[] part = orderBy.split(" ");

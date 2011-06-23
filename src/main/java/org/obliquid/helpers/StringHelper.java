@@ -111,8 +111,8 @@ public class StringHelper {
      * Compute the md5 hash of a InputStream. In case of errors, returns an empty string. It takes
      * care of closing the InputStream
      * 
-     * @param filename
-     *            the file to be hashed
+     * @param inputStream
+     *            the InputStream to be hashed
      * @return a 32-character hexadecimal number
      * @throws IOException
      */
@@ -254,12 +254,12 @@ public class StringHelper {
     /**
      * Quote and zeropad a field for a SQL query
      * 
-     * @param arg
-     * @param length
-     * @return
+     * @param value the value to be quoted and zero padded
+     * @param length the length of the zero-padded long, excluding the quotes
+     * @return the quoted and zero-padded long value
      */
-    public static String quote(final long arg, final int length) {
-        return "'" + zeroPad(arg, length) + "'";
+    public static String quote(final long value, final int length) {
+        return "'" + zeroPad(value, length) + "'";
     }
 
     public static String escape(final String arg) {
