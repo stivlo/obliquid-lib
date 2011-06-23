@@ -3,6 +3,7 @@ package org.obliquid.helpers;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
@@ -254,8 +255,10 @@ public class StringHelper {
     /**
      * Quote and zeropad a field for a SQL query
      * 
-     * @param value the value to be quoted and zero padded
-     * @param length the length of the zero-padded long, excluding the quotes
+     * @param value
+     *            the value to be quoted and zero padded
+     * @param length
+     *            the length of the zero-padded long, excluding the quotes
      * @return the quoted and zero-padded long value
      */
     public static String quote(final long value, final int length) {
@@ -284,6 +287,25 @@ public class StringHelper {
         StringBuilder format = new StringBuilder("%0");
         format.append(length).append("d");
         return String.format(format.toString(), arg);
+    }
+
+    /**
+     * Zero pad the decimal part of the argument until it reach the specified scale and then zero
+     * pad the integer part until the whole resulting string reach the specified totalLength (also
+     * the decimal separator is counted).
+     * 
+     * @param value
+     *            a BigDecimal to be zero-padded
+     * @param totalLength
+     *            the total length, including the decimal point and the decimal digits
+     * @param scale
+     *            number of digits after the decimal point
+     * @return a zero-padded String representation
+     * @throws IllegalArgumentException
+     *             when the BigDecimal is negative, since is not supported
+     */
+    public static String zeroPad(BigDecimal value, int totalLength, int scale) {
+        return BdHelper.zeroPad(value, totalLength, scale);
     }
 
     /**
@@ -372,8 +394,11 @@ public class StringHelper {
      * string.
      * 
      * @param glue
+     *            the connecting string, for instance a comma
      * @param pieces
+     *            the parts to be join
      * @param quote
+     *            the quote to use
      * @return a String containing a String representation of all the array elements in the same
      *         order, with the glue String between each element.
      */
@@ -383,23 +408,30 @@ public class StringHelper {
         String sep = "";
         Iterator<Entry<String, String>> it = pieces.entrySet().iterator();
         while (it.hasNext()) {
-            sb.append(sep);
-            sb.append(quote);
-            sb.append((it.next()).getKey());
-            sb.append(quote);
+            sb.append(sep).append(quote).append((it.next()).getKey()).append(quote);
             sep = glue;
         }
         return sb.toString();
     }
 
+    /**
+     * Join keys elements of the String array with a glue Stringand quote each one of them with a
+     * quote string.
+     * 
+     * @param glue
+     *            the connecting string, for instance a comma
+     * @param pieces
+     *            the parts to be join
+     * @param quote
+     *            the quote to use
+     * @return a String containing a String representation of all the array elements in the same
+     *         order, with the glue String between each element.
+     */
     public static String implodeAndQuote(final String glue, final String[] pieces, final String quote) {
         StringBuilder sb = new StringBuilder();
         String sep = "";
         for (String piece : pieces) {
-            sb.append(sep);
-            sb.append(quote);
-            sb.append(piece);
-            sb.append(quote);
+            sb.append(sep).append(quote).append(piece).append(quote);
             sep = glue;
         }
         return sb.toString();
