@@ -4,7 +4,7 @@
 
   <groupId>org.obliquid.helpers</groupId>
   <artifactId>obliquid-helpers</artifactId>
-  <version>2011-06-22</version>
+  <version>2011-06-23</version>
   <packaging>jar</packaging>
 
   <name>obliquid-helpers</name>
