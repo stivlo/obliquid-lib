@@ -1,15 +1,24 @@
 = org.obliquid.helpers = 
 
-org.obliquid.helpers are static Java helper classes released with LGPL3 licence.
+org.obliquid.helpers are Java helper classes released with LGPL3 licence.
 Maven is used to pull dependencies and build the project. All classes are not
 meant to be comprehensive, but they contain what I need, YAGNI style.
 
 The following classes are committed to date:
 
+;BdHelper
+: Make it easier to do some operations with BigDecimals
 ;DateHelper
 : Helper Class for Dates, both Java Dates and Joda Dates.
 ;SimpleStopWatch 
 : Simple Stop Watch with seconds and milliseconds timings and sleep functions wrapped to ignore exceptions.
+;StringHelper
+: Utility functions for String: SHA1, MD5, random string, ellipsis, escape, implode, quote, repeat, substr, truncate, ucFirst, zeroPad
+
+;SqlHelper
+: SQL related utils: build a prepared statement, methods to close a ResultSet or Statement checking for null and Exceptions, methods to extract values from a ResultSet including blobs.
+;DbNull
+: Represent a NULL value in a database field, and holds the type from java.sql.Types
 
 == Maven Quick Start ==
 
@@ -22,8 +31,9 @@ target/classes directory.
 
 '''mvn clean''' deletes the target/ directory with all generated artifacts
 
-'''mvn eclipse:eclipse''' generates or updates eclipse project files, run this command every time a new dependency is added to pom.xml - I've blogged in more details about [http://www.stefanolocati.it/blog/?p=917 external dependencies]
-
 '''mvn package''' generates a jar file in the target/ directory
 
+'''mvn eclipse:eclipse''' generates or updates eclipse project files, run this command every time a new dependency is added to pom.xml - I've blogged in more details about [http://www.stefanolocati.it/blog/?p=917 external dependencies]
+
 '''mvn javadoc:javadoc''' generates the Javadoc files in target/site/apidocs/
+
