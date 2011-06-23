@@ -12,6 +12,8 @@ The following classes are committed to date:
 : Helper Class for Arrays and Collections: buil HashMap from two arrys, build an ArrayList from one or two Arrays
 ;BdHelper
 : Make it easier to do some operations with BigDecimals
+;ByteArrayHelper
+: Analyze and manipulate byte arrays: search, replace, toArray (from List)
 ;DateHelper
 : Helper Class for Dates, both Java Dates and Joda Dates.
 ;ExecHelper
