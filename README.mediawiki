@@ -55,7 +55,10 @@ target/classes directory.
 
 '''mvn package''' generates a jar file in the target/ directory
 
+'''mvn javadoc:javadoc''' generates the Javadoc files in target/site/apidocs/
+
 '''mvn eclipse:eclipse''' generates or updates eclipse project files, run this command every time a new dependency is added to pom.xml - I've blogged in more details about [http://www.stefanolocati.it/blog/?p=917 external dependencies]
 
-'''mvn javadoc:javadoc''' generates the Javadoc files in target/site/apidocs/
+'''mvn eclipse:eclipse -DdownloadSources=true  -DdownloadJavadocs=true''' to download also Javadocs and Sources
+
 
