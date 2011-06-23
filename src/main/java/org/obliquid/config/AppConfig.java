@@ -9,7 +9,7 @@ import java.util.MissingResourceException;
  * Application configuration, allows to keep different configurations forr different servers in the
  * same codebase, so I can publish over and over to without worrying about messing the
  * configurations. Extend this class and name the new class with the hostname having the first
- * letter uppercase. Subclass will be looked for in the package obliquid.config. - This are the
+ * letter uppercase. Subclass will be looked for in the package org.obliquid.config. - These are the
  * defaults and can be overridden by calling setPackage() and setClass() methods. This kind of
  * system serves well my purposes, because I want to be able to keep distinct configurations for the
  * different servers, and I write these configurations by hand. If needed you can just subclass and
@@ -28,7 +28,7 @@ public abstract class AppConfig {
     }
 
     /**
-     * Set the package for the configuration class. default "obliquid.config"
+     * Set the package for the configuration class. default "org.obliquid.config"
      * 
      * @param configPackage
      *            the package name
@@ -65,7 +65,7 @@ public abstract class AppConfig {
                 return singleton;
             }
             if (configPackage == null) {
-                configPackage = "obliquid.config"; //default
+                configPackage = "org.obliquid.config"; //default
             }
             if (configClass == null) {
                 configClass = AppConfig.getClassName(); //default
