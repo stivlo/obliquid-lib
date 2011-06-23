@@ -6,17 +6,26 @@ meant to be comprehensive, but they contain what I need, YAGNI style.
 
 The following classes are committed to date:
 
+'''org.obliquid.helpers''' package:
+
 ;BdHelper
 : Make it easier to do some operations with BigDecimals
 ;DateHelper
 : Helper Class for Dates, both Java Dates and Joda Dates.
-;SimpleStopWatch 
+;SqlHelper
+: SQL related utils: build a prepared statement, methods to close a ResultSet or Statement checking for null and Exceptions, methods to extract values from a ResultSet including blobs.
+;StopWatch 
 : Simple Stop Watch with seconds and milliseconds timings and sleep functions wrapped to ignore exceptions.
 ;StringHelper
 : Utility functions for String: SHA1, MD5, random string, ellipsis, escape, implode, quote, repeat, substr, truncate, ucFirst, zeroPad
 
-;SqlHelper
-: SQL related utils: build a prepared statement, methods to close a ResultSet or Statement checking for null and Exceptions, methods to extract values from a ResultSet including blobs.
+'''org.obliquid.config''' package:
+
+;AppConfig
+: Application configuration, allows to keep different configuration for different servers in the same codebase, so I can publish over and over without worrying about messing the configurations.
+
+'''org.obliquid.db''' package:
+
 ;DbNull
 : Represent a NULL value in a database field, and holds the type from java.sql.Types
 
