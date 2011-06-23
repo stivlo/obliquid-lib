@@ -6,7 +6,7 @@ meant to be comprehensive, but they contain what I need, YAGNI style.
 
 The following classes are committed to date:
 
-'''org.obliquid.helpers''' package:
+=== org.obliquid.helpers package ===
 
 ;ArrayHelper
 : Helper Class for Arrays and Collections: buil HashMap from two arrys, build an ArrayList from one or two Arrays
@@ -21,15 +21,24 @@ The following classes are committed to date:
 ;StringHelper
 : Utility functions for String: SHA1, MD5, random string, ellipsis, escape, implode, quote, repeat, substr, truncate, ucFirst, zeroPad
 
-'''org.obliquid.config''' package:
+---
+
+=== org.obliquid.config package ===
 
 ;AppConfig
 : Application configuration, allows to keep different configuration for different servers in the same codebase, so I can publish over and over without worrying about messing the configurations.
 
-'''org.obliquid.db''' package:
+---
+
+=== org.obliquid.db package ===
 
 ;DbNull
 : Represent a NULL value in a database field, and holds the type from java.sql.Types
+;MetaDb
+: Manage interactions with DB
+;HasDb
+: Base class for Objects needing a DB connection
+
 
 == Maven Quick Start ==
 
