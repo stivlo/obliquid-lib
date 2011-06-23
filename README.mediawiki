@@ -127,6 +127,20 @@ The following classes are committed to date:
 ;SpanishVatId
 : Hold and verify a Spanish VAT Id. It doesn't verify the check digit, just the general format
 
+----
+
+=== org.obliquid.client package ===
+
+;ClientFactory
+: A factory class to create Clients, using the application configuration (PostMan, MyMemCache, AmazonEC2, AmazonS3, AmazonSimpleEmailService
+;MyMemCache
+: Creates a connection pool of MemCached clients
+;PostMan
+: Interface to send an email. Use ClientFactory to create an instance
+;Wget
+: Class to download a URL from HTTP
+
+
 == Maven Quick Start ==
 
 This project uses Maven, if you know it already you can stop reading now. Otherwise read the [http://maven.apache.org/guides/getting-started/index.html Maven Getting Started Guide].  Supposing that Maven is already installed on your system, here are some useful commands:
