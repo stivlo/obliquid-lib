@@ -21,14 +21,14 @@ The following classes are committed to date:
 ;StringHelper
 : Utility functions for String: SHA1, MD5, random string, ellipsis, escape, implode, quote, repeat, substr, truncate, ucFirst, zeroPad
 
----
+----
 
 === org.obliquid.config package ===
 
 ;AppConfig
 : Application configuration, allows to keep different configuration for different servers in the same codebase, so I can publish over and over without worrying about messing the configurations.
 
----
+----
 
 === org.obliquid.db package ===
 
