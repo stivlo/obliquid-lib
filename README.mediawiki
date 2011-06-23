@@ -14,6 +14,8 @@ The following classes are committed to date:
 : Make it easier to do some operations with BigDecimals
 ;DateHelper
 : Helper Class for Dates, both Java Dates and Joda Dates.
+;ExecHelper
+: Run system commands, provides an exec function that returns an exit value
 ;SqlHelper
 : SQL related utils: build a prepared statement, methods to close a ResultSet or Statement checking for null and Exceptions, methods to extract values from a ResultSet including blobs.
 ;StopWatch 
