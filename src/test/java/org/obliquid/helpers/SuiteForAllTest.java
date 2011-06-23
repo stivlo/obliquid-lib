@@ -11,7 +11,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses(value = { DateHelperShould.class, SimpleStopWatchShould.class, StringHelperShould.class,
-        DbNullShould.class, BdHelperShould.class })
+        DbNullShould.class, BdHelperShould.class, SqlHelperShould.class })
 public class SuiteForAllTest {
 
     public SuiteForAllTest() {
