@@ -17,12 +17,15 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 /**
- * Helper class for Dates, both Java Dates and Joda Dates. It doesn't mean to be comprehensive, it
- * contains the functions I need in my development. Most of them are simple, however they give me a
- * simple interface that it's easier to memorize without going into the details of different
- * implementations of Java and Joda Dates.
+ * Helper class for Dates, Java Dates, Joda Dates and ISO Dates in the String form yyyy-MM-dd. If
+ * this class grows too big (say more than 800 lines I will consider splitting it in a
+ * JavaDateHelper, JodaDateHelper and IsoDateHelper.
  * 
- * Joda Dates are great, but in real life I've to deal with Java Dates too.
+ * The methods implemented aren't mean to be comprehensive, it contains the functions I need in my
+ * development, they give me a simple interface that it's easier to memorize without going into the
+ * details of different implementations of Java, Joda and ISO Dates.
+ * 
+ * Joda Dates are great, but in real life I've to deal with Java Dates and ISO Dates too.
  * 
  * @author stivlo
  */
@@ -231,7 +234,7 @@ public class DateHelper {
     }
 
     /**
-     * Return the number of FULL days between two ReadableDates
+     * Return the number of FULL days between two ReadableDates.
      * 
      * @param fromWhen
      *            start date
@@ -241,6 +244,21 @@ public class DateHelper {
      */
     public static int computeDaysBetween(final ReadableDateTime fromWhen, final ReadableDateTime untilWhen) {
         return Days.daysBetween(fromWhen, untilWhen).getDays();
+    }
+
+    /**
+     * Return the number of FULL days between two ISO Dates.
+     * 
+     * @param isoFromWhen
+     *            start date
+     * @param isoUntilWhen
+     *            end date
+     * @return the number of full days
+     */
+    public static int computeDaysBetween(String isoFromWhen, String isoUntilWhen) {
+        ReadableDateTime jodaFromWhen = DateHelper.buildReadableDateTimeFromIsoDate(isoFromWhen);
+        ReadableDateTime jodaUntilWhen = DateHelper.buildReadableDateTimeFromIsoDate(isoUntilWhen);
+        return Days.daysBetween(jodaFromWhen, jodaUntilWhen).getDays();
     }
 
     /**
@@ -255,6 +273,31 @@ public class DateHelper {
         MutableDateTime until = today.toMutableDateTime();
         until.addDays(-howManyDays);
         return DateHelper.formatIsoDate(until);
+    }
+
+    /**
+     * Compute how many days there are in the year contained in the isoDate
+     * 
+     * @param isoDate
+     *            the date from which I'll extract the year
+     * @return the number of days, should be either 365 or 366
+     */
+    public static int computeDaysInTheYear(String isoDate) {
+        int year = DateHelper.extractYear(isoDate);
+        return computeDaysInTheYear(year);
+    }
+
+    /**
+     * Compute how many days there are in the year
+     * 
+     * @param year
+     *            the year to consider
+     * @return the number of days, should be either 365 or 366
+     */
+    public static int computeDaysInTheYear(int year) {
+        String isoFromWhen = year + "-01-01";
+        String isoUntilWhen = year + "-12-31";
+        return DateHelper.computeDaysBetween(isoFromWhen, isoUntilWhen) + 1;
     }
 
     /**
@@ -294,6 +337,48 @@ public class DateHelper {
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(javaDate);
         return calendar.get(Calendar.YEAR);
+    }
+
+    /**
+     * Extract the day part from a ISO date
+     * 
+     * @param isoDate
+     *            the ISO Date to consider
+     * @return the day of the month
+     */
+    public static int extractDay(String isoDate) {
+        DateTimeFormatter parser = DateTimeFormat.forPattern("yyyy-MM-dd");
+        DateTime date = parser.parseDateTime(isoDate);
+        int year = date.getDayOfMonth();
+        return year;
+    }
+
+    /**
+     * Extract the month part from a ISO date
+     * 
+     * @param isoDate
+     *            the ISO Date to consider
+     * @return the month of the year, such as 1 for January and 12 for December
+     */
+    public static int extractMonth(String isoDate) {
+        DateTimeFormatter parser = DateTimeFormat.forPattern("yyyy-MM-dd");
+        DateTime date = parser.parseDateTime(isoDate);
+        int year = date.getMonthOfYear();
+        return year;
+    }
+
+    /**
+     * Extract the year part from a ISO date, such as 2011
+     * 
+     * @param isoDate
+     *            the ISO Date to consider
+     * @return the year
+     */
+    public static int extractYear(String isoDate) {
+        DateTimeFormatter parser = DateTimeFormat.forPattern("yyyy-MM-dd");
+        DateTime date = parser.parseDateTime(isoDate);
+        int year = date.getYear();
+        return year;
     }
 
     /**
