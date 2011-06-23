@@ -1,8 +1,10 @@
 = org.obliquid.helpers = 
 
 org.obliquid.helpers are Java helper classes released with LGPL3 licence.
+They are my personal code library that I've used in multiple projects.
 Maven is used to pull dependencies and build the project. All classes are not
-meant to be comprehensive, but they contain what I need, YAGNI style.
+meant to be comprehensive, but they contain what I need,
+[http://en.wikipedia.org/wiki/You_ain%27t_gonna_need_it YAGNI] style.
 
 The following classes are committed to date:
 
@@ -34,6 +36,8 @@ The following classes are committed to date:
 : Simple Stop Watch with seconds and milliseconds timings and sleep functions wrapped to ignore exceptions.
 ;StringHelper
 : Utility functions for String: SHA1, MD5, random string, ellipsis, escape, implode, quote, repeat, substr, truncate, ucFirst, zeroPad
+;WebClient
+: Return info about the Web Client: getIpAddress()
 
 ----
 
