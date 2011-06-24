@@ -140,6 +140,12 @@ The following classes are committed to date:
 ;Wget
 : Class to download a URL from HTTP
 
+----
+
+=== org.obliquid.scripts package ===
+
+;InstallCert
+: Utility program to install HTTPS certificates in the VM
 
 == Maven Quick Start ==
 

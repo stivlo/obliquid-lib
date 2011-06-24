@@ -40,7 +40,8 @@ import javax.net.ssl.*;
 /**
  * Usage: java InstallCert <host>[:port] [passphrase]
  * 
- * Install certificates, actually save them to a file. That file has to be referenced by the VM.
+ * Install HTTPS certificates, actually save them to a file. That file has to be referenced by the
+ * VM. Used to be in SUN blobs, but it has been deleted and I can't find the new URL on Oracle.
  */
 public class InstallCert {
 
