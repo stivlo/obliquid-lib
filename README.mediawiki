@@ -170,6 +170,8 @@ The following classes are committed to date:
 : Helps to deal with EC2 Tags, especially with Name tag
 ;MyVolume
 : Wrapper around InstanceBlockDeviceMapping, provides getDeviceName, getId, getName, getSizeInGb, toString
+;MySnapshot
+: Wrapper around Amazon Snapshot
 
 == Maven Quick Start ==
 
