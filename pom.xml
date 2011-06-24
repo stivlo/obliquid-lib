@@ -4,27 +4,30 @@
 
   <groupId>org.obliquid.helpers</groupId>
   <artifactId>obliquid-helpers</artifactId>
-  <version>2011-06-23</version>
+  <version>0.9-SNAPSHOT</version>
   <packaging>jar</packaging>
-
   <name>obliquid-helpers</name>
-  <url>http://www.stefanolocati.it/blog/?p=901</url>
-
+  <url>https://github.com/stivlo/org.obliquid.helpers</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <repositories>
+
+    <!-- For Jakarta ORO -->
     <repository>
       <id>mvnsearch</id>
       <name>Maven Search</name>
       <url>http://www.mvnsearch.org/maven2/</url>
     </repository>
+
+    <!-- For Spy Memcached -->
     <repository>
       <id>spy</id>
       <name>Spy Repository</name>
       <url>http://files.couchbase.com/maven2/</url>
     </repository>
+
   </repositories>
 
   <dependencies>
