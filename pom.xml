@@ -92,6 +92,13 @@
        <scope>compile</scope>
      </dependency>
 
+     <dependency>
+         <groupId>com.google.code.typica</groupId>
+         <artifactId>typica</artifactId>
+         <version>1.7.2</version>
+         <scope>compile</scope>
+     </dependency>
+
   </dependencies>
 
 </project>

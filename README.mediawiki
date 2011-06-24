@@ -149,6 +149,19 @@ The following classes are committed to date:
 ;InstallCert
 : Utility program to install HTTPS certificates in the VM
 
+----
+
+=== org.obliquid.sdb package ===
+
+;AmazonSdbHelper
+: Implementation of PersistenceInterface for Amazon SimpleDb with the official SDK
+;SimpleDbHelper
+: Implementation of PersistenceInterface for Amazon SimpleDb with Typica
+;PersistenceInterface
+: Interface for persistence in value-data storage
+;EntityInterface
+: Common Interface for Persistence Entities
+
 == Maven Quick Start ==
 
 This project uses Maven, if you know it already you can stop reading now. Otherwise read the [http://maven.apache.org/guides/getting-started/index.html Maven Getting Started Guide].  Supposing that Maven is already installed on your system, here are some useful commands:
