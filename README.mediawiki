@@ -172,6 +172,8 @@ The following classes are committed to date:
 : Wrapper around InstanceBlockDeviceMapping, provides getDeviceName, getId, getName, getSizeInGb, toString
 ;MySnapshot
 : Wrapper around Amazon Snapshot
+;FirewallManager
+: Authorize/Revoke authorization to IP addresses or CIDR to connect to our Amazon servers
 
 == Maven Quick Start ==
 
