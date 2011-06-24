@@ -51,7 +51,7 @@ public abstract class AppConfig {
     public abstract int getLogLevel();
 
     /**
-     * Get a the only instance of the class, it's thead safe.
+     * Get a the only instance of the class, it's thread safe.
      * 
      * @return an instance of AppConfig.
      * @throws ServiceException
