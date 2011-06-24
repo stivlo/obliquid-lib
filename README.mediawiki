@@ -162,6 +162,15 @@ The following classes are committed to date:
 ;EntityInterface
 : Common Interface for Persistence Entities
 
+----
+
+=== org.obliquid.ec2 package ===
+
+;Ec2Tag
+: Helps to deal with EC2 Tags, especially with Name tag
+;MyVolume
+: Wrapper around InstanceBlockDeviceMapping, provides getDeviceName, getId, getName, getSizeInGb, toString
+
 == Maven Quick Start ==
 
 This project uses Maven, if you know it already you can stop reading now. Otherwise read the [http://maven.apache.org/guides/getting-started/index.html Maven Getting Started Guide].  Supposing that Maven is already installed on your system, here are some useful commands:
@@ -180,5 +189,4 @@ target/classes directory.
 '''mvn eclipse:eclipse''' generates or updates eclipse project files, run this command every time a new dependency is added to pom.xml - I've blogged in more details about [http://www.stefanolocati.it/blog/?p=917 external dependencies]
 
 '''mvn eclipse:eclipse -DdownloadSources=true  -DdownloadJavadocs=true''' to download also Javadocs and Sources
-
 
