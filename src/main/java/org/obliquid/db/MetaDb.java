@@ -533,7 +533,6 @@ public class MetaDb {
      *            an array of int to be substituted as parameters
      * @return a column of results
      * @throws SQLException
-     * @throws ServiceException
      */
     public List<Object> selectColumn(String sql, int[] param) throws SQLException {
         ArrayList<Object> arList = ArrayHelper.buildArrayList(param);

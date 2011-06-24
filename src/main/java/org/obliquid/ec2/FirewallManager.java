@@ -84,8 +84,6 @@ public class FirewallManager {
 
     /**
      * Revoke all authorization in groups web and mail for ports portsToCheck
-     * 
-     * @throws ServiceException
      */
     public void revokeAll() {
         if (ec2 == null) {

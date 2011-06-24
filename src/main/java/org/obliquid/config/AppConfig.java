@@ -54,7 +54,6 @@ public abstract class AppConfig {
      * Get a the only instance of the class, it's thread safe.
      * 
      * @return an instance of AppConfig.
-     * @throws ServiceException
      */
     public static AppConfig getInstance() {
         if (singleton != null) {

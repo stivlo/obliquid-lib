@@ -33,7 +33,7 @@ public class ClientFactory {
      * At the moment works with Amazon Simple Email Service and Java Mail.
      * 
      * @return a PostMan implementation
-     * @throws ServiceException
+     * @throws RejectedExecutionException
      *             if the class wasn't found, is not of the right type, can't be loaded, etc.
      */
     public static PostMan createPostMan() {

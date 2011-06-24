@@ -19,7 +19,6 @@ public class FileHelper {
      * @param pathName
      *            pathName to be created
      * @throws IOException
-     * @throws ServiceException
      *             if the directory could not be created
      */
     public static void mkdir(String pathName) throws IOException {
