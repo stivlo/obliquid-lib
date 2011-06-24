@@ -24,12 +24,12 @@ public class VatPercentShould {
     }
 
     @Test
-    public void ZeroIsValid() {
+    public void zeroIsValid() {
         assertTrue(percent.isValid("0"));
     }
 
     @Test
-    public void TwentyIsValid() {
+    public void twentyIsValid() {
         assertTrue(percent.isValid("20"));
     }
 

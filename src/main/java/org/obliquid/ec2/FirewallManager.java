@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.RejectedExecutionException;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.obliquid.client.ClientFactory;
 
 import com.amazonaws.AmazonServiceException;
@@ -56,7 +57,7 @@ public class FirewallManager {
         for (int i = 0; i < ipPermissions.size(); i++) {
             aPerm = ipPermissions.get(i);
             port = aPerm.getFromPort();
-            if (portsToCheck != null && !Arrays.asList(portsToCheck).contains(port)) {
+            if (portsToCheck != null && !ArrayUtils.contains(portsToCheck, port)) {
                 ipPermissions.remove(aPerm);
                 i--;
             }

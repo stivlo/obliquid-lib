@@ -1,5 +1,6 @@
 package org.obliquid.helpers;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -30,12 +31,6 @@ import org.joda.time.format.DateTimeFormatter;
  * @author stivlo
  */
 public class DateHelper {
-
-    /** Simple ISO Format for Joda Dates */
-    private static final DateTimeFormatter isoFormatForJodaDate = DateTimeFormat.forPattern("yyyy-MM-dd");
-
-    /** Simple ISO Format for Java Dates */
-    private static final SimpleDateFormat isoFormatForJavaDate = new SimpleDateFormat("yyyy-MM-dd");
 
     private DateHelper() {
         //all methods are static
@@ -79,7 +74,15 @@ public class DateHelper {
      * @return the formatted date
      */
     public static String formatIsoDate(final ReadableDateTime aDate) {
-        return isoFormatForJodaDate.print(aDate);
+        return buildIsoFormatForJodaDate().print(aDate);
+    }
+
+    /**
+     * Simple ISO Format for Joda Dates. I need to build a new one each time because is not thread
+     * safe
+     */
+    private static DateTimeFormatter buildIsoFormatForJodaDate() {
+        return DateTimeFormat.forPattern("yyyy-MM-dd");
     }
 
     /**
@@ -168,7 +171,7 @@ public class DateHelper {
      *             when isoDate format is not valid
      */
     public static ReadableDateTime buildReadableDateTimeFromIsoDate(final String isoDate) {
-        return isoFormatForJodaDate.parseDateTime(isoDate);
+        return buildIsoFormatForJodaDate().parseDateTime(isoDate);
     }
 
     /**
@@ -181,7 +184,7 @@ public class DateHelper {
      *             when the format of isoDate is not valid
      */
     public static LocalDate buildLocalDateFromIsoDate(final String isoDate) {
-        ReadableDateTime dateTime = isoFormatForJodaDate.parseDateTime(isoDate);
+        ReadableDateTime dateTime = buildIsoFormatForJodaDate().parseDateTime(isoDate);
         LocalDate date = new LocalDate(dateTime.getYear(), dateTime.getMonthOfYear(),
                 dateTime.getDayOfMonth());
         return date;
@@ -215,11 +218,16 @@ public class DateHelper {
     public static Date buildJavaDateFromIsoDate(String isoDate) {
         Date date;
         try {
-            date = isoFormatForJavaDate.parse(isoDate);
+            date = buildIsoFormatForJavaDate().parse(isoDate);
         } catch (ParseException ex) {
             throw new IllegalArgumentException(ex);
         }
         return date;
+    }
+
+    /** Simple ISO Format for Java Dates */
+    private static DateFormat buildIsoFormatForJavaDate() {
+        return new SimpleDateFormat("yyyy-MM-dd");
     }
 
     /**
