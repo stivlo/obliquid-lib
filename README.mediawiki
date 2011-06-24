@@ -179,6 +179,13 @@ The following classes are committed to date:
 ; VolumeBackupPolicy
 : Implements a backup policy for Volumes
 
+---
+
+=== org.obliquid.pdf package ===
+
+;PdfDocumentGenerator
+: Base class for document generator (wrapper for iText)
+
 == Maven Quick Start ==
 
 This project uses Maven, if you know it already you can stop reading now. Otherwise read the [http://maven.apache.org/guides/getting-started/index.html Maven Getting Started Guide].  Supposing that Maven is already installed on your system, here are some useful commands:
