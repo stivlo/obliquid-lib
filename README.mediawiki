@@ -176,6 +176,8 @@ The following classes are committed to date:
 : Authorize/Revoke authorization to IP addresses or CIDR to connect to our Amazon servers
 ;SnapshotManager
 : List instances, volumes, create / delete snapshots and set the Name tag of a snapshot
+; VolumeBackupPolicy
+: Implements a backup policy for Volumes
 
 == Maven Quick Start ==
 
