@@ -89,6 +89,8 @@ The following classes are committed to date:
 : Hold and validate a URL
 ;Username
 : Hold and validate a Username
+;VatPercent
+: Hold and validate a VAT Percentage
 
 ----
 
