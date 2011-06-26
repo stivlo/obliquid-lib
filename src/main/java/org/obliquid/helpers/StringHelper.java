@@ -553,4 +553,18 @@ public class StringHelper {
         return output.toString();
     }
 
+    /**
+     * Recode to correct UTF8 the wrong encoding that you obtain in the DB when the PHP page has
+     * UTF8 Content-Type header, but the DB connection uses Latin1 encoding.
+     * 
+     * @return a correctly encoded UTF8 string
+     */
+    public static String recodePhp(String bogusString) {
+        try {
+            return new String(bogusString.getBytes("LATIN1"));
+        } catch (UnsupportedEncodingException ex) {
+            throw new UnsupportedOperationException(ex);
+        }
+    }
+
 }
