@@ -13,3 +13,6 @@ mysql -u root -pRootPassword --default-character-set=utf8 < user.sql
 mysql -u root -pRootPassword --default-character-set=utf8 < schema.sql
 mysql -u root -pRootPassword --default-character-set=utf8 < data.sql
 
+Host configuration should be created as a class in org.obliquid.config with the same 
+name as the computer name with the first letter uppercase.
+
