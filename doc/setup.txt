@@ -1,0 +1,15 @@
+obliquid-lib SETUP
+
+obliquid-lib is built with Maven. If you have a working installation of Maven it will
+download all dependendents libraries automatically.
+
+Unit tests are grouped in two suites: org.obliquid.junit.SuiteForAllTest contains all
+tests that don't require a DB, org.obliquid.junit.SuiteForDbTest contains all tests
+that do require DBs.
+
+To create the DBs run the following commands with MySQL root user:
+
+mysql -u root -pRootPassword --default-character-set=utf8 < user.sql
+mysql -u root -pRootPassword --default-character-set=utf8 < schema.sql
+mysql -u root -pRootPassword --default-character-set=utf8 < data.sql
+
