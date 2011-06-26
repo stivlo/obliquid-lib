@@ -2,12 +2,12 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.obliquid.helpers</groupId>
-  <artifactId>obliquid-helpers</artifactId>
-  <version>0.9-SNAPSHOT</version>
+  <groupId>org.obliquid</groupId>
+  <artifactId>obliquid-lib</artifactId>
+  <version>0.9.1-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>obliquid-helpers</name>
-  <url>https://github.com/stivlo/org.obliquid.helpers</url>
+  <url>https://github.com/stivlo/obliquid-lib</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -71,7 +71,8 @@
       <groupId>org.apache.geronimo.specs</groupId>
       <artifactId>geronimo-servlet_3.0_spec</artifactId>
       <version>1.0</version>
-      <scope>compile</scope>
+      <scope>provided</scope>
+      <optional>true</optional>
     </dependency>
 
     <dependency>

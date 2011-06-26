@@ -1,6 +1,7 @@
-= org.obliquid.helpers = 
+= obliquid-lib = 
 
-org.obliquid.helpers are Java helper classes released with LGPL3 licence.
+obliquid-lib are Java classes not bound to any specific application, that
+I use for my daily development. This collection is released with LGPL3 licence.
 They are my personal code library that I've used in multiple projects.
 Maven is used to pull dependencies and build the project. All classes are not
 meant to be comprehensive, but they contain what I need,
