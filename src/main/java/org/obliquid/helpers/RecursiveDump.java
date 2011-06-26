@@ -18,8 +18,7 @@ import org.obliquid.helpers.StringHelper;
  */
 public class RecursiveDump {
 
-    /** Creates a new instance of PHPString */
-    public RecursiveDump() {
+    private RecursiveDump() {
         //empty constructor
     }
 

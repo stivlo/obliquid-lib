@@ -1,4 +1,4 @@
-package org.obliquid.pdf;
+package org.obliquid.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

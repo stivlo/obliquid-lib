@@ -31,8 +31,6 @@ The following classes are committed to date:
 : Recursive Dump of Collections & Arrays
 ;SqlHelper
 : SQL related utils: build a prepared statement, methods to close a ResultSet or Statement checking for null and Exceptions, methods to extract values from a ResultSet including blobs.
-;StopWatch 
-: Simple Stop Watch with seconds and milliseconds timings and sleep functions wrapped to ignore exceptions.
 ;StringHelper
 : Utility functions for String: SHA1, MD5, random string, ellipsis, escape, implode, quote, repeat, substr, truncate, ucFirst, zeroPad
 
@@ -180,12 +178,17 @@ The following classes are committed to date:
 ; VolumeBackupPolicy
 : Implements a backup policy for Volumes
 
----
+----
 
-=== org.obliquid.pdf package ===
+=== org.obliquid.util package ===
 
+;StopWatch 
+: Simple Stop Watch with seconds and milliseconds timings and sleep functions wrapped to ignore exceptions.
 ;PdfDocumentGenerator
 : Base class for document generator (wrapper for iText)
+
+
+----
 
 == Maven Quick Start ==
 

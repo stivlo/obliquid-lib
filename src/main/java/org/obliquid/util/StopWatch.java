@@ -1,4 +1,4 @@
-package org.obliquid.helpers;
+package org.obliquid.util;
 
 /**
  * Simple Stop Watch with seconds and milliseconds timings and sleep functions wrapped to ignore

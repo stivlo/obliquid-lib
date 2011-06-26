@@ -1,10 +1,11 @@
-package org.obliquid.helpers;
+package org.obliquid.util;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.obliquid.util.StopWatch;
 
-public class SimpleStopWatchShould {
+public class StopWatchShould {
 
     /**
      * When we say sleep for 457 milliseconds it actually means sleep for 457 milliseconds or more.
