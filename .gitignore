@@ -1,5 +1,14 @@
+#
+# Don't commit eclipse files
 .classpath
 .project
+#
+# Don't commit any generated artifact
 target/
+#
+# Don't commit the bin directory for my quick and dirty scripts
 bin/
+#
+# Don't commit my laptop configuration
+Stivlo.java
 
