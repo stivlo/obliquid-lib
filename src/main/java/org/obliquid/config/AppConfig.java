@@ -70,7 +70,7 @@ public abstract class AppConfig {
                 configClass = AppConfig.getClassName(); //default
             }
             String qualifiedClassName = configPackage + "." + configClass;
-            String errMsg = "Error while trying to load configuration";
+            String errMsg = "Error while trying to load configuration class " + qualifiedClassName + " ";
             try {
                 singleton = (AppConfig) Class.forName(qualifiedClassName).newInstance();
             } catch (InstantiationException ex) {
