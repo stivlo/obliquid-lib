@@ -53,6 +53,8 @@ The following classes are committed to date:
 : Base class for Objects needing a DB connection
 ;SqlFileReader
 : Provides a statement Iterator interface to SQL files
+;TableIteratorBuilder
+: Provides an Iterator for all the tables of the currently selected DB
 
 ----
 
