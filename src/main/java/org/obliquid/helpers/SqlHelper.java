@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -41,7 +42,9 @@ public class SqlHelper {
         } else if (value != null) {
             stmt.setObject(pos, value);
         } else {
-            stmt.setObject(pos, "");
+            //this is atrick because if value is null we've lost the type information. it should work
+            //on MySQL and doesn't work on Oracle. Use DbNull class to save null value in a portable way
+            stmt.setNull(pos, Types.VARCHAR);
         }
     }
 
