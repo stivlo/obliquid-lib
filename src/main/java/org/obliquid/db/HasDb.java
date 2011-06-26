@@ -83,4 +83,11 @@ public class HasDb {
         return conf;
     }
 
+    public void releaseConnection() throws SQLException {
+        MetaDb curDb = getDb();
+        if (curDb != null) {
+            curDb.releaseConnection();
+        }
+    }
+
 }
