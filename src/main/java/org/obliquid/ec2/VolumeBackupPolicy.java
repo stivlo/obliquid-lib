@@ -93,11 +93,13 @@ public class VolumeBackupPolicy {
         }
         int volumeSize = snapshotsOfaVolume.get(0).getSizeInGb();
         if (volumeSize <= thresholdGb && snapshotsOfaVolume.size() <= howManyCopiesForSmallVolumes) {
-            message = "Skipped deletion because I don't have more than " + howManyCopiesForSmallVolumes + " snapshots";
+            message = "Skipped deletion because I don't have more than " + howManyCopiesForSmallVolumes
+                    + " snapshots";
             return toBeDeleted; //empty list
         }
         if (volumeSize > thresholdGb && snapshotsOfaVolume.size() <= howManyCopiesForBigVolumes) {
-            message = "Skipped deletion because I don't have more than " + howManyCopiesForBigVolumes + " snapshots";
+            message = "Skipped deletion because I don't have more than " + howManyCopiesForBigVolumes
+                    + " snapshots";
             return toBeDeleted; //empty list
         }
         for (MySnapshot snapshot : snapshotsOfaVolume) {
