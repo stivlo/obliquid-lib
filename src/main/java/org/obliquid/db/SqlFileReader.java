@@ -1,4 +1,4 @@
-package org.obliquid.helpers;
+package org.obliquid.db;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;

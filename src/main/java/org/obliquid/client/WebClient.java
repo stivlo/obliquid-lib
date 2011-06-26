@@ -1,4 +1,4 @@
-package org.obliquid.helpers;
+package org.obliquid.client;
 
 import javax.servlet.http.HttpServletRequest;
 

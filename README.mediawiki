@@ -29,16 +29,12 @@ The following classes are committed to date:
 : Analyze Apache .htaccess files: listAuthorizedAddresses(), buildAllowFrom()
 ;RecursiveDump
 : Recursive Dump of Collections & Arrays
-;SqlFileReader
-: Provides a statement Iterator interface to SQL files
 ;SqlHelper
 : SQL related utils: build a prepared statement, methods to close a ResultSet or Statement checking for null and Exceptions, methods to extract values from a ResultSet including blobs.
 ;StopWatch 
 : Simple Stop Watch with seconds and milliseconds timings and sleep functions wrapped to ignore exceptions.
 ;StringHelper
 : Utility functions for String: SHA1, MD5, random string, ellipsis, escape, implode, quote, repeat, substr, truncate, ucFirst, zeroPad
-;WebClient
-: Return info about the Web Client: getIpAddress()
 
 ----
 
@@ -57,6 +53,8 @@ The following classes are committed to date:
 : Manage interactions with DB
 ;HasDb
 : Base class for Objects needing a DB connection
+;SqlFileReader
+: Provides a statement Iterator interface to SQL files
 
 ----
 
@@ -142,6 +140,8 @@ The following classes are committed to date:
 : Interface to send an email. Use ClientFactory to create an instance
 ;Wget
 : Class to download a URL from HTTP
+;WebClient
+: Return info about the Web Client: getIpAddress()
 
 ----
 
