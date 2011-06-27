@@ -7,5 +7,6 @@ Maven is used to pull dependencies and build the project. All classes are not
 meant to be comprehensive, but they contain what I need,
 [http://en.wikipedia.org/wiki/You_ain%27t_gonna_need_it YAGNI] style.
 
-For further information take a look at the [Wiki https://github.com/stivlo/obliquid-lib/wiki]
+For further information take a look at the
+[https://github.com/stivlo/obliquid-lib/wiki Wiki]
 
