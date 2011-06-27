@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.concurrent.RejectedExecutionException;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.obliquid.client.ClientFactory;
+import org.obliquid.util.ClientFactory;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.ec2.AmazonEC2;

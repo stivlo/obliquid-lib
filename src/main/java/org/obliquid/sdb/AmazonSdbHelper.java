@@ -14,7 +14,7 @@ import java.util.UUID;
 import org.obliquid.helpers.SqlHelper;
 import org.obliquid.helpers.StringHelper;
 
-import org.obliquid.client.ClientFactory;
+import org.obliquid.util.ClientFactory;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;

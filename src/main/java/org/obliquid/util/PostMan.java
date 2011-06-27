@@ -1,4 +1,4 @@
-package org.obliquid.client;
+package org.obliquid.util;
 
 /**
  * Interface to send an email. Use ClientFactory to create an instance.

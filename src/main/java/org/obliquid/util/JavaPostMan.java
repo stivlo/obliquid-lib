@@ -1,4 +1,4 @@
-package org.obliquid.client;
+package org.obliquid.util;
 
 import java.util.Date;
 import java.util.concurrent.RejectedExecutionException;
