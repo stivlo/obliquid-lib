@@ -194,6 +194,7 @@
     
     <reporting>
         <plugins>
+            
             <plugin>
                 <artifactId>maven-javadoc-plugin</artifactId>
             </plugin>
@@ -201,7 +202,9 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>jxr-maven-plugin</artifactId>
             </plugin>
+            
         </plugins>
+        
     </reporting>
     
     
