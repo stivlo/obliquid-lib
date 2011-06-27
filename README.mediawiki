@@ -1,12 +1,11 @@
 = obliquid-lib = 
 
-obliquid-lib are Java classes not bound to any specific application, that
-I use for my daily development. This collection is released with LGPL3 licence.
+obliquid-lib are Java classes that I use for my daily development and not bound
+to any specific application. This collection is released with LGPL3 licence.
 They are my personal code library that I've used in multiple projects.
-Maven is used to pull dependencies and build the project. All classes are not
-meant to be comprehensive, but they contain what I need,
+All classes are not meant to be comprehensive, but they contain what I need,
 [http://en.wikipedia.org/wiki/You_ain%27t_gonna_need_it YAGNI] style.
 
 For further information take a look at the
-[https://github.com/stivlo/obliquid-lib/wiki Wiki]
+[https://github.com/stivlo/obliquid-lib/wiki Wiki].
 
