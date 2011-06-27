@@ -28,6 +28,7 @@ public class TableIteratorBuilder extends HasDb {
 
     public TableIteratorBuilder(MetaDb db) {
         super();
+        this.db = db;
     }
 
     /**
@@ -57,6 +58,21 @@ public class TableIteratorBuilder extends HasDb {
         Iterator<String> it = tableIterator();
         db.execute("USE " + currentDb); //preserve the currently selected db
         return it;
+    }
+
+    /**
+     * A static method that creates a new Object of this type, connects to the db, gets the tables,
+     * disconnects from the db and returns a tableIterator
+     * 
+     * @return an Iterator of table names
+     * @throws SQLException
+     */
+    public static Iterator<String> tableIteratorWithAutoDb() throws SQLException {
+        TableIteratorBuilder builder = new TableIteratorBuilder();
+        builder.getDb();
+        Iterator<String> tableIterator = builder.tableIterator();
+        builder.releaseConnection();
+        return tableIterator;
     }
 
 }
