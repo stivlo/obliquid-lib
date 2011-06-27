@@ -29,6 +29,7 @@ public class FieldIteratorBuilder extends HasDb {
 
     public FieldIteratorBuilder(MetaDb db) {
         super();
+        this.db = db;
     }
 
     /**
@@ -43,10 +44,26 @@ public class FieldIteratorBuilder extends HasDb {
         List<DbField> fieldList = new ArrayList<DbField>();
         List<List<Object>> allFields = db.selectAll("DESCRIBE " + tableName);
         for (List<Object> fieldRawData : allFields) {
-            DbField aField = new DbField((String) fieldRawData.get(0), (String) fieldRawData.get(1));
+            DbField aField = new DbField((String) fieldRawData.get(0), (String) fieldRawData.get(1),
+                    (String) fieldRawData.get(3));
             fieldList.add(aField);
         }
         return fieldList.iterator();
+    }
+
+    /**
+     * A static method that creates a new Object of this type, connects to the db, gets the fields
+     * of the specified table, disconnects from the db and returns a tableIterator
+     * 
+     * @return an Iterator of table names
+     * @throws SQLException
+     */
+    public static Iterator<DbField> fieldIteratorWithAutoDb(String table) throws SQLException {
+        FieldIteratorBuilder builder = new FieldIteratorBuilder();
+        builder.getDb();
+        Iterator<DbField> fieldIterator = builder.fieldIterator(table);
+        builder.releaseConnection();
+        return fieldIterator;
     }
 
 }
