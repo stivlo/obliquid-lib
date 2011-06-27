@@ -169,9 +169,7 @@ class ConnectionManager {
         synchronized (ConnectionManager.class) {
             nOpen++;
         }
-        if (nOpen > 1) {
-            conf.log("getStandaloneConnection() nOpen=" + nOpen, AppConfig.INFO);
-        }
+        conf.log("getStandaloneConnection() nOpen=" + nOpen, AppConfig.INFO);
         // Thread.dumpStack();
         return conn;
     }
@@ -192,8 +190,7 @@ class ConnectionManager {
         synchronized (ConnectionManager.class) {
             nOpen++;
         }
-        if (nOpen > 1)
-            conf.log("getPoolableConnection() nOpen=" + nOpen, AppConfig.INFO);
+        conf.log("getPoolableConnection() nOpen=" + nOpen, AppConfig.INFO);
         return conn;
     }
 
@@ -213,9 +210,7 @@ class ConnectionManager {
             }
         }
         conn = null;
-        if (nOpen > 0) {
-            conf.log("releaseConnection() nOpen=" + nOpen, AppConfig.INFO);
-        }
+        conf.log("releaseConnection() nOpen=" + nOpen, AppConfig.INFO);
     }
 
     /**
