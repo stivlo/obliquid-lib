@@ -5,9 +5,27 @@
     <groupId>org.obliquid</groupId>
     <artifactId>obliquid-lib</artifactId>
     <version>0.9.1-SNAPSHOT</version>
+    
     <packaging>jar</packaging>
-    <name>obliquid-helpers</name>
+    <name>obliquid-lib</name>
     <url>https://github.com/stivlo/obliquid-lib</url>
+    <description>
+        obliquid-lib are Java classes that I use for my daily development and not bound to
+        any specific application. This collection is released with LGPL3 licence. They are my
+        personal code library that I've used in multiple projects. All classes are not meant
+        to be comprehensive, but they contain what I need, YAGNI style.
+    </description>
+    
+    <issueManagement>
+        <system>github</system>
+        <url>https://github.com/stivlo/obliquid-lib/issues</url>
+    </issueManagement>
+    
+    <scm>
+        <connection>scm:git://github.com/stivlo/obliquid-lib.git</connection>
+        <url>https://github.com/stivlo/obliquid-lib</url>
+    </scm>
+    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -123,14 +141,14 @@
             <version>2.6</version>
             <scope>compile</scope>
         </dependency>
-
+        
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>r09</version>
             <scope>compile</scope>
         </dependency>
-
+        
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -162,6 +180,30 @@
             </build>
         </profile>
     </profiles>
+    
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.0-beta-3</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+    
+    <reporting>
+        <plugins>
+            <plugin>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jxr-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </reporting>
+    
     
 </project>
 
