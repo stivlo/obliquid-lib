@@ -968,7 +968,7 @@ public class MetaDb {
 
     /**
      * Build a SELECT query as SELECT <fields> <query>. <fields> is a comma separated list of fields
-     * built from the ArrayList. For now it doesn't recognize AS, but AS support can be added.
+     * built from the Array fields. For now it doesn't recognize AS, but AS support can be added.
      * 
      * @param fields
      *            list of fields
@@ -981,6 +981,21 @@ public class MetaDb {
         String sql = "SELECT " + StringHelper.implode(", ", fields) + " " + query;
         List<List<Object>> matrix = selectAll(sql);
         return matrix;
+    }
+
+    /**
+     * Build a SELECT query as SELECT <fields> <query>. <fields> is a comma separated list of fields
+     * built from fields List. No AS support for now.
+     * 
+     * @param fields
+     *            list of fields
+     * @param sql
+     *            the body of the query (starting from FROM, included)
+     * @return an ArrayList with the results, or null
+     * @throws SQLException
+     */
+    public List<List<Object>> selectAll(List<String> fields, String sql) throws SQLException {
+        return selectAll(fields.toArray(new String[0]), sql);
     }
 
     /**
