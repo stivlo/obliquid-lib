@@ -792,8 +792,8 @@ public class MetaDb {
      */
     public int update(String tablename, Map<String, Object> fields, Map<String, Object> priKeys)
             throws SQLException {
-        String sql = "UPDATE " + tablename + " SET " + StringHelper.implode("=?, ", fields) + "=? WHERE "
-                + StringHelper.implode("=? AND ", priKeys) + "=?";
+        String sql = "UPDATE " + tablename + " SET " + StringHelper.implodeAndQuote("=?, ", fields, "`")
+                + "=? WHERE " + StringHelper.implode("=? AND ", priKeys) + "=?";
         ArrayList<Object> arList = ArrayHelper.buildArrayList(fields, priKeys);
         return execute(sql, arList);
     }
@@ -978,7 +978,7 @@ public class MetaDb {
      * @throws SQLException
      */
     public List<List<Object>> selectAll(String[] fields, String query) throws SQLException {
-        String sql = "SELECT " + StringHelper.implode(", ", fields) + " " + query;
+        String sql = "SELECT " + StringHelper.implodeAndQuote(", ", fields, "`") + " " + query;
         List<List<Object>> matrix = selectAll(sql);
         return matrix;
     }
