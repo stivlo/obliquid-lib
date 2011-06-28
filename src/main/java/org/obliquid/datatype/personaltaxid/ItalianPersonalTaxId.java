@@ -66,7 +66,7 @@ public class ItalianPersonalTaxId extends PersonalTaxId {
      * @return true if the String has an invalid length
      */
     private boolean hasInvalidLength(String taxId) {
-        if (taxId.length() != expectedLength) {
+        if (taxId == null || taxId.length() != expectedLength) {
             message = "Invalid length";
             return true;
         }

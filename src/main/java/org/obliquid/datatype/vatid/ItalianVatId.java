@@ -22,7 +22,7 @@ public class ItalianVatId extends VatId {
      */
     @Override
     public boolean isValid(String vatIdString) {
-        if (vatIdString.length() < 4) {
+        if (vatIdString == null || vatIdString.length() < 4) {
             return false;
         }
         String start = vatIdString.substring(0, 3);
