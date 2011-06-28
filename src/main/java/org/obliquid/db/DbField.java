@@ -11,11 +11,14 @@ public class DbField {
 
     private String name, type;
     boolean isPrimary;
+
+    /** Set to true for text types, false for numeric and binary types */
     private ImmutableMap<String, Boolean> isThisTypeText = new ImmutableMap.Builder<String, Boolean>()
             .put("smallint", false).put("varchar", true).put("timestamp", false).put("tinyint", false)
             .put("datetime", false).put("text", true).put("year", false).put("decimal", false)
             .put("enum", false).put("set", false).put("mediumint", false).put("char", true).put("int", false)
-            .put("blob", false).build();
+            .put("blob", false).put("date", false).put("mediumblob", false).put("double", false)
+            .put("longblob", false).build();
 
     /**
      * Builds an Immutable Field
