@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -391,7 +390,7 @@ public class StringHelper {
 
     /**
      * Join keys elements of the HashMap with a glue String and quote each one of them with a quote
-     * string.
+     * string. The values are ignored.
      * 
      * @param glue
      *            the connecting string, for instance a comma
@@ -402,11 +401,11 @@ public class StringHelper {
      * @return a String containing a String representation of all the array elements in the same
      *         order, with the glue String between each element.
      */
-    public static String implodeAndQuote(final String glue, final HashMap<String, String> pieces,
+    public static String implodeAndQuote(final String glue, final Map<String, Object> pieces,
             final String quote) {
         StringBuilder sb = new StringBuilder();
         String sep = "";
-        Iterator<Entry<String, String>> it = pieces.entrySet().iterator();
+        Iterator<Entry<String, Object>> it = pieces.entrySet().iterator();
         while (it.hasNext()) {
             sb.append(sep).append(quote).append((it.next()).getKey()).append(quote);
             sep = glue;
