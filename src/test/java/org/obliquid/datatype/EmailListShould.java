@@ -15,4 +15,10 @@ public class EmailListShould {
         assertFalse(list.isValid("stivlo@example.com, errata"));
     }
 
+    @Test
+    public void testWithConstructorParameter() {
+        EmailList list = new EmailList("stivlo@example.com");
+        assertEquals("stivlo@example.com", list.getRawString());
+    }
+
 }

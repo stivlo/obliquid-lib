@@ -17,7 +17,8 @@ public abstract class PersonalTaxId extends DataType {
      * @param countryCode
      *            two letter country ISO abbreviation
      * @return a newly created CompanyTaxId
-     * @throw IllegalArgumentException if we don't have a class for the specified countryCode
+     * @throws IllegalArgumentException
+     *             if we don't have a class for the specified countryCode
      */
     public static PersonalTaxId createInstance(String countryCode) {
         if (countryCode.equals("IT")) {

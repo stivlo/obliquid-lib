@@ -131,7 +131,7 @@ public class SnapshotManager {
      * </pre>
      * 
      * @param instance
-     * @return
+     * @return a String representation of the instance
      */
     public String toString(Instance instance) {
         String ipAddressString = instance.getPublicIpAddress();

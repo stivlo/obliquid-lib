@@ -17,6 +17,9 @@ public class BooleanType extends DataType {
      */
     @Override
     public boolean isValid(String booleanYN) {
+        if (booleanYN == null) {
+            return false;
+        }
         return (booleanYN.equals("Y") || booleanYN.equals("N"));
     }
 
@@ -27,6 +30,9 @@ public class BooleanType extends DataType {
      *            should be either Y or N uppercase
      */
     public boolean isValid(Character booleanYN) {
+        if (booleanYN == null) {
+            return false;
+        }
         return isValid(booleanYN.toString());
     }
 

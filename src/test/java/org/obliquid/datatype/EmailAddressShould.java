@@ -17,4 +17,10 @@ public class EmailAddressShould {
         assertEquals(emailString, email.getFormattedString());
     }
 
+    @Test
+    public void notValidForNull() {
+        EmailAddress email = new EmailAddress();
+        assertFalse(null, email.isValid(null));
+    }
+
 }

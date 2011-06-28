@@ -97,4 +97,18 @@ public class BooleanTypeShould {
         assertFalse(myType.getAsBoolean());
     }
 
+    @Test
+    public void isValidForNullStringIsFalse() {
+        BooleanType myType = new BooleanType();
+        String nullString = null;
+        assertFalse(myType.isValid(nullString));
+    }
+
+    @Test
+    public void isValidForNullCharacterIsFalse() {
+        BooleanType myType = new BooleanType();
+        Character nullCharacter = null;
+        assertFalse(myType.isValid(nullCharacter));
+    }
+
 }

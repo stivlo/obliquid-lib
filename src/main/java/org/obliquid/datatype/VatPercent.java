@@ -21,6 +21,9 @@ public class VatPercent extends DataType {
      */
     @Override
     public boolean isValid(String data) {
+        if (data == null) {
+            return false;
+        }
         try {
             BigDecimal percentage = new BigDecimal(data);
             if (BdHelper.compare(percentage, 100) >= 0 || BdHelper.compare(percentage, 0) < 0) {

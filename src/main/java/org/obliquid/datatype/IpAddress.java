@@ -15,6 +15,9 @@ public class IpAddress extends DataType {
 
     @Override
     public boolean isValid(String ipAddressString) {
+        if (ipAddressString == null) {
+            return false;
+        }
         try {
             InetAddress.getByName(ipAddressString);
         } catch (UnknownHostException e) {

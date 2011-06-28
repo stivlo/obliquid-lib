@@ -18,7 +18,7 @@ public interface PostMan {
     /**
      * Get the From: email
      * 
-     * @return
+     * @return from email address
      */
     String getFrom();
 
@@ -32,7 +32,7 @@ public interface PostMan {
     /**
      * Get the To: email, can be a comma separated list of email addresses
      * 
-     * @return
+     * @return to email address
      */
     String getTo();
 
@@ -60,7 +60,7 @@ public interface PostMan {
     /**
      * Get the message body
      * 
-     * @param message
+     * @return message body
      */
     String getBody();
 

@@ -152,7 +152,7 @@ public interface PersistenceInterface {
      * 
      * @param name
      *            the attribute as boolean
-     * @return
+     * @return true if the attribute contains 'Y' ignoring case, false otherwise
      * @throws NoSuchElementException
      */
     boolean getAttributeAsBoolean(final String name) throws NoSuchElementException;

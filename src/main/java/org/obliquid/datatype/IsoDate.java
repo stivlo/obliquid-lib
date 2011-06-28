@@ -55,7 +55,7 @@ public class IsoDate extends DataType {
     /**
      * Compute the number of days from the date inside the object to the date specified as parameter
      * 
-     * @param date2String
+     * @param dateString
      *            an iso date in the format yyyy-MM-dd
      * @return number of days between the dates
      */

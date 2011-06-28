@@ -48,4 +48,21 @@ public class VatPercentShould {
         assertEquals(0, VatPercent.computeVatPercent("ES", "IT"));
     }
 
+    @Test
+    public void beNotValidForNull() {
+        assertFalse(percent.isValid(null));
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void throwIllegalStateExceptionForGetFormattedStringOnNewObject() {
+        VatPercent vatP = new VatPercent();
+        vatP.getFormattedString();
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void throwIllegalStateExceptionForGetRawStringOnNewObject() {
+        VatPercent vatP = new VatPercent();
+        vatP.getRawString();
+    }
+
 }

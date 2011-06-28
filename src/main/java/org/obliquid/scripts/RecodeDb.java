@@ -39,12 +39,13 @@ public class RecodeDb extends HasDb {
             DbField aField = fieldIterator.next();
             if (aField.isText()) {
                 List<String> priKeys = PriKeyLister.getPriKeysWithAutoDb(table);
-                recodeField(table, priKeys, aField.getName());
+                System.out.println("Recoding table " + table + " field " + aField.getName());
+                recodeField(table, aField.getName(), priKeys);
             }
         }
     }
 
-    private void recodeField(String table, List<String> priKeys, String fieldName) throws SQLException {
+    private void recodeField(String table, String fieldName, List<String> priKeys) throws SQLException {
         System.out.println(table + " " + priKeys + " " + fieldName);
         List<String> fields = new ArrayList<String>();
         fields.add(fieldName);

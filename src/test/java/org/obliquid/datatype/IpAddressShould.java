@@ -33,4 +33,9 @@ public class IpAddressShould {
         Assert.assertTrue(ipAddress.isValid(correctIp));
     }
 
+    @Test
+    public void beNotValidForNull() {
+        Assert.assertFalse(ipAddress.isValid(null));
+    }
+
 }

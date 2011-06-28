@@ -29,4 +29,17 @@ public class IsoDateShould {
         assertEquals(366, isoDate.daysInTheYear());
     }
 
+    @Test
+    public void beNotValidForNull() {
+        IsoDate isoDate = new IsoDate();
+        assertFalse(isoDate.isValid(null));
+    }
+
+    @Test
+    public void computeDaysUntil() {
+        IsoDate isoDate = new IsoDate();
+        isoDate.set("2010-11-01");
+        assertEquals(5, isoDate.daysUntil("2010-11-06"));
+    }
+
 }
