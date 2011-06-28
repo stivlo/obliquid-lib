@@ -7,13 +7,27 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.obliquid.db.DbField;
 import org.obliquid.db.FieldIteratorBuilder;
 import org.obliquid.db.HasDb;
 import org.obliquid.db.PriKeyLister;
 import org.obliquid.db.TableIteratorBuilder;
 
+/**
+ * This script will go through each and every text data in the DB and applies the recodeString()
+ * function to it. In this implementation it will reverse every String in the db, so by running it
+ * again is possible to have the data reversed back exactly as it was. Subclasses will override the
+ * implementation of recodeString() to do something useful, such as StringHelper.recodePhp(). By
+ * defaults it runs in dry run which you want to try first to be sure that all MySQL types needed
+ * are supported.
+ * 
+ * @author stivlo
+ */
 public class RecodeDb extends HasDb {
+
+    /** On the cautios side, we don't do any modifications unless specifically required */
+    boolean dryRun = true;
 
     /**
      * Recode the current db
@@ -25,6 +39,16 @@ public class RecodeDb extends HasDb {
         while (tableIterator.hasNext()) {
             recodeTable(tableIterator.next());
         }
+    }
+
+    /**
+     * Set a dry or production run. dryRun is default
+     * 
+     * @param dryRun
+     *            set it to false to update the db
+     */
+    public void setDryRun(boolean dryRun) {
+        this.dryRun = dryRun;
     }
 
     /**
@@ -57,7 +81,9 @@ public class RecodeDb extends HasDb {
             Map<String, Object> fieldAndValue = recodeFieldAndStoreInMap(fieldName, row.get(0));
             row.remove(0); //remove the field that was used already to leave only the priKey values
             Map<String, Object> priKeyAndValue = storePrimaryKeyInMap(priKeys, row);
-            db.update(table, fieldAndValue, priKeyAndValue);
+            if (!dryRun) {
+                db.update(table, fieldAndValue, priKeyAndValue);
+            }
         }
     }
 
@@ -88,10 +114,21 @@ public class RecodeDb extends HasDb {
      *            the value
      * @return a Map of field => content, with content recoded
      */
-    private Map<String, Object> recodeFieldAndStoreInMap(String fieldName, Object content) {
+    private Map<String, Object> recodeFieldAndStoreInMap(final String fieldName, final Object content) {
         Map<String, Object> text = new HashMap<String, Object>();
-        text.put(fieldName, "*" + (String) content);
+        String fixedContent = recodeString((String) content);
+        text.put(fieldName, fixedContent);
         return text;
+    }
+
+    /**
+     * This is the method to be over-ridden by a child class to implement the required recoding
+     * 
+     * @param input
+     * @return
+     */
+    protected String recodeString(String input) {
+        return StringUtils.reverse(input);
     }
 
     public static void main(String[] arg) throws SQLException {

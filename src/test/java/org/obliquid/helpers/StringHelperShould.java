@@ -166,7 +166,7 @@ public class StringHelperShould {
 
     @Test
     public void extractFieldNameTest() {
-        HashMap<String, String> ingredients = new HashMap<String, String>();
+        HashMap<String, Object> ingredients = new HashMap<String, Object>();
         ingredients.put("spaghetti", "100g");
         ingredients.put("sauce", "150g");
         String result = StringHelper.implodeAndQuote(",", ingredients, "'");
