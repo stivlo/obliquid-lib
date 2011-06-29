@@ -11,4 +11,6 @@ bin/
 #
 # Don't commit my laptop configuration
 Stivlox.java
-
+#
+# Don't commit log4j log
+log4j.log

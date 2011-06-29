@@ -5,6 +5,9 @@ import java.net.UnknownHostException;
 import java.util.Locale;
 import java.util.MissingResourceException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * Application configuration, allows to keep different configurations forr different servers in the
  * same codebase, so I can publish over and over to without worrying about messing the
@@ -22,6 +25,10 @@ public abstract class AppConfig {
     private static String configPackage, configClass;
 
     private static volatile AppConfig singleton = null;
+
+    private static final Log logger = LogFactory.getLog(AppConfig.class);
+
+    private static int logLevel = WARNING;
 
     protected AppConfig() {
         //no initialization
@@ -48,7 +55,18 @@ public abstract class AppConfig {
     }
 
     /** one of DISABLED, ERROR, WARNING, INFO */
-    public abstract int getLogLevel();
+    public static int getLogLevel() {
+        return logLevel;
+    }
+
+    /**
+     * one of DISABLED, ERROR, WARNING, INFO. potentially should be synchronized, but since we're
+     * only setting a value
+     * 
+     */
+    public static void setLogLevel(int logLevel) {
+        AppConfig.logLevel = logLevel;
+    }
 
     /**
      * Get a the only instance of the class, it's thread safe.
@@ -135,17 +153,20 @@ public abstract class AppConfig {
      *            the log level (ERROR/WARNING/INFO/DISABLED)
      */
     public void log(String msg, int level) {
-        if (level > this.getLogLevel()) {
+        if (level > AppConfig.getLogLevel()) { //DISABLED is 0 other levels going up
             return;
         }
         if (level == ERROR) {
-            System.out.print("ERROR:   ");
+            //System.out.print("ERROR:   ");
+            logger.error(msg);
         } else if (level == WARNING) {
-            System.out.print("WARNING: ");
+            //System.out.print("WARNING: ");
+            logger.warn(msg);
         } else if (level == INFO) {
-            System.out.print("INFO:    ");
+            //System.out.print("INFO:    ");
+            logger.info(msg);
         }
-        System.out.println(msg);
+        //System.out.println(msg);
     }
 
     /**

@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Test;
+import org.obliquid.config.AppConfig;
 
 import com.google.common.collect.ImmutableList;
 
@@ -14,6 +15,7 @@ public class TableIteratorBuilderShould {
 
     @Test
     public void returnSixteenTablesForDb2() throws SQLException {
+        AppConfig.setLogLevel(AppConfig.INFO);
         TableIteratorBuilder builder = new TableIteratorBuilder();
         builder.getDb();
         Iterator<String> tableIterator = builder.tableIterator();
