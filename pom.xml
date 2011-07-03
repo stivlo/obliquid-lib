@@ -16,6 +16,13 @@
         to be comprehensive, but they contain what I need, YAGNI style.
     </description>
     
+    <licenses>
+        <license>
+            <name>GNU Library or Lesser General Public License (LGPL)</name>
+            <url>http://www.gnu.org/licenses/lgpl.html</url>
+        </license>
+    </licenses>
+    
     <issueManagement>
         <system>github</system>
         <url>https://github.com/stivlo/obliquid-lib/issues</url>
@@ -30,30 +37,49 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     
+    <distributionManagement>
+        <!-- Publish versioned releases here -->
+        <repository>
+            <id>obliquid</id>
+            <name>Obliquid releases</name>
+            <url>http://nexus.obliquid.com/nexus/content/repositories/releases</url>
+        </repository>
+        
+        <!-- Publish snapshots here -->
+        <snapshotRepository>
+            <id>obliquid</id>
+            <name>Obliquid snapshots</name>
+            <url>http://nexus.obliquid.com/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+    
     <repositories>
-        
-        <!-- For Jakarta ORO -->
         <repository>
-            <id>mvnsearch</id>
-            <name>Maven Search</name>
-            <url>http://www.mvnsearch.org/maven2/</url>
+            <id>obliquid</id>
+            <name>Obliquid Public Repository</name>
+            <url>http://nexus.obliquid.com/nexus/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
-        
-        <!-- For Spy Memcached -->
-        <repository>
-            <id>spy</id>
-            <name>Spy Repository</name>
-            <url>http://files.couchbase.com/maven2/</url>
-        </repository>
-        
-        <!-- For iText -->
-        <repository>
-            <id>itextpdf.com</id>
-            <name>Maven Repository for iText</name>
-            <url>http://maven.itextpdf.com/</url>
-        </repository>
-        
     </repositories>
+    
+    <pluginRepositories>
+        <pluginRepository>
+            <id>obliquid</id>
+            <name>obliquid</name>
+            <url>http://nexus.obliquid.com/nexus/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
     
     <dependencies>
         
@@ -101,8 +127,8 @@
         </dependency>
         
         <dependency>
-            <groupId>apache-oro</groupId>
-            <artifactId>jakarta-oro</artifactId>
+            <groupId>oro</groupId>
+            <artifactId>oro</artifactId>
             <version>2.0.8</version>
             <scope>compile</scope>
         </dependency>
@@ -155,11 +181,11 @@
             <version>5.1.16</version>
             <scope>test</scope>
         </dependency>
-
+        
         <dependency>
-             <groupId>log4j</groupId>
-             <artifactId>log4j</artifactId>
-             <version>1.2.16</version>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.16</version>
         </dependency>
         
     </dependencies>
@@ -205,30 +231,28 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>2.8</version>
             </plugin>
-
+            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
                 <version>2.4</version>
             </plugin>
-
-            <plugin>
-                 <groupId>org.codehaus.mojo</groupId>
-                 <artifactId>cobertura-maven-plugin</artifactId>
-                 <version>2.5.1</version>
-            </plugin>
-
-            <!--
+            
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
-                <artifactId>jxr-maven-plugin</artifactId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.5.1</version>
             </plugin>
-            -->
+            
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>2.3.3-SNAPSHOT</version>
+            </plugin>
             
         </plugins>
         
     </reporting>
-    
     
 </project>
 
