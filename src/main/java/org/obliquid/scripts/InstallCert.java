@@ -139,10 +139,15 @@ public class InstallCert {
         String alias = host + "-" + (k + 1);
         ks.setCertificateEntry(alias, cert);
 
-        OutputStream out = new FileOutputStream("jssecacerts");
-        ks.store(out, passphrase);
-        out.close();
-
+        OutputStream out = null;
+        try {
+            out = new FileOutputStream("jssecacerts");
+            ks.store(out, passphrase);
+        } finally {
+            if (out != null) {
+                out.close();
+            }
+        }
         System.out.println();
         System.out.println(cert);
         System.out.println();
@@ -186,6 +191,7 @@ public class InstallCert {
             this.chain = chain;
             tm.checkServerTrusted(chain, authType);
         }
+
     }
 
 }
