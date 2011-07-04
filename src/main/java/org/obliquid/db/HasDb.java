@@ -83,10 +83,13 @@ public class HasDb {
         return conf;
     }
 
-    public void releaseConnection() throws SQLException {
-        MetaDb curDb = getDb();
-        if (curDb != null) {
-            curDb.releaseConnection();
+    /**
+     * Release the connection, and shields the exception, since we're not interested in handling
+     * exceptions on connection closing statements.
+     */
+    public void releaseConnection() {
+        if (db != null) {
+            db.releaseConnection();
         }
     }
 

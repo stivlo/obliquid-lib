@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.obliquid.config.AppConfig;
 import org.obliquid.helpers.ArrayHelper;
 import org.obliquid.helpers.SqlHelper;
 import org.obliquid.helpers.StringHelper;
@@ -112,7 +113,7 @@ public class MetaDb {
         try {
             connectionManager.releaseConnection();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            AppConfig.getInstance().log(ex.getMessage(), AppConfig.ERROR);
         }
     }
 
@@ -822,7 +823,7 @@ public class MetaDb {
 
     /**
      * Build a SELECT query as SELECT <fields> <query>. <fields> is a comma separated list of fields
-     * built from the ArrayList.
+     * built from the String Array.
      * 
      * @param fields
      * @param query
@@ -837,7 +838,7 @@ public class MetaDb {
 
     /**
      * Build a SELECT query as SELECT <fields> <query>. <fields> is a comma separated list of fields
-     * built from the ArrayList.
+     * built from the String Array.
      * 
      * @param fields
      * @param query
@@ -859,7 +860,7 @@ public class MetaDb {
 
     /**
      * Build a SELECT query as SELECT <fields> <query>. <fields> is a comma separated list of fields
-     * built from the ArrayList. It supports AS to rename fields/give names to expressions.
+     * built from the String Array. It supports AS to rename fields/give names to expressions.
      * 
      * @param fields
      *            the fields of the SELECT statement
@@ -883,7 +884,7 @@ public class MetaDb {
 
     /**
      * Build a SELECT query as SELECT <fields> <query>. <fields> is a comma separated list of fields
-     * built from the ArrayList. It supports AS to rename fields/give names to expressions.
+     * built from the String Array. It supports AS to rename fields/give names to expressions.
      * 
      * @param fields
      *            the fields of the SELECT statement
@@ -910,7 +911,7 @@ public class MetaDb {
 
     /**
      * Build a SELECT query as SELECT <fields> <query>. <fields> is a comma separated list of fields
-     * built from the ArrayList. It supports AS to rename fields/give names to expressions.
+     * built from the String Array. It supports AS to rename fields/give names to expressions.
      * 
      * @param fields
      *            the fields of the SELECT statement
@@ -925,6 +926,24 @@ public class MetaDb {
         ArrayList<Object> arList = new ArrayList<Object>();
         arList.add(param);
         return selectRowHashMap(fields, query, arList);
+    }
+
+    /**
+     * Build a SELECT query as SELECT <fields> <query>. <fields> is a comma separated list of fields
+     * built from the List. It supports AS to rename fields/give names to expressions.
+     * 
+     * @param fields
+     *            the fields of the SELECT statement
+     * @param query
+     *            the rest of the query starting from FROM (included)
+     * @param param
+     *            an int IN parameters to be set in the query
+     * @return an HashMap with the results, or null
+     * @throws SQLException
+     */
+    public Map<String, Object> selectRowHashMap(List<String> fields, String query, int param)
+            throws SQLException {
+        return selectRowHashMap(fields.toArray(new String[0]), query, param);
     }
 
     /**
@@ -1034,6 +1053,19 @@ public class MetaDb {
         String sql = "SELECT " + StringHelper.implode(", ", fields) + " " + query;
         List<List<Object>> matrix = selectAll(sql, param);
         return matrix;
+    }
+
+    /**
+     * Build a SELECT query as SELECT <fields> <query>. <fields> is a comma separated list of fields
+     * built from the ArrayList. It supports AS to rename fields/give names to expressions.
+     * 
+     * @param fields
+     * @param query
+     * @return an ArrayList of HashMap(s) with the results, or null
+     * @throws SQLException
+     */
+    public List<Map<String, Object>> selectAllHashMap(List<String> fields, String query) throws SQLException {
+        return selectAllHashMap(fields.toArray(new String[0]), query);
     }
 
     /**
