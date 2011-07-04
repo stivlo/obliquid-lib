@@ -39,7 +39,7 @@ public class MetaDb {
      * Create a new instance of Db
      * 
      */
-    protected MetaDb() {
+    public MetaDb() {
         connectionManager = new ConnectionManager();
     }
 
