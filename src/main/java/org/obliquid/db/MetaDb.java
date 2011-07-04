@@ -23,7 +23,7 @@ import org.obliquid.helpers.StringHelper;
  */
 public class MetaDb {
 
-    /** Holds the connection */
+    /** Holds the connection - one MetaDb Object one ConnectionManager Object, one Connection Object */
     private final ConnectionManager connectionManager;
 
     /** Db Connection */

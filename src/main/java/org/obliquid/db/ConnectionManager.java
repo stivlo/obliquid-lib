@@ -11,7 +11,7 @@ import javax.sql.DataSource;
 import org.obliquid.config.AppConfig;
 
 /**
- * Hold a Connection, don't use this class directly, it's used by MetaDB, it's not a public class.
+ * Hold one Connection, don't use this class directly, it's used by MetaDB, it's not a public class.
  * 
  * @author stivlo
  * 
@@ -151,6 +151,9 @@ class ConnectionManager {
      * @throws SQLException
      */
     public Connection getConnection() throws SQLException {
+        if (conn != null && !conn.isClosed()) {
+            return conn;
+        }
         if (usePool) {
             return getPoolableConnection();
         }
