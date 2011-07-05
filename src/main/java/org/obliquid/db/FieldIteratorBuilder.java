@@ -21,7 +21,9 @@ import java.util.List;
  * 
  * @author stivlo
  */
-public class FieldIteratorBuilder extends HasDb {
+public class FieldIteratorBuilder {
+
+    private MetaDb db;
 
     public FieldIteratorBuilder() {
         super();
@@ -30,6 +32,27 @@ public class FieldIteratorBuilder extends HasDb {
     public FieldIteratorBuilder(MetaDb db) {
         super();
         this.db = db;
+    }
+
+    /**
+     * Release a connection. If it's a standalone Connection, the connection is closed, otherwise is
+     * returned to the pool.
+     */
+    public void releaseConnection() {
+        if (db != null) {
+            db.releaseConnection();
+        }
+    }
+
+    /**
+     * Injects db connection class
+     * 
+     * @param db
+     * @throws SQLException
+     */
+    public void setDb(MetaDb db) throws SQLException {
+        this.db = db;
+        db.getConnection();
     }
 
     /**
@@ -60,7 +83,8 @@ public class FieldIteratorBuilder extends HasDb {
      */
     public static Iterator<DbField> fieldIteratorWithAutoDb(String table) throws SQLException {
         FieldIteratorBuilder builder = new FieldIteratorBuilder();
-        builder.getDb();
+        builder.db = new MetaDb();
+        builder.db.getConnection();
         Iterator<DbField> fieldIterator = builder.fieldIterator(table);
         builder.releaseConnection();
         return fieldIterator;

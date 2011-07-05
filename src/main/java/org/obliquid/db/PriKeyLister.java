@@ -7,7 +7,9 @@ import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 
-public class PriKeyLister extends HasDb {
+public class PriKeyLister {
+
+    private MetaDb db;
 
     public PriKeyLister() {
         super();
@@ -15,6 +17,16 @@ public class PriKeyLister extends HasDb {
 
     public PriKeyLister(MetaDb db) {
         super();
+    }
+
+    /**
+     * Release a connection. If it's a standalone Connection, the connection is closed, otherwise is
+     * returned to the pool.
+     */
+    public void releaseConnection() {
+        if (db != null) {
+            db.releaseConnection();
+        }
     }
 
     /**
@@ -47,10 +59,22 @@ public class PriKeyLister extends HasDb {
      */
     public static List<String> getPriKeysWithAutoDb(String table) throws SQLException {
         PriKeyLister lister = new PriKeyLister();
-        lister.getDb();
+        lister.db = new MetaDb();
+        lister.db.getConnection();
         List<String> priKeys = lister.getPriKeys(table);
         lister.releaseConnection();
         return priKeys;
+    }
+
+    /**
+     * Injects Db Connection
+     * 
+     * @param metaDb
+     * @throws SQLException
+     */
+    public void setDb(MetaDb db) throws SQLException {
+        this.db = db;
+        db.getConnection();
     }
 
 }

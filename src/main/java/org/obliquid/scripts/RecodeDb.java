@@ -10,7 +10,7 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.obliquid.db.DbField;
 import org.obliquid.db.FieldIteratorBuilder;
-import org.obliquid.db.HasDb;
+import org.obliquid.db.MetaDb;
 import org.obliquid.db.PriKeyLister;
 import org.obliquid.db.TableIteratorBuilder;
 
@@ -24,10 +24,22 @@ import org.obliquid.db.TableIteratorBuilder;
  * 
  * @author stivlo
  */
-public class RecodeDb extends HasDb {
+public class RecodeDb {
+
+    private MetaDb db;
 
     /** On the cautios side, we don't do any modifications unless specifically required */
     boolean dryRun = true;
+
+    /**
+     * Release a connection. If it's a standalone Connection, the connection is closed, otherwise is
+     * returned to the pool.
+     */
+    public void releaseConnection() {
+        if (db != null) {
+            db.releaseConnection();
+        }
+    }
 
     /**
      * Recode the current db
@@ -52,7 +64,7 @@ public class RecodeDb extends HasDb {
     }
 
     /**
-     * Reocode all the text fields of a table
+     * Recode all the text fields of a table
      * 
      * @param table
      * @throws SQLException
@@ -134,7 +146,8 @@ public class RecodeDb extends HasDb {
     public static void main(String[] arg) throws SQLException {
         RecodeDb instance = new RecodeDb();
         try {
-            instance.getDb();
+            instance.db = new MetaDb();
+            instance.db.getConnection();
             instance.recodeDb();
         } finally {
             instance.releaseConnection();

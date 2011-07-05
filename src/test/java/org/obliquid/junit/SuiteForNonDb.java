@@ -33,9 +33,9 @@ import org.junit.runners.Suite.SuiteClasses;
         EmailAddressShould.class, EmailListShould.class, IpAddressShould.class, IsoDateShould.class,
         VatPercentShould.class, Ec2TagShould.class, WgetShould.class, CountryCodeShould.class,
         ItalianPostCodeShould.class, ItalianCompanyTaxIdShould.class })
-public class SuiteForAllTest {
+public class SuiteForNonDb {
 
-    public SuiteForAllTest() {
+    public SuiteForNonDb() {
         //run all JUnit Tests    
     }
 
