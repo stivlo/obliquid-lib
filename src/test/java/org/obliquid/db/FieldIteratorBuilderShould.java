@@ -12,7 +12,7 @@ public class FieldIteratorBuilderShould {
     @Test
     public void returnThirteenFieldsForTableFilm() throws SQLException {
         FieldIteratorBuilder builder = new FieldIteratorBuilder();
-        builder.setDb(new MetaDb());
+        builder.setDb(new MetaDbImpl());
         Iterator<DbField> fieldIterator = builder.fieldIterator("film");
         builder.releaseConnection();
         int count = 0;
@@ -28,7 +28,7 @@ public class FieldIteratorBuilderShould {
         String[] fieldName = new String[] { "language_id", "name", "last_update" };
         String[] fieldType = new String[] { "tinyint", "char", "timestamp" };
         FieldIteratorBuilder builder = new FieldIteratorBuilder();
-        builder.setDb(new MetaDb());
+        builder.setDb(new MetaDbImpl());
         Iterator<DbField> fieldIterator = builder.fieldIterator("language");
         builder.releaseConnection();
         int count = 0;

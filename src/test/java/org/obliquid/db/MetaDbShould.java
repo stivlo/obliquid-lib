@@ -8,15 +8,15 @@ import java.sql.SQLException;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.obliquid.db.MetaDb;
+import org.obliquid.db.MetaDbImpl;
 
 public class MetaDbShould {
 
-    private static MetaDb db;
+    private static MetaDbImpl db;
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
-        db = new MetaDb();
+        db = new MetaDbImpl();
         db.getConnection();
     }
 

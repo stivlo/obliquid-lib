@@ -1,47 +1,13 @@
 package org.obliquid.db;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.obliquid.config.AppConfig;
-import org.obliquid.helpers.ArrayHelper;
-import org.obliquid.helpers.SqlHelper;
-import org.obliquid.helpers.StringHelper;
-
-/**
- * Manage interactions with database.
- * 
- * @author stivlo
- */
-public class MetaDb {
-
-    /** Holds the connection - one MetaDb Object one ConnectionManager Object, one Connection Object */
-    private final ConnectionManager connectionManager;
-
-    /** Db Connection */
-    private Connection conn = null;
-
-    /** Statement for raw Query */
-    private Statement statement;
-
-    /** ResultSet for raw Query */
-    private ResultSet res;
-
-    /**
-     * Create a new instance of Db
-     * 
-     */
-    public MetaDb() {
-        connectionManager = new ConnectionManager();
-    }
+public interface MetaDb {
 
     /**
      * Execute a raw query. Remember to close the created ResultSet and Statement by calling the
@@ -50,21 +16,7 @@ public class MetaDb {
      * @return a ResultSet object
      * @throws SQLException
      */
-    public ResultSet executeRawQuery(String sql) throws SQLException {
-        statement = null;
-        res = null;
-        statement = conn.createStatement();
-        res = statement.executeQuery(sql);
-        return res;
-    }
-
-    /**
-     * Close ResulSet and Statement after a raw query. Exception are trapped.
-     */
-    public void closeResultSetAndStatement() {
-        SqlHelper.close(statement);
-        SqlHelper.close(res);
-    }
+    public abstract ResultSet executeRawQuery(String sql) throws SQLException;
 
     /**
      * Get a Connection, either from the pool or standalone, or from the internal instance variable
@@ -81,10 +33,7 @@ public class MetaDb {
      *         methods from this class should be enough for common Db operations.
      * @throws SQLException
      */
-    public Connection getConnection(boolean usePool) throws SQLException {
-        conn = connectionManager.getConnection(usePool);
-        return conn;
-    }
+    public abstract Connection getConnection(boolean usePool) throws SQLException;
 
     /**
      * Get a Connection either from the pool or standalone, as specified in JFig parameter
@@ -96,10 +45,7 @@ public class MetaDb {
      *         methods from this class should be enough for common Db operations.
      * @throws SQLException
      */
-    public Connection getConnection() throws SQLException {
-        conn = connectionManager.getConnection();
-        return conn;
-    }
+    public abstract Connection getConnection() throws SQLException;
 
     /**
      * Release a connection. If it's a standalone Connection, the connection is closed, otherwise is
@@ -108,14 +54,7 @@ public class MetaDb {
      * them even when an Exception is raised. It doesn't throw SQLException any more, since if it
      * would, there would be nothing we could do about it, so throwing it is pointless.
      */
-    public void releaseConnection() {
-        conn = null;
-        try {
-            connectionManager.releaseConnection();
-        } catch (SQLException ex) {
-            AppConfig.getInstance().log(ex.getMessage(), AppConfig.ERROR);
-        }
-    }
+    public abstract void releaseConnection();
 
     /**
      * Executes a SQL statement.
@@ -126,17 +65,7 @@ public class MetaDb {
      * @return rowCount number of rows affected
      * @throws SQLException
      */
-    public int execute(String sql) throws SQLException {
-        Statement stmt = null;
-        int rowCount = 0;
-        try {
-            stmt = conn.createStatement();
-            rowCount = stmt.executeUpdate(sql);
-        } finally {
-            SqlHelper.close(stmt);
-        }
-        return rowCount;
-    }
+    public abstract int execute(String sql) throws SQLException;
 
     /**
      * Executes a SQL statement.
@@ -149,17 +78,7 @@ public class MetaDb {
      * @return rowCount number of rows affected
      * @throws SQLException
      */
-    public int execute(String sql, List<?> param) throws SQLException {
-        PreparedStatement statement = null;
-        int rowCount = 0;
-        try {
-            statement = SqlHelper.buildPreparedStatement(conn, sql, param);
-            rowCount = statement.executeUpdate();
-        } finally {
-            SqlHelper.close(statement);
-        }
-        return rowCount;
-    }
+    public abstract int execute(String sql, List<?> param) throws SQLException;
 
     /**
      * Executes a SQL statement.
@@ -172,10 +91,7 @@ public class MetaDb {
      * @return rowCount number of rows affected
      * @throws SQLException
      */
-    public int execute(String sql, String[] param) throws SQLException {
-        ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
-        return execute(sql, arList);
-    }
+    public abstract int execute(String sql, String[] param) throws SQLException;
 
     /**
      * Executes a SQL statement.
@@ -188,11 +104,7 @@ public class MetaDb {
      * @return rowCount number of rows affected
      * @throws SQLException
      */
-    public <T> int execute(String sql, T param) throws SQLException {
-        ArrayList<Object> arList = new ArrayList<Object>();
-        arList.add(param);
-        return execute(sql, arList);
-    }
+    public abstract <T> int execute(String sql, T param) throws SQLException;
 
     /**
      * Execute a SQL statement.
@@ -206,10 +118,7 @@ public class MetaDb {
      * @return rowCount number of rows affected
      * @throws SQLException
      */
-    public int execute(String sql, Map<String, Object> param) throws SQLException {
-        ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
-        return execute(sql, arList);
-    }
+    public abstract int execute(String sql, Map<String, Object> param) throws SQLException;
 
     /**
      * Execute a SQL statement.
@@ -221,10 +130,7 @@ public class MetaDb {
      * @return rowCount number of rows affected
      * @throws SQLException
      */
-    public int execute(String sql, int[] param) throws SQLException {
-        ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
-        return execute(sql, arList);
-    }
+    public abstract int execute(String sql, int[] param) throws SQLException;
 
     /**
      * Executes the specified SELECT query, fetch the value from the first column of the first row
@@ -235,24 +141,7 @@ public class MetaDb {
      * @return the fetched value in a Java Object.
      * @throws SQLException
      */
-    public Object selectField(String sql) throws SQLException {
-        Statement stmt = null;
-        ResultSet res = null;
-        Object field = null;
-        try {
-            stmt = conn.createStatement();
-            res = stmt.executeQuery(sql);
-            if (res.next()) {
-                field = res.getObject(1);
-            } else {
-                throw new SQLException("*** Empty ResultSet ***");
-            }
-        } finally {
-            SqlHelper.close(stmt);
-            SqlHelper.close(res);
-        }
-        return field;
-    }
+    public abstract Object selectField(String sql) throws SQLException;
 
     /**
      * Executes the specified prepared query, fetch the value from the first column of the first row
@@ -265,24 +154,7 @@ public class MetaDb {
      * @return the fetched value in a Java Object or null
      * @throws SQLException
      */
-    public Object selectField(String sql, List<?> param) throws SQLException {
-        PreparedStatement stmt = null;
-        ResultSet res = null;
-        Object field = null;
-        try {
-            stmt = SqlHelper.buildPreparedStatement(conn, sql, param);
-            res = stmt.executeQuery();
-            if (res.next()) {
-                field = res.getObject(1);
-            } else {
-                return null;
-            }
-        } finally {
-            SqlHelper.close(stmt);
-            SqlHelper.close(res);
-        }
-        return field;
-    }
+    public abstract Object selectField(String sql, List<?> param) throws SQLException;
 
     /**
      * Executes the specified prepared query, fetch the value from the first column of the first row
@@ -295,10 +167,7 @@ public class MetaDb {
      * @return the fetched value in an Object
      * @throws SQLException
      */
-    public Object selectField(String sql, String[] param) throws SQLException {
-        ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
-        return selectField(sql, arList);
-    }
+    public abstract Object selectField(String sql, String[] param) throws SQLException;
 
     /**
      * Executes the specified prepared query, fetch the value from the first column of the first row
@@ -311,10 +180,7 @@ public class MetaDb {
      * @return the fetched value in an Object
      * @throws SQLException
      */
-    public Object selectField(String sql, int[] param) throws SQLException {
-        ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
-        return selectField(sql, arList);
-    }
+    public abstract Object selectField(String sql, int[] param) throws SQLException;
 
     /**
      * Executes the specified prepared query, fetch the value from the first column of the first row
@@ -327,11 +193,7 @@ public class MetaDb {
      * @return the fetched value in an Object
      * @throws SQLException
      */
-    public <T> Object selectField(String sql, T param) throws SQLException {
-        ArrayList<Object> arList = new ArrayList<Object>();
-        arList.add(param);
-        return selectField(sql, arList);
-    }
+    public abstract <T> Object selectField(String sql, T param) throws SQLException;
 
     /**
      * Executes the specified query, fetch the first row of the result set row, frees the result set
@@ -343,23 +205,7 @@ public class MetaDb {
      *         were fetched.
      * @throws SQLException
      */
-    public List<Object> selectRow(String sql) throws SQLException {
-        Statement statement = null;
-        ResultSet res = null;
-        List<Object> row = null;
-        try {
-            statement = conn.createStatement();
-            res = statement.executeQuery(sql);
-            int numCols = SqlHelper.getColumnCount(res);
-            if (res.next()) {
-                row = SqlHelper.extractRowFromResultSet(res, numCols);
-            }
-        } finally {
-            SqlHelper.close(statement);
-            SqlHelper.close(res);
-        }
-        return row;
-    }
+    public abstract List<Object> selectRow(String sql) throws SQLException;
 
     /**
      * Executes the specified query, fetch the first row of the result set row, frees the result set
@@ -373,23 +219,7 @@ public class MetaDb {
      *         were fetched.
      * @throws SQLException
      */
-    public List<Object> selectRow(String sql, List<?> param) throws SQLException {
-        PreparedStatement stmt = null;
-        ResultSet res = null;
-        List<Object> row = null;
-        try {
-            stmt = SqlHelper.buildPreparedStatement(conn, sql, param);
-            res = stmt.executeQuery();
-            int numCols = SqlHelper.getColumnCount(res);
-            if (res.next()) {
-                row = SqlHelper.extractRowFromResultSet(res, numCols);
-            }
-        } finally {
-            SqlHelper.close(res);
-            SqlHelper.close(stmt);
-        }
-        return row;
-    }
+    public abstract List<Object> selectRow(String sql, List<?> param) throws SQLException;
 
     /**
      * Executes the specified query, fetch the first row of the result set row, frees the result set
@@ -403,11 +233,7 @@ public class MetaDb {
      *         were fetched.
      * @throws SQLException
      */
-    public List<Object> selectRow(String sql, int param) throws SQLException {
-        List<Object> arList = new ArrayList<Object>();
-        arList.add(param);
-        return selectRow(sql, arList);
-    }
+    public abstract List<Object> selectRow(String sql, int param) throws SQLException;
 
     /**
      * Executes the specified query, fetch the first row of the result set row, frees the result set
@@ -421,11 +247,7 @@ public class MetaDb {
      *         were fetched.
      * @throws SQLException
      */
-    public List<Object> selectRow(String sql, String param) throws SQLException {
-        ArrayList<Object> arList = new ArrayList<Object>();
-        arList.add(param);
-        return selectRow(sql, arList);
-    }
+    public abstract List<Object> selectRow(String sql, String param) throws SQLException;
 
     /**
      * Executes the specified query, fetch the first row of the result set row, frees the result set
@@ -439,10 +261,7 @@ public class MetaDb {
      *         were fetched.
      * @throws SQLException
      */
-    public List<Object> selectRow(String sql, String[] param) throws SQLException {
-        ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
-        return selectRow(sql, arList);
-    }
+    public abstract List<Object> selectRow(String sql, String[] param) throws SQLException;
 
     /**
      * Executes the specified query, fetch the first row of the result set row, frees the result set
@@ -455,10 +274,7 @@ public class MetaDb {
      * @return a row of results
      * @throws SQLException
      */
-    public List<Object> selectRow(String sql, int[] param) throws SQLException {
-        ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
-        return selectRow(sql, arList);
-    }
+    public abstract List<Object> selectRow(String sql, int[] param) throws SQLException;
 
     /**
      * Executes the specified query, fetch the first column of all the rows of the result set, frees
@@ -470,23 +286,7 @@ public class MetaDb {
      * @return a column of results
      * @throws SQLException
      */
-    public List<Object> selectColumn(String sql) throws SQLException {
-        Statement stmt = null;
-        ResultSet res = null;
-        ArrayList<Object> column = new ArrayList<Object>();
-        try {
-            stmt = conn.createStatement();
-            res = stmt.executeQuery(sql);
-            while (res.next()) {
-                res.getRow();
-                column.add(res.getObject(1));
-            }
-        } finally {
-            SqlHelper.close(res);
-            SqlHelper.close(stmt);
-        }
-        return column;
-    }
+    public abstract List<Object> selectColumn(String sql) throws SQLException;
 
     /**
      * Executes the specified query, fetch the first column of all the rows of the result set, frees
@@ -497,14 +297,7 @@ public class MetaDb {
      * @return a column of results
      * @throws SQLException
      */
-    public String[] selectColumnToStringArray(String sql) throws SQLException {
-        List<Object> res = selectColumn(sql);
-        String[] ar = new String[res.size()];
-        for (int i = 0; i < res.size(); i++) {
-            ar[i] = (String) res.get(i);
-        }
-        return ar;
-    }
+    public abstract String[] selectColumnToStringArray(String sql) throws SQLException;
 
     /**
      * Executes the specified query, fetch the first column of all the rows of the result set, frees
@@ -515,14 +308,7 @@ public class MetaDb {
      * @return a column of results
      * @throws SQLException
      */
-    public int[] selectColumnToIntArray(String sql) throws SQLException {
-        List<Object> res = selectColumn(sql);
-        int[] ar = new int[res.size()];
-        for (int i = 0; i < res.size(); i++) {
-            ar[i] = (Integer) res.get(i);
-        }
-        return ar;
-    }
+    public abstract int[] selectColumnToIntArray(String sql) throws SQLException;
 
     /**
      * Executes the specified query, fetch the first column of all the rows of the result set, frees
@@ -535,10 +321,7 @@ public class MetaDb {
      * @return a column of results
      * @throws SQLException
      */
-    public List<Object> selectColumn(String sql, int[] param) throws SQLException {
-        ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
-        return selectColumn(sql, arList);
-    }
+    public abstract List<Object> selectColumn(String sql, int[] param) throws SQLException;
 
     /**
      * Executes the specified query, fetch the first column of all the rows of the result set, frees
@@ -550,11 +333,7 @@ public class MetaDb {
      * @return a List of Object
      * @throws SQLException
      */
-    public List<Object> selectColumn(String sql, int param) throws SQLException {
-        ArrayList<Object> arList = new ArrayList<Object>();
-        arList.add(param);
-        return selectColumn(sql, arList);
-    }
+    public abstract List<Object> selectColumn(String sql, int param) throws SQLException;
 
     /**
      * Executes the specified query, fetch the first column of all the rows of the result set, frees
@@ -567,23 +346,7 @@ public class MetaDb {
      * @return a column of results
      * @throws SQLException
      */
-    public List<Object> selectColumn(String sql, List<?> param) throws SQLException {
-        PreparedStatement stmt = null;
-        ResultSet res = null;
-        ArrayList<Object> row = new ArrayList<Object>();
-        try {
-            stmt = SqlHelper.buildPreparedStatement(conn, sql, param);
-            res = stmt.executeQuery();
-            while (res.next()) {
-                res.getRow();
-                row.add(res.getObject(1));
-            }
-        } finally {
-            SqlHelper.close(res);
-            SqlHelper.close(stmt);
-        }
-        return row;
-    }
+    public abstract List<Object> selectColumn(String sql, List<?> param) throws SQLException;
 
     /**
      * Executes the specified SELECT query, fetch all rows of the result set row into a given two
@@ -596,20 +359,7 @@ public class MetaDb {
      *         null.
      * @throws SQLException
      */
-    public List<List<Object>> selectAll(String sql) throws SQLException {
-        Statement statement = null;
-        ResultSet res = null;
-        List<List<Object>> matrix = null;
-        try {
-            statement = conn.createStatement();
-            res = statement.executeQuery(sql);
-            matrix = SqlHelper.extractMatrixFromResultSet(res);
-        } finally {
-            SqlHelper.close(res);
-            SqlHelper.close(statement);
-        }
-        return matrix;
-    }
+    public abstract List<List<Object>> selectAll(String sql) throws SQLException;
 
     /**
      * Executes the specified query, fetch all rows of the result set row into a given two dimension
@@ -623,20 +373,7 @@ public class MetaDb {
      *         the Objects contained in the row. If no rows were fetched, queryAll() returns null.
      * @throws SQLException
      */
-    public List<List<Object>> selectAll(String sql, List<?> param) throws SQLException {
-        PreparedStatement stmt = null;
-        ResultSet res = null;
-        List<List<Object>> matrix = null;
-        try {
-            stmt = SqlHelper.buildPreparedStatement(conn, sql, param);
-            res = stmt.executeQuery();
-            matrix = SqlHelper.extractMatrixFromResultSet(res);
-        } finally {
-            SqlHelper.close(res);
-            SqlHelper.close(stmt);
-        }
-        return matrix;
-    }
+    public abstract List<List<Object>> selectAll(String sql, List<?> param) throws SQLException;
 
     /**
      * Executes the specified SELECT query, fetch all rows of the result set row into a given two
@@ -651,10 +388,7 @@ public class MetaDb {
      *         null.
      * @throws SQLException
      */
-    public List<List<Object>> selectAll(String sql, String[] param) throws SQLException {
-        ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
-        return selectAll(sql, arList);
-    }
+    public abstract List<List<Object>> selectAll(String sql, String[] param) throws SQLException;
 
     /**
      * selectAll for int[]
@@ -666,10 +400,7 @@ public class MetaDb {
      * @return all rows of results as a matrix
      * @throws SQLException
      */
-    public List<List<Object>> selectAll(String sql, int[] param) throws SQLException {
-        ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
-        return selectAll(sql, arList);
-    }
+    public abstract List<List<Object>> selectAll(String sql, int[] param) throws SQLException;
 
     /**
      * queryAll for Object
@@ -681,52 +412,7 @@ public class MetaDb {
      * @return all rows of results as a matrix
      * @throws SQLException
      */
-    public <T> List<List<Object>> selectAll(String sql, T param) throws SQLException {
-        ArrayList<Object> arList = new ArrayList<Object>();
-        arList.add(param);
-        return selectAll(sql, arList);
-    }
-
-    /**
-     * Creates a new Id to use in an INSERT statement. The returned Id won't be returned again, even
-     * if it's not used.
-     * 
-     * @param tablename
-     *            the name of the table for which we are requesting a new Id.
-     * @return an Object of type Long containing an Id that we can use for an insert statement.
-     * @throws SQLException
-     */
-    public int newIdUsingSequence(String tablename) throws SQLException {
-        String sql = "INSERT INTO _sequence_" + tablename + " VALUES (null)";
-        execute(sql);
-        Long id = (Long) selectField("SELECT LAST_INSERT_ID()");
-        sql = "DELETE FROM _sequence_" + tablename + " WHERE sequence<" + id;
-        execute(sql);
-        return id.intValue();
-    }
-
-    /**
-     * Returns a new id using sequences.
-     * 
-     * @param sequenceName
-     *            a mnemonic for the sequence. it's a good idea to use the same name as a table
-     *            name, but it's not required.
-     * @return an integer that is the next val to be used
-     * @throws SQLException
-     */
-    public int newIdUsingSequenceNoCommit(String sequenceName) throws SQLException {
-        String sql = "SELECT nextval FROM sequence WHERE sequencename=? FOR UPDATE";
-        List<Object> res = selectRow(sql, sequenceName);
-        if (res == null) {
-            sql = "INSERT INTO equence(nextval, sequencename) VALUES (2, ?)";
-            execute(sql, sequenceName);
-            return 1;
-        }
-        Integer nextval = (Integer) res.get(0);
-        sql = "UPDATE sequence SET nextval=nextval+1 WHERE sequencename=?";
-        execute(sql, sequenceName);
-        return nextval;
-    }
+    public abstract <T> List<List<Object>> selectAll(String sql, T param) throws SQLException;
 
     /**
      * Build a SQL Insert Statement for table tablename using the contents of the HashMap as data,
@@ -739,19 +425,7 @@ public class MetaDb {
      * @return the query executed
      * @throws SQLException
      */
-    public String insertDelayed(String tablename, Map<String, Object> fields) throws SQLException {
-        StringBuilder sb = new StringBuilder(128);
-        sb.append("INSERT DELAYED INTO ");
-        sb.append(tablename);
-        sb.append("(");
-        sb.append(StringHelper.implode(", ", fields));
-        sb.append(") VALUES (");
-        sb.append(StringHelper.repeatWithSeparator("?", fields.size(), ","));
-        sb.append(")");
-        String sql = sb.toString();
-        execute(sql, fields);
-        return sql;
-    }
+    public abstract String insertDelayed(String tablename, Map<String, Object> fields) throws SQLException;
 
     /**
      * Build a SQL Insert Statement for table tablename using the contents of the HashMap as data.
@@ -763,20 +437,7 @@ public class MetaDb {
      * @return the query executed
      * @throws SQLException
      */
-    public String insert(String tablename, Map<String, Object> fields) throws SQLException {
-        String sql;
-        StringBuilder sqlB = new StringBuilder(128);
-        sqlB.append("INSERT INTO ");
-        sqlB.append(tablename);
-        sqlB.append("(");
-        sqlB.append(StringHelper.implode(", ", fields));
-        sqlB.append(") VALUES (");
-        sqlB.append(StringHelper.repeatWithSeparator("?", fields.size(), ","));
-        sqlB.append(")");
-        sql = sqlB.toString();
-        execute(sql, fields);
-        return sql;
-    }
+    public abstract String insert(String tablename, Map<String, Object> fields) throws SQLException;
 
     /**
      * Build a simple SQL Update Statement for table tablename using the contents of the HashMap as
@@ -791,13 +452,8 @@ public class MetaDb {
      * @return rowCount number of rows affected
      * @throws SQLException
      */
-    public int update(String tablename, Map<String, Object> fields, Map<String, Object> priKeys)
-            throws SQLException {
-        String sql = "UPDATE " + tablename + " SET " + StringHelper.implodeAndQuote("=?, ", fields, "`")
-                + "=? WHERE " + StringHelper.implode("=? AND ", priKeys) + "=?";
-        ArrayList<Object> arList = ArrayHelper.buildArrayList(fields, priKeys);
-        return execute(sql, arList);
-    }
+    public abstract int update(String tablename, Map<String, Object> fields, Map<String, Object> priKeys)
+            throws SQLException;
 
     /**
      * Build a simple SQL Update Statement for table tablename using the contents of the HashMap as
@@ -814,12 +470,8 @@ public class MetaDb {
      * @return rowCount number of rows affected
      * @throws SQLException
      */
-    public <T> int update(String tablename, Map<String, Object> fields, String priName, T priValue)
-            throws SQLException {
-        Map<String, Object> priKeys = new HashMap<String, Object>();
-        priKeys.put(priName, priValue);
-        return update(tablename, fields, priKeys);
-    }
+    public abstract <T> int update(String tablename, Map<String, Object> fields, String priName, T priValue)
+            throws SQLException;
 
     /**
      * Build a SELECT query as SELECT <fields> <query>. <fields> is a comma separated list of fields
@@ -830,11 +482,7 @@ public class MetaDb {
      * @return an ArrayList with the results, or null
      * @throws SQLException
      */
-    public List<Object> selectRow(String[] fields, String query) throws SQLException {
-        String sql = "SELECT " + StringHelper.implode(", ", fields) + " " + query;
-        List<Object> row = selectRow(sql);
-        return row;
-    }
+    public abstract List<Object> selectRow(String[] fields, String query) throws SQLException;
 
     /**
      * Build a SELECT query as SELECT <fields> <query>. <fields> is a comma separated list of fields
@@ -846,17 +494,9 @@ public class MetaDb {
      * @return an ArrayList with the results, or null
      * @throws SQLException
      */
-    public List<Object> selectRow(String[] fields, String query, List<?> param) throws SQLException {
-        String sql = "SELECT " + StringHelper.implode(", ", fields) + " " + query;
-        List<Object> row = selectRow(sql, param);
-        return row;
-    }
+    public abstract List<Object> selectRow(String[] fields, String query, List<?> param) throws SQLException;
 
-    public List<Object> selectRow(String[] fields, String query, int param) throws SQLException {
-        String sql = "SELECT " + StringHelper.implode(", ", fields) + " " + query;
-        List<Object> row = selectRow(sql, param);
-        return row;
-    }
+    public abstract List<Object> selectRow(String[] fields, String query, int param) throws SQLException;
 
     /**
      * Build a SELECT query as SELECT <fields> <query>. <fields> is a comma separated list of fields
@@ -869,18 +509,7 @@ public class MetaDb {
      * @return an HashMap with the results, or null
      * @throws SQLException
      */
-    public Map<String, Object> selectRowHashMap(String[] fields, String query) throws SQLException {
-        Map<String, Object> res = new HashMap<String, Object>();
-        String sql = "SELECT " + StringHelper.implode(", ", fields) + " " + query;
-        List<Object> row = selectRow(sql);
-        if (row == null) {
-            return null;
-        }
-        for (int i = 0; i < fields.length; i++) {
-            res.put(SqlHelper.extractFieldName(fields[i]), row.get(i));
-        }
-        return res;
-    }
+    public abstract Map<String, Object> selectRowHashMap(String[] fields, String query) throws SQLException;
 
     /**
      * Build a SELECT query as SELECT <fields> <query>. <fields> is a comma separated list of fields
@@ -895,19 +524,8 @@ public class MetaDb {
      * @return an HashMap with the results, or null
      * @throws SQLException
      */
-    public Map<String, Object> selectRowHashMap(String[] fields, String query, List<?> param)
-            throws SQLException {
-        Map<String, Object> res = new HashMap<String, Object>();
-        String sql = "SELECT " + StringHelper.implode(", ", fields) + " " + query;
-        List<Object> row = selectRow(sql, param);
-        if (row == null) {
-            return null;
-        }
-        for (int i = 0; i < fields.length; i++) {
-            res.put(SqlHelper.extractFieldName(fields[i]), row.get(i));
-        }
-        return res;
-    }
+    public abstract Map<String, Object> selectRowHashMap(String[] fields, String query, List<?> param)
+            throws SQLException;
 
     /**
      * Build a SELECT query as SELECT <fields> <query>. <fields> is a comma separated list of fields
@@ -922,11 +540,8 @@ public class MetaDb {
      * @return an HashMap with the results, or null
      * @throws SQLException
      */
-    public Map<String, Object> selectRowHashMap(String[] fields, String query, int param) throws SQLException {
-        ArrayList<Object> arList = new ArrayList<Object>();
-        arList.add(param);
-        return selectRowHashMap(fields, query, arList);
-    }
+    public abstract Map<String, Object> selectRowHashMap(String[] fields, String query, int param)
+            throws SQLException;
 
     /**
      * Build a SELECT query as SELECT <fields> <query>. <fields> is a comma separated list of fields
@@ -941,10 +556,8 @@ public class MetaDb {
      * @return an HashMap with the results, or null
      * @throws SQLException
      */
-    public Map<String, Object> selectRowHashMap(List<String> fields, String query, int param)
-            throws SQLException {
-        return selectRowHashMap(fields.toArray(new String[0]), query, param);
-    }
+    public abstract Map<String, Object> selectRowHashMap(List<String> fields, String query, int param)
+            throws SQLException;
 
     /**
      * Build a SELECT query as SELECT <fields> <query>. <fields> is a comma separated list of fields
@@ -959,12 +572,8 @@ public class MetaDb {
      * @return an HashMap with the results, or null
      * @throws SQLException
      */
-    public Map<String, Object> selectRowHashMap(String[] fields, String query, String param)
-            throws SQLException {
-        ArrayList<Object> arList = new ArrayList<Object>();
-        arList.add(param);
-        return selectRowHashMap(fields, query, arList);
-    }
+    public abstract Map<String, Object> selectRowHashMap(String[] fields, String query, String param)
+            throws SQLException;
 
     /**
      * Build a SELECT query as SELECT <fields> <query>. <fields> is a comma separated list of fields
@@ -979,11 +588,8 @@ public class MetaDb {
      * @return an HashMap with the results, or null
      * @throws SQLException
      */
-    public Map<String, Object> selectRowHashMap(String[] fields, String query, int[] param)
-            throws SQLException {
-        ArrayList<Object> paramList = ArrayHelper.buildArrayList(param);
-        return selectRowHashMap(fields, query, paramList);
-    }
+    public abstract Map<String, Object> selectRowHashMap(String[] fields, String query, int[] param)
+            throws SQLException;
 
     /**
      * Build a SELECT query as SELECT <fields> <query>. <fields> is a comma separated list of fields
@@ -996,11 +602,7 @@ public class MetaDb {
      * @return an ArrayList with the results, or null
      * @throws SQLException
      */
-    public List<List<Object>> selectAll(String[] fields, String query) throws SQLException {
-        String sql = "SELECT " + StringHelper.implodeAndQuote(", ", fields, "`") + " " + query;
-        List<List<Object>> matrix = selectAll(sql);
-        return matrix;
-    }
+    public abstract List<List<Object>> selectAll(String[] fields, String query) throws SQLException;
 
     /**
      * Build a SELECT query as SELECT <fields> <query>. <fields> is a comma separated list of fields
@@ -1013,9 +615,7 @@ public class MetaDb {
      * @return an ArrayList with the results, or null
      * @throws SQLException
      */
-    public List<List<Object>> selectAll(List<String> fields, String sql) throws SQLException {
-        return selectAll(fields.toArray(new String[0]), sql);
-    }
+    public abstract List<List<Object>> selectAll(List<String> fields, String sql) throws SQLException;
 
     /**
      * Build a SELECT query as SELECT <fields> <query>. <fields> is a comma separated list of fields
@@ -1030,11 +630,8 @@ public class MetaDb {
      * @return an ArrayList with the results, or null
      * @throws SQLException
      */
-    public List<List<Object>> selectAll(String[] fields, String query, List<?> param) throws SQLException {
-        String sql = "SELECT " + StringHelper.implode(", ", fields) + " " + query;
-        List<List<Object>> matrix = selectAll(sql, param);
-        return matrix;
-    }
+    public abstract List<List<Object>> selectAll(String[] fields, String query, List<?> param)
+            throws SQLException;
 
     /**
      * Build a SELECT query as SELECT <fields> <query>. <fields> is a comma separated list of fields
@@ -1049,11 +646,8 @@ public class MetaDb {
      * @return an ArrayList with the results, or null
      * @throws SQLException
      */
-    public List<List<Object>> selectAll(String[] fields, String query, int param) throws SQLException {
-        String sql = "SELECT " + StringHelper.implode(", ", fields) + " " + query;
-        List<List<Object>> matrix = selectAll(sql, param);
-        return matrix;
-    }
+    public abstract List<List<Object>> selectAll(String[] fields, String query, int param)
+            throws SQLException;
 
     /**
      * Build a SELECT query as SELECT <fields> <query>. <fields> is a comma separated list of fields
@@ -1064,9 +658,8 @@ public class MetaDb {
      * @return an ArrayList of HashMap(s) with the results, or null
      * @throws SQLException
      */
-    public List<Map<String, Object>> selectAllHashMap(List<String> fields, String query) throws SQLException {
-        return selectAllHashMap(fields.toArray(new String[0]), query);
-    }
+    public abstract List<Map<String, Object>> selectAllHashMap(List<String> fields, String query)
+            throws SQLException;
 
     /**
      * Build a SELECT query as SELECT <fields> <query>. <fields> is a comma separated list of fields
@@ -1077,26 +670,8 @@ public class MetaDb {
      * @return an ArrayList of HashMap(s) with the results, or null
      * @throws SQLException
      */
-    public List<Map<String, Object>> selectAllHashMap(String[] fields, String query) throws SQLException {
-        Map<String, Object> rowAsHashMap;
-        List<Object> rowAsList;
-        ArrayList<Map<String, Object>> res;
-        String sql = "SELECT " + StringHelper.implode(", ", fields) + " " + query;
-        List<List<Object>> matrix = selectAll(sql);
-        if (matrix == null) {
-            return null;
-        }
-        res = new ArrayList<Map<String, Object>>();
-        for (Iterator<List<Object>> it = matrix.iterator(); it.hasNext();) {
-            rowAsHashMap = new HashMap<String, Object>();
-            rowAsList = it.next();
-            for (int i = 0; i < fields.length; i++) {
-                rowAsHashMap.put(SqlHelper.extractFieldName(fields[i]), rowAsList.get(i));
-            }
-            res.add(rowAsHashMap);
-        }
-        return res;
-    }
+    public abstract List<Map<String, Object>> selectAllHashMap(String[] fields, String query)
+            throws SQLException;
 
     /**
      * Build a SELECT query as SELECT <fields> <query>. <fields> is a comma separated list of fields
@@ -1108,33 +683,11 @@ public class MetaDb {
      * @return an ArrayList of HashMap(s) with the results, or null
      * @throws SQLException
      */
-    public List<Map<String, Object>> selectAllHashMap(String[] fields, String query, ArrayList<?> param)
-            throws SQLException {
-        Map<String, Object> rowHM;
-        List<Object> rowAL;
-        ArrayList<Map<String, Object>> res;
-        String sql = "SELECT " + StringHelper.implode(", ", fields) + " " + query;
-        List<List<Object>> matrix = selectAll(sql, param);
-        if (matrix == null) {
-            return null;
-        }
-        res = new ArrayList<Map<String, Object>>();
-        for (Iterator<List<Object>> it = matrix.iterator(); it.hasNext();) {
-            rowHM = new HashMap<String, Object>();
-            rowAL = it.next();
-            for (int i = 0; i < fields.length; i++) {
-                rowHM.put(SqlHelper.extractFieldName(fields[i]), rowAL.get(i));
-            }
-            res.add(rowHM);
-        }
-        return res;
-    }
+    public abstract List<Map<String, Object>> selectAllHashMap(String[] fields, String query,
+            ArrayList<?> param) throws SQLException;
 
-    public List<Map<String, Object>> selectAllHashMap(String[] fields, String sql, int[] param)
-            throws SQLException {
-        ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
-        return selectAllHashMap(fields, sql, arList);
-    }
+    public abstract List<Map<String, Object>> selectAllHashMap(String[] fields, String sql, int[] param)
+            throws SQLException;
 
     /**
      * <pre>
@@ -1153,12 +706,8 @@ public class MetaDb {
      * }
      * @throws SQLException
      */
-    public <T> List<Map<String, Object>> selectAllHashMap(String[] fields, String sql, T param)
-            throws SQLException {
-        ArrayList<Object> arList = new ArrayList<Object>();
-        arList.add(param);
-        return selectAllHashMap(fields, sql, arList);
-    }
+    public abstract <T> List<Map<String, Object>> selectAllHashMap(String[] fields, String sql, T param)
+            throws SQLException;
 
     /**
      * Define whether database changes done on the database be automatically committed. This
@@ -1171,9 +720,7 @@ public class MetaDb {
      *            ended by committing any database changes that were pending.
      * @throws SQLException
      */
-    public void autoCommitTransactions(boolean autoCommit) throws SQLException {
-        conn.setAutoCommit(autoCommit);
-    }
+    public abstract void autoCommitTransactions(boolean autoCommit) throws SQLException;
 
     /**
      * Commit the database changes done during a transaction that is in progress. This method may
@@ -1182,9 +729,7 @@ public class MetaDb {
      * 
      * @throws SQLException
      */
-    public void commitTransaction() throws SQLException {
-        connectionManager.commitTransaction();
-    }
+    public abstract void commitTransaction() throws SQLException;
 
     /**
      * Cancel any database changes done during a transaction that is in progress. This function may
@@ -1193,9 +738,7 @@ public class MetaDb {
      * 
      * @throws SQLException
      */
-    public void rollbackTransaction() throws SQLException {
-        connectionManager.rollbackTransaction();
-    }
+    public abstract void rollbackTransaction() throws SQLException;
 
     /**
      * Execute the query an extract the blob field in row 1, column 1 (first row, first column)
@@ -1205,15 +748,6 @@ public class MetaDb {
      * @return the object as a byte[]
      * @throws SQLException
      */
-    public byte[] selectBlobField(String sql) throws SQLException {
-        ResultSet res = executeRawQuery(sql);
-        byte[] immagine = null;
-        if (!res.next()) {
-            throw new SQLException("No rows returned");
-        }
-        immagine = SqlHelper.fetchBlobFromCurrentRowInResulSet(res, 1);
-        closeResultSetAndStatement();
-        return immagine;
-    }
+    public abstract byte[] selectBlobField(String sql) throws SQLException;
 
 }

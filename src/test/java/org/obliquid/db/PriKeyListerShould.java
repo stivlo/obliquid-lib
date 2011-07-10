@@ -12,7 +12,7 @@ public class PriKeyListerShould {
     @Test
     public void listActorIdForActorTable() throws SQLException {
         PriKeyLister lister = new PriKeyLister();
-        lister.setDb(new MetaDb());
+        lister.setDb(new MetaDbImpl());
         List<String> priKeys = lister.getPriKeys("actor");
         assertEquals(1, priKeys.size());
         lister.releaseConnection();

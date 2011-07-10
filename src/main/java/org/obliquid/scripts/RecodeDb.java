@@ -11,6 +11,7 @@ import org.apache.commons.lang.StringUtils;
 import org.obliquid.db.DbField;
 import org.obliquid.db.FieldIteratorBuilder;
 import org.obliquid.db.MetaDb;
+import org.obliquid.db.MetaDbImpl;
 import org.obliquid.db.PriKeyLister;
 import org.obliquid.db.TableIteratorBuilder;
 
@@ -146,7 +147,7 @@ public class RecodeDb {
     public static void main(String[] arg) throws SQLException {
         RecodeDb instance = new RecodeDb();
         try {
-            instance.db = new MetaDb();
+            instance.db = new MetaDbImpl();
             instance.db.getConnection();
             instance.recodeDb();
         } finally {

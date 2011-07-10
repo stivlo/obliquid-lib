@@ -59,7 +59,7 @@ public class PriKeyLister {
      */
     public static List<String> getPriKeysWithAutoDb(String table) throws SQLException {
         PriKeyLister lister = new PriKeyLister();
-        lister.db = new MetaDb();
+        lister.db = new MetaDbImpl();
         lister.db.getConnection();
         List<String> priKeys = lister.getPriKeys(table);
         lister.releaseConnection();

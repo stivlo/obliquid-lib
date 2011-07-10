@@ -83,7 +83,7 @@ public class FieldIteratorBuilder {
      */
     public static Iterator<DbField> fieldIteratorWithAutoDb(String table) throws SQLException {
         FieldIteratorBuilder builder = new FieldIteratorBuilder();
-        builder.db = new MetaDb();
+        builder.db = new MetaDbImpl();
         builder.db.getConnection();
         Iterator<DbField> fieldIterator = builder.fieldIterator(table);
         builder.releaseConnection();

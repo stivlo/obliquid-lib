@@ -17,7 +17,7 @@ public class TableIteratorBuilderShould {
     public void returnSixteenTablesForDb2() throws SQLException {
         AppConfig.setLogLevel(AppConfig.INFO);
         TableIteratorBuilder builder = new TableIteratorBuilder();
-        builder.setDb(new MetaDb());
+        builder.setDb(new MetaDbImpl());
         Iterator<String> tableIterator = builder.tableIterator();
         builder.releaseConnection();
         int count = 0;
@@ -31,7 +31,7 @@ public class TableIteratorBuilderShould {
     @Test
     public void returnZeroTablesForDb1() throws SQLException {
         TableIteratorBuilder builder = new TableIteratorBuilder();
-        builder.setDb(new MetaDb());
+        builder.setDb(new MetaDbImpl());
         Iterator<String> tableIterator = builder.tableIterator("obliquid_db1");
         builder.releaseConnection();
         int count = 0;
@@ -46,7 +46,7 @@ public class TableIteratorBuilderShould {
     public void throwExceptionForOtherDbs() throws SQLException {
         TableIteratorBuilder builder = new TableIteratorBuilder();
         try {
-            builder.setDb(new MetaDb());
+            builder.setDb(new MetaDbImpl());
             builder.tableIterator("wrongdb");
         } finally {
             builder.releaseConnection(); //safe

@@ -81,7 +81,7 @@ public class TableIteratorBuilder {
      */
     public static Iterator<String> tableIteratorWithAutoDb() throws SQLException {
         TableIteratorBuilder builder = new TableIteratorBuilder();
-        builder.db = new MetaDb();
+        builder.db = new MetaDbImpl();
         builder.db.getConnection();
         Iterator<String> tableIterator = builder.tableIterator();
         builder.releaseConnection();
