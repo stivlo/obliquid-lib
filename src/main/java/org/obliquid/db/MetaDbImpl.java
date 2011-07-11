@@ -11,7 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.obliquid.config.AppConfig;
+import org.apache.log4j.Logger;
 import org.obliquid.helpers.ArrayHelper;
 import org.obliquid.helpers.SqlHelper;
 import org.obliquid.helpers.StringHelper;
@@ -35,6 +35,9 @@ public class MetaDbImpl implements MetaDb {
     /** ResultSet for raw Query */
     private ResultSet res;
 
+    /** Log4j instance */
+    private static final Logger log = Logger.getLogger(ConnectionManager.class);
+
     /**
      * Create a new instance of Db
      * 
@@ -43,7 +46,9 @@ public class MetaDbImpl implements MetaDb {
         connectionManager = new ConnectionManager();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#executeRawQuery(java.lang.String)
      */
     @Override
@@ -63,7 +68,9 @@ public class MetaDbImpl implements MetaDb {
         SqlHelper.close(res);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#getConnection(boolean)
      */
     @Override
@@ -72,7 +79,9 @@ public class MetaDbImpl implements MetaDb {
         return conn;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#getConnection()
      */
     @Override
@@ -81,7 +90,9 @@ public class MetaDbImpl implements MetaDb {
         return conn;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#releaseConnection()
      */
     @Override
@@ -90,11 +101,13 @@ public class MetaDbImpl implements MetaDb {
         try {
             connectionManager.releaseConnection();
         } catch (SQLException ex) {
-            AppConfig.getInstance().log(ex.getMessage(), AppConfig.ERROR);
+            log.error(ex.getMessage());
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#execute(java.lang.String)
      */
     @Override
@@ -110,7 +123,9 @@ public class MetaDbImpl implements MetaDb {
         return rowCount;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#execute(java.lang.String, java.util.List)
      */
     @Override
@@ -126,7 +141,9 @@ public class MetaDbImpl implements MetaDb {
         return rowCount;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#execute(java.lang.String, java.lang.String[])
      */
     @Override
@@ -135,7 +152,9 @@ public class MetaDbImpl implements MetaDb {
         return execute(sql, arList);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#execute(java.lang.String, T)
      */
     @Override
@@ -145,7 +164,9 @@ public class MetaDbImpl implements MetaDb {
         return execute(sql, arList);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#execute(java.lang.String, java.util.Map)
      */
     @Override
@@ -154,7 +175,9 @@ public class MetaDbImpl implements MetaDb {
         return execute(sql, arList);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#execute(java.lang.String, int[])
      */
     @Override
@@ -163,7 +186,9 @@ public class MetaDbImpl implements MetaDb {
         return execute(sql, arList);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectField(java.lang.String)
      */
     @Override
@@ -186,7 +211,9 @@ public class MetaDbImpl implements MetaDb {
         return field;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectField(java.lang.String, java.util.List)
      */
     @Override
@@ -209,7 +236,9 @@ public class MetaDbImpl implements MetaDb {
         return field;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectField(java.lang.String, java.lang.String[])
      */
     @Override
@@ -218,7 +247,9 @@ public class MetaDbImpl implements MetaDb {
         return selectField(sql, arList);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectField(java.lang.String, int[])
      */
     @Override
@@ -227,7 +258,9 @@ public class MetaDbImpl implements MetaDb {
         return selectField(sql, arList);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectField(java.lang.String, T)
      */
     @Override
@@ -237,7 +270,9 @@ public class MetaDbImpl implements MetaDb {
         return selectField(sql, arList);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectRow(java.lang.String)
      */
     @Override
@@ -259,7 +294,9 @@ public class MetaDbImpl implements MetaDb {
         return row;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectRow(java.lang.String, java.util.List)
      */
     @Override
@@ -281,7 +318,9 @@ public class MetaDbImpl implements MetaDb {
         return row;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectRow(java.lang.String, int)
      */
     @Override
@@ -291,7 +330,9 @@ public class MetaDbImpl implements MetaDb {
         return selectRow(sql, arList);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectRow(java.lang.String, java.lang.String)
      */
     @Override
@@ -301,7 +342,9 @@ public class MetaDbImpl implements MetaDb {
         return selectRow(sql, arList);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectRow(java.lang.String, java.lang.String[])
      */
     @Override
@@ -310,7 +353,9 @@ public class MetaDbImpl implements MetaDb {
         return selectRow(sql, arList);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectRow(java.lang.String, int[])
      */
     @Override
@@ -319,7 +364,9 @@ public class MetaDbImpl implements MetaDb {
         return selectRow(sql, arList);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectColumn(java.lang.String)
      */
     @Override
@@ -341,7 +388,9 @@ public class MetaDbImpl implements MetaDb {
         return column;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectColumnToStringArray(java.lang.String)
      */
     @Override
@@ -354,7 +403,9 @@ public class MetaDbImpl implements MetaDb {
         return ar;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectColumnToIntArray(java.lang.String)
      */
     @Override
@@ -367,7 +418,9 @@ public class MetaDbImpl implements MetaDb {
         return ar;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectColumn(java.lang.String, int[])
      */
     @Override
@@ -376,7 +429,9 @@ public class MetaDbImpl implements MetaDb {
         return selectColumn(sql, arList);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectColumn(java.lang.String, int)
      */
     @Override
@@ -386,7 +441,9 @@ public class MetaDbImpl implements MetaDb {
         return selectColumn(sql, arList);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectColumn(java.lang.String, java.util.List)
      */
     @Override
@@ -408,7 +465,9 @@ public class MetaDbImpl implements MetaDb {
         return row;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectAll(java.lang.String)
      */
     @Override
@@ -427,7 +486,9 @@ public class MetaDbImpl implements MetaDb {
         return matrix;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectAll(java.lang.String, java.util.List)
      */
     @Override
@@ -446,7 +507,9 @@ public class MetaDbImpl implements MetaDb {
         return matrix;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectAll(java.lang.String, java.lang.String[])
      */
     @Override
@@ -455,7 +518,9 @@ public class MetaDbImpl implements MetaDb {
         return selectAll(sql, arList);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectAll(java.lang.String, int[])
      */
     @Override
@@ -464,7 +529,9 @@ public class MetaDbImpl implements MetaDb {
         return selectAll(sql, arList);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectAll(java.lang.String, T)
      */
     @Override
@@ -515,7 +582,9 @@ public class MetaDbImpl implements MetaDb {
         return nextval;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#insertDelayed(java.lang.String, java.util.Map)
      */
     @Override
@@ -533,7 +602,9 @@ public class MetaDbImpl implements MetaDb {
         return sql;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#insert(java.lang.String, java.util.Map)
      */
     @Override
@@ -552,7 +623,9 @@ public class MetaDbImpl implements MetaDb {
         return sql;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#update(java.lang.String, java.util.Map, java.util.Map)
      */
     @Override
@@ -564,7 +637,9 @@ public class MetaDbImpl implements MetaDb {
         return execute(sql, arList);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#update(java.lang.String, java.util.Map, java.lang.String, T)
      */
     @Override
@@ -575,7 +650,9 @@ public class MetaDbImpl implements MetaDb {
         return update(tablename, fields, priKeys);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectRow(java.lang.String[], java.lang.String)
      */
     @Override
@@ -585,7 +662,9 @@ public class MetaDbImpl implements MetaDb {
         return row;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectRow(java.lang.String[], java.lang.String, java.util.List)
      */
     @Override
@@ -595,7 +674,9 @@ public class MetaDbImpl implements MetaDb {
         return row;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectRow(java.lang.String[], java.lang.String, int)
      */
     @Override
@@ -605,7 +686,9 @@ public class MetaDbImpl implements MetaDb {
         return row;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectRowHashMap(java.lang.String[], java.lang.String)
      */
     @Override
@@ -622,8 +705,11 @@ public class MetaDbImpl implements MetaDb {
         return res;
     }
 
-    /* (non-Javadoc)
-     * @see org.obliquid.db.MetaDb#selectRowHashMap(java.lang.String[], java.lang.String, java.util.List)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.obliquid.db.MetaDb#selectRowHashMap(java.lang.String[], java.lang.String,
+     * java.util.List)
      */
     @Override
     public Map<String, Object> selectRowHashMap(String[] fields, String query, List<?> param)
@@ -640,7 +726,9 @@ public class MetaDbImpl implements MetaDb {
         return res;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectRowHashMap(java.lang.String[], java.lang.String, int)
      */
     @Override
@@ -650,7 +738,9 @@ public class MetaDbImpl implements MetaDb {
         return selectRowHashMap(fields, query, arList);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectRowHashMap(java.util.List, java.lang.String, int)
      */
     @Override
@@ -659,8 +749,11 @@ public class MetaDbImpl implements MetaDb {
         return selectRowHashMap(fields.toArray(new String[0]), query, param);
     }
 
-    /* (non-Javadoc)
-     * @see org.obliquid.db.MetaDb#selectRowHashMap(java.lang.String[], java.lang.String, java.lang.String)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.obliquid.db.MetaDb#selectRowHashMap(java.lang.String[], java.lang.String,
+     * java.lang.String)
      */
     @Override
     public Map<String, Object> selectRowHashMap(String[] fields, String query, String param)
@@ -670,7 +763,9 @@ public class MetaDbImpl implements MetaDb {
         return selectRowHashMap(fields, query, arList);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectRowHashMap(java.lang.String[], java.lang.String, int[])
      */
     @Override
@@ -680,7 +775,9 @@ public class MetaDbImpl implements MetaDb {
         return selectRowHashMap(fields, query, paramList);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectAll(java.lang.String[], java.lang.String)
      */
     @Override
@@ -690,7 +787,9 @@ public class MetaDbImpl implements MetaDb {
         return matrix;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectAll(java.util.List, java.lang.String)
      */
     @Override
@@ -698,7 +797,9 @@ public class MetaDbImpl implements MetaDb {
         return selectAll(fields.toArray(new String[0]), sql);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectAll(java.lang.String[], java.lang.String, java.util.List)
      */
     @Override
@@ -708,7 +809,9 @@ public class MetaDbImpl implements MetaDb {
         return matrix;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectAll(java.lang.String[], java.lang.String, int)
      */
     @Override
@@ -718,7 +821,9 @@ public class MetaDbImpl implements MetaDb {
         return matrix;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectAllHashMap(java.util.List, java.lang.String)
      */
     @Override
@@ -726,7 +831,9 @@ public class MetaDbImpl implements MetaDb {
         return selectAllHashMap(fields.toArray(new String[0]), query);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectAllHashMap(java.lang.String[], java.lang.String)
      */
     @Override
@@ -751,8 +858,11 @@ public class MetaDbImpl implements MetaDb {
         return res;
     }
 
-    /* (non-Javadoc)
-     * @see org.obliquid.db.MetaDb#selectAllHashMap(java.lang.String[], java.lang.String, java.util.ArrayList)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.obliquid.db.MetaDb#selectAllHashMap(java.lang.String[], java.lang.String,
+     * java.util.ArrayList)
      */
     @Override
     public List<Map<String, Object>> selectAllHashMap(String[] fields, String query, ArrayList<?> param)
@@ -777,7 +887,9 @@ public class MetaDbImpl implements MetaDb {
         return res;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectAllHashMap(java.lang.String[], java.lang.String, int[])
      */
     @Override
@@ -787,7 +899,9 @@ public class MetaDbImpl implements MetaDb {
         return selectAllHashMap(fields, sql, arList);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectAllHashMap(java.lang.String[], java.lang.String, T)
      */
     @Override
@@ -798,7 +912,9 @@ public class MetaDbImpl implements MetaDb {
         return selectAllHashMap(fields, sql, arList);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#autoCommitTransactions(boolean)
      */
     @Override
@@ -806,7 +922,9 @@ public class MetaDbImpl implements MetaDb {
         conn.setAutoCommit(autoCommit);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#commitTransaction()
      */
     @Override
@@ -814,7 +932,9 @@ public class MetaDbImpl implements MetaDb {
         connectionManager.commitTransaction();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#rollbackTransaction()
      */
     @Override
@@ -822,7 +942,9 @@ public class MetaDbImpl implements MetaDb {
         connectionManager.rollbackTransaction();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.obliquid.db.MetaDb#selectBlobField(java.lang.String)
      */
     @Override

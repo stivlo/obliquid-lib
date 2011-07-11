@@ -8,6 +8,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import org.apache.log4j.Logger;
 import org.obliquid.config.AppConfig;
 
 /**
@@ -32,6 +33,9 @@ class ConnectionManager {
 
     /** A JNDI reference to DataSource */
     private static volatile DataSource ds = null;
+
+    /** Log4j instance */
+    private static final Logger log = Logger.getLogger(ConnectionManager.class);
 
     protected ConnectionManager() {
         conf = AppConfig.getInstance();
@@ -62,7 +66,7 @@ class ConnectionManager {
     protected String getDataSourceName() throws SQLException {
         if (dataSourceName == null || dataSourceName.length() == 0) {
             String msg = "Define Config parameter getDataSourceName()";
-            conf.log(msg, AppConfig.ERROR);
+            log.error(msg);
             throw new SQLException(msg);
         }
         return dataSourceName;
@@ -83,7 +87,7 @@ class ConnectionManager {
     protected String getDriver() throws SQLException {
         if (driver == null || driver.length() == 0) {
             String msg = "Define parameter getDriver()";
-            conf.log(msg, AppConfig.ERROR);
+            log.error(msg);
             throw new SQLException(msg);
         }
         return driver;
@@ -104,7 +108,7 @@ class ConnectionManager {
     public String getUrl() throws SQLException {
         if (url == null || url.length() == 0) {
             String msg = "Define parameter getUrl()";
-            conf.log(msg, AppConfig.ERROR);
+            log.error(msg);
             throw new SQLException(msg);
         }
         return url;
@@ -119,7 +123,7 @@ class ConnectionManager {
     protected String getUsername() throws SQLException {
         if (username == null || username.length() == 0) {
             String msg = "Define parameter getUsername()";
-            conf.log(msg, AppConfig.ERROR);
+            log.error(msg);
             throw new SQLException(msg);
         }
         return username;
@@ -134,7 +138,7 @@ class ConnectionManager {
     protected String getPassword() throws SQLException {
         if (password == null || password.length() == 0) {
             String msg = "Define parameter getPassword()";
-            conf.log(msg, AppConfig.ERROR);
+            log.error(msg);
             throw new SQLException(msg);
         }
         return password;
@@ -172,7 +176,7 @@ class ConnectionManager {
         synchronized (ConnectionManager.class) {
             nOpen++;
         }
-        conf.log("getStandaloneConnection() nOpen=" + nOpen, AppConfig.INFO);
+        log.info("getStandaloneConnection() nOpen=" + nOpen);
         // Thread.dumpStack();
         return conn;
     }
@@ -193,7 +197,7 @@ class ConnectionManager {
         synchronized (ConnectionManager.class) {
             nOpen++;
         }
-        conf.log("getPoolableConnection() nOpen=" + nOpen, AppConfig.INFO);
+        log.info("getPoolableConnection() nOpen=" + nOpen);
         return conn;
     }
 
@@ -213,7 +217,7 @@ class ConnectionManager {
             }
         }
         conn = null;
-        conf.log("releaseConnection() nOpen=" + nOpen, AppConfig.INFO);
+        log.info("releaseConnection() nOpen=" + nOpen);
     }
 
     /**
@@ -226,12 +230,12 @@ class ConnectionManager {
     @Override
     protected void finalize() {
         if (conn != null) {
-            conf.log("Db.finalize() - OPEN CONNECTION", AppConfig.ERROR);
+            log.error("Db.finalize() - OPEN CONNECTION");
         }
         try {
             releaseConnection();
         } catch (SQLException ex) {
-            conf.log(ex.toString(), AppConfig.ERROR);
+            log.error(ex.toString());
         }
     }
 
@@ -256,12 +260,12 @@ class ConnectionManager {
     }
 
     public void commitTransaction() throws SQLException {
-        conf.log(this + " " + conn + ".commitTransaction()", AppConfig.INFO);
+        log.info(this + " " + conn + ".commitTransaction()");
         conn.commit();
     }
 
     public void rollbackTransaction() throws SQLException {
-        conf.log(this + " " + conn + ".rollbackTransaction()", AppConfig.INFO);
+        log.info(this + " " + conn + ".rollbackTransaction()");
         conn.rollback();
     }
 
