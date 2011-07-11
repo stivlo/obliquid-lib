@@ -1,5 +1,6 @@
 package org.obliquid.scripts;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,6 +41,10 @@ public class RecodeDb {
         if (db != null) {
             db.releaseConnection();
         }
+    }
+
+    public Connection getConnection() throws SQLException {
+        return db.getConnection();
     }
 
     /**
