@@ -15,6 +15,7 @@ import org.obliquid.helpers.BdHelperShould;
 import org.obliquid.helpers.DateHelperShould;
 import org.obliquid.helpers.SqlHelperShould;
 import org.obliquid.helpers.StringHelperShould;
+import org.obliquid.util.MapCacheShould;
 import org.obliquid.util.StopWatchShould;
 import org.obliquid.util.WgetShould;
 
@@ -32,7 +33,7 @@ import org.junit.runners.Suite.SuiteClasses;
         DbNullShould.class, BdHelperShould.class, SqlHelperShould.class, BooleanTypeShould.class,
         EmailAddressShould.class, EmailListShould.class, IpAddressShould.class, IsoDateShould.class,
         VatPercentShould.class, Ec2TagShould.class, WgetShould.class, CountryCodeShould.class,
-        ItalianPostCodeShould.class, ItalianCompanyTaxIdShould.class })
+        ItalianPostCodeShould.class, ItalianCompanyTaxIdShould.class, MapCacheShould.class })
 public class SuiteForNonDb {
 
     public SuiteForNonDb() {

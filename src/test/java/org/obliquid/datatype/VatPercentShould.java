@@ -2,6 +2,8 @@ package org.obliquid.datatype;
 
 import static org.junit.Assert.*;
 
+import java.util.Locale;
+
 import org.junit.Test;
 
 public class VatPercentShould {
@@ -56,7 +58,7 @@ public class VatPercentShould {
     @Test(expected = IllegalStateException.class)
     public void throwIllegalStateExceptionForGetFormattedStringOnNewObject() {
         VatPercent vatP = new VatPercent();
-        vatP.getFormattedString();
+        vatP.getFormattedString(Locale.US);
     }
 
     @Test(expected = IllegalStateException.class)

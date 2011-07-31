@@ -16,14 +16,16 @@ public class MapCache implements OCache {
 
         @Override
         public Future<Boolean> set(String key, Object object) {
-                boolean result;
-                try {
-                        store.put(key, object);
-                        result = true;
-                } catch (NullPointerException ex) {
-                        result = false;
-                } catch (IllegalArgumentException ex) {
-                        result = false;
+                boolean result = false;
+                if (key != null) {
+                        try {
+                                store.put(key, object);
+                                result = true;
+                        } catch (NullPointerException ex) {
+                                // result is false
+                        } catch (IllegalArgumentException ex) {
+                                // result is false
+                        }
                 }
                 return new FakeFutureBoolean(result);
         }

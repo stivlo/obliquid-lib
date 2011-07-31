@@ -19,6 +19,6 @@ import org.obliquid.db.TableIteratorBuilderShould;
         FieldIteratorBuilderShould.class, MetaDbShould.class })
 public class SuiteForDb {
 
-    //magic happens with annotations I don't need a class body
+    //annotation driven
 
 }

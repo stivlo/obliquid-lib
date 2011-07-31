@@ -2,6 +2,8 @@ package org.obliquid.datatype;
 
 import static org.junit.Assert.*;
 
+import java.util.Locale;
+
 import org.junit.Test;
 
 public class EmailAddressShould {
@@ -14,7 +16,7 @@ public class EmailAddressShould {
         assertEquals(emailString, email.getRawString());
         assertEquals(emailString, email.toString());
         email = new EmailAddress(emailString);
-        assertEquals(emailString, email.getFormattedString());
+        assertEquals(emailString, email.getFormattedString(Locale.US));
     }
 
     @Test
