@@ -2,6 +2,7 @@
 # Don't commit eclipse files
 .classpath
 .project
+.settings/
 #
 # Don't commit any generated artifact
 target/
