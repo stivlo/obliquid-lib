@@ -10,8 +10,6 @@ import java.net.ConnectException;
  */
 public interface EntityInterface {
 
-    void setPersistenceHelper(final PersistenceInterface persistenceHelper);
-
     void save() throws ConnectException;
 
     void delete() throws ConnectException;
