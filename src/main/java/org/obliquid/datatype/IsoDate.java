@@ -2,6 +2,7 @@ package org.obliquid.datatype;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import org.joda.time.ReadableDateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -41,8 +42,8 @@ public class IsoDate extends DataType {
      * Format the date as a long date
      */
     @Override
-    public String getFormattedString() {
-        DateTimeFormatter formatter = DateTimeFormat.longDate();
+    public String getFormattedString(Locale locale) {
+        DateTimeFormatter formatter = DateTimeFormat.longDate().withLocale(locale);
         return formatter.print(getDateTime());
     }
 

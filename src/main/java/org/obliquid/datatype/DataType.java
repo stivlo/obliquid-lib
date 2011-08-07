@@ -1,6 +1,7 @@
 package org.obliquid.datatype;
 
 import java.io.Serializable;
+import java.util.Locale;
 
 /**
  * Abstract base class for scalar data types. set()/get() the data safely and check if isValid()
@@ -26,7 +27,7 @@ public abstract class DataType implements Serializable {
      * @throws IllegalStateException
      *             if the data is not in a valid state (null)
      */
-    public String getFormattedString() throws IllegalStateException {
+    public String getFormattedString(Locale locale) throws IllegalStateException {
         if (data == null) {
             throw new IllegalStateException();
         }

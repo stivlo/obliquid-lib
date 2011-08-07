@@ -1,6 +1,9 @@
 package org.obliquid.datatype;
 
 import static org.junit.Assert.*;
+
+import java.util.Locale;
+
 import org.junit.Test;
 
 public class IsoDateShould {
@@ -16,7 +19,7 @@ public class IsoDateShould {
     public void getFormattedStringTest() {
         IsoDate isoDate = new IsoDate();
         isoDate.set("2011-02-22");
-        assertEquals("February 22, 2011", isoDate.getFormattedString());
+        assertEquals("February 22, 2011", isoDate.getFormattedString(Locale.US));
         assertEquals("2011-02-22", isoDate.toString());
     }
 

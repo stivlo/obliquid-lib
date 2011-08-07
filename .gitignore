@@ -2,6 +2,7 @@
 # Don't commit eclipse files
 .classpath
 .project
+.settings/
 #
 # Don't commit any generated artifact
 target/
@@ -14,3 +15,5 @@ Stivlox.java
 #
 # Don't commit log4j log
 log4j.log
+# Don't commit local configuration
+src/test/java/org/obliquid/config/

@@ -1,5 +1,6 @@
 package org.obliquid.datatype;
 
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,7 +33,7 @@ public class Password extends DataType {
      * Return an empty String, we don't want to show passwords
      */
     @Override
-    public String getFormattedString() {
+    public String getFormattedString(Locale locale) {
         return "";
     }
 
