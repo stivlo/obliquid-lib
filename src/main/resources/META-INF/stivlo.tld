@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib
+        xsi:schemaLocation="
+            http://java.sun.com/xml/ns/javaee 
+            http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+        xmlns="http://java.sun.com/xml/ns/javaee" 
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        version="2.1">
+	<tlib-version>1.0</tlib-version> 
+	<short-name>StivloTags</short-name>
+	<uri>http://www.stefanolocati.it/</uri>
+
+    <!-- Example from http://www.stardeveloper.com/articles/display.html?article=2001081301&amp;page=1 -->
+	<tag> 
+		<name>firstTag</name> 
+		<tag-class>obliquid.tag.FirstTag</tag-class>
+		<body-content>empty</body-content> 
+		<attribute>
+			<name>name</name>
+			<required>false</required>
+		</attribute>
+	</tag> 
+	
+	<!-- Truncate text after maxLength or 80 chars, adding "&amp;hellip;" if the the text was longer -->
+	<tag>
+	    <name>ellipsis</name>
+	    <tag-class>obliquid.tag.Ellipsis</tag-class>
+	    <body-content>scriptless</body-content>
+	    <attribute>
+	         <name>maxLength</name>
+	         <required>false</required>
+	    </attribute>
+	</tag>
+	
+</taglib>
