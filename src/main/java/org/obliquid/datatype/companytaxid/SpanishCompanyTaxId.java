@@ -1,6 +1,8 @@
 package org.obliquid.datatype.companytaxid;
 
-import org.obliquid.datatype.DataType;
+import java.util.Locale;
+
+import org.obliquid.datatype.deprecated.DataTypeClass;
 import org.obliquid.datatype.vatid.VatId;
 
 /**
@@ -10,17 +12,27 @@ import org.obliquid.datatype.vatid.VatId;
  */
 public class SpanishCompanyTaxId extends CompanyTaxId {
 
-    private static final long serialVersionUID = 1L;
+        /**
+         * Universal Serial Identifier.
+         */
+        private static final long serialVersionUID = 1L;
 
-    private final DataType vatId;
+        private final DataTypeClass vatId;
 
-    protected SpanishCompanyTaxId() {
-        vatId = VatId.createInstance("ES");
-    }
+        protected SpanishCompanyTaxId() {
+                vatId = VatId.createInstance("ES");
+        }
 
-    @Override
-    public boolean isValid(String taxIdString) {
-        return vatId.isValid(taxIdString);
-    }
+        @Override
+        public boolean isValid(String taxIdString) {
+                return vatId.isValid(taxIdString);
+        }
+
+        @Override
+        public String getFormattedString(Locale locale)
+                        throws IllegalStateException {
+                // TODO Auto-generated method stub
+                return null;
+        }
 
 }

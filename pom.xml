@@ -305,7 +305,7 @@
                 <version>2.3.3-SNAPSHOT</version>
                 <configuration>
                     <xmlOutput>true</xmlOutput>
-                    <!-- Optional derectory to put findbugs xdoc xml report -->
+                    <!-- Optional directory to put findbugs xdoc xml report -->
                     <xmlOutputDirectory>target/site</xmlOutputDirectory>
                 </configuration>
             </plugin>

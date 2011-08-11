@@ -1,6 +1,6 @@
 package org.obliquid.datatype.vatid;
 
-import org.obliquid.datatype.DataType;
+import org.obliquid.datatype.deprecated.DataTypeClass;
 
 /**
  * Hold and validate a EU VAT Id. For a webservice allowing proper verification:
@@ -8,7 +8,7 @@ import org.obliquid.datatype.DataType;
  * 
  * @author stivlo
  */
-public abstract class VatId extends DataType {
+public abstract class VatId extends DataTypeClass {
 
     private static final long serialVersionUID = 1L;
 

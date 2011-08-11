@@ -1,70 +1,117 @@
 package org.obliquid.datatype;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Locale;
 
 import org.junit.Test;
 
+/**
+ * Check class VatPercent.
+ * 
+ * @author stivlo
+ * 
+ */
 public class VatPercentShould {
 
-    public static VatPercent percent = new VatPercent();
+        /**
+         * a VatPercent instance that will be created for each test.
+         */
+        private VatPercent percent = new VatPercent();
 
-    @Test
-    public void invalidNumberIsNotValid() {
-        assertFalse(percent.isValid("xxa"));
-    }
+        /**
+         * Check that the invalid number "xxa" doesn't validate.
+         */
+        @Test
+        public final void invalidNumberIsNotValid() {
+                assertFalse(percent.isValid("xxa"));
+        }
 
-    @Test
-    public void greaterThanHundredIsNotValid() {
-        assertFalse(percent.isValid("102"));
-    }
+        /**
+         * Check that "102" doesn't validate.
+         */
+        @Test
+        public final void greaterThanHundredIsNotValid() {
+                assertFalse(percent.isValid("102"));
+        }
 
-    @Test
-    public void hundredIsNotValid() {
-        assertFalse(percent.isValid("100"));
-    }
+        /**
+         * Check that "100" doesn't validate.
+         */
+        @Test
+        public final void hundredIsNotValid() {
+                assertFalse(percent.isValid("100"));
+        }
 
-    @Test
-    public void zeroIsValid() {
-        assertTrue(percent.isValid("0"));
-    }
+        /**
+         * Check that "0" does validate.
+         */
+        @Test
+        public final void zeroIsValid() {
+                assertTrue(percent.isValid("0"));
+        }
 
-    @Test
-    public void twentyIsValid() {
-        assertTrue(percent.isValid("20"));
-    }
+        /**
+         * Check that "20" validates.
+         */
+        @Test
+        public final void twentyIsValid() {
+                assertTrue(percent.isValid("20"));
+        }
 
-    @Test
-    public void computeVatPercentInsideItalyIsTwenty() {
-        assertEquals(20, VatPercent.computeVatPercent("IT", "IT"));
-    }
+        /**
+         * Check VAT percent from Italy to Italy.
+         */
+        @Test
+        public final void computeVatPercentInsideItalyIsTwenty() {
+                final int expectedPercent = 20;
+                assertEquals(expectedPercent,
+                                VatPercent.computeVatPercent("IT", "IT"));
+        }
 
-    @Test
-    public void computeVatPercentFromItalyToAbroadIsZero() {
-        assertEquals(0, VatPercent.computeVatPercent("IT", "UK"));
-    }
+        /**
+         * Check VAT percent from Italy to UK.
+         */
+        @Test
+        public final void computeVatPercentFromItalyToAbroadIsZero() {
+                assertEquals(0, VatPercent.computeVatPercent("IT", "UK"));
+        }
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void computeVatPercentFromEsDoesntWork() {
-        assertEquals(0, VatPercent.computeVatPercent("ES", "IT"));
-    }
+        /**
+         * Check VAT percent from Spain to Italy.
+         */
+        @Test(expected = UnsupportedOperationException.class)
+        public final void computeVatPercentFromEsDoesntWork() {
+                assertEquals(0, VatPercent.computeVatPercent("ES", "IT"));
+        }
 
-    @Test
-    public void beNotValidForNull() {
-        assertFalse(percent.isValid(null));
-    }
+        /**
+         * Check that null is not valid.
+         */
+        @Test
+        public final void beNotValidForNull() {
+                assertFalse(percent.isValid(null));
+        }
 
-    @Test(expected = IllegalStateException.class)
-    public void throwIllegalStateExceptionForGetFormattedStringOnNewObject() {
-        VatPercent vatP = new VatPercent();
-        vatP.getFormattedString(Locale.US);
-    }
+        /**
+         * Check that asking a formatted string without setting a value, throws
+         * exception.
+         */
+        @Test(expected = IllegalStateException.class)
+        public final void throwIllegalStateExceptionForGetFormattedStringOnNewObject() {
+                VatPercent vatP = new VatPercent();
+                vatP.getFormattedString(Locale.US);
+        }
 
-    @Test(expected = IllegalStateException.class)
-    public void throwIllegalStateExceptionForGetRawStringOnNewObject() {
-        VatPercent vatP = new VatPercent();
-        vatP.getRawString();
-    }
+        /**
+         * Check that asking raw data without setting a value, throws exception.
+         */
+        @Test(expected = IllegalStateException.class)
+        public final void throwIllegalStateExceptionForGetRawStringOnNewObject() {
+                VatPercent vatP = new VatPercent();
+                vatP.getData();
+        }
 
 }

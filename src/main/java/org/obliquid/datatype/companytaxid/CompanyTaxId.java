@@ -1,13 +1,13 @@
 package org.obliquid.datatype.companytaxid;
 
-import org.obliquid.datatype.DataType;
+import org.obliquid.datatype.deprecated.DataTypeClass;
 
 /**
  * Base class for Company Tax Ids.
  * 
  * @author stivlo
  */
-public abstract class CompanyTaxId extends DataType {
+public abstract class CompanyTaxId extends DataTypeClass {
 
     private static final long serialVersionUID = 1L;
 

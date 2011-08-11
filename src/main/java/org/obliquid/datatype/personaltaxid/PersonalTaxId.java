@@ -1,13 +1,13 @@
 package org.obliquid.datatype.personaltaxid;
 
-import org.obliquid.datatype.DataType;
+import org.obliquid.datatype.deprecated.DataTypeClass;
 
 /**
  * Base class for PersonalTaxIds
  * 
  * @author stivlo
  */
-public abstract class PersonalTaxId extends DataType {
+public abstract class PersonalTaxId extends DataTypeClass {
 
     private static final long serialVersionUID = 1L;
 
