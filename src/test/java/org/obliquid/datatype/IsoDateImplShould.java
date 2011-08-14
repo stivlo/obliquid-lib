@@ -132,7 +132,6 @@ public class IsoDateImplShould {
         public final void settingAWrongIsoDate() {
                 IsoDate isoDate = new IsoDateImpl();
                 isoDate.setDataFromString("201--07-21");
-                System.out.println("**" + isoDate.toString());
         }
 
         /**

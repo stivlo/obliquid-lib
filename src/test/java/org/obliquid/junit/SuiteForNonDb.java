@@ -6,7 +6,8 @@ import org.obliquid.datatype.EmailAddressImplShould;
 import org.obliquid.datatype.EmailListImplShould;
 import org.obliquid.datatype.IpAddressImplShould;
 import org.obliquid.datatype.IsoDateImplShould;
-import org.obliquid.datatype.ItalianPostCodeShould;
+import org.obliquid.datatype.ItalianPostCodeImplShould;
+import org.obliquid.datatype.LanguageTypeImplShould;
 import org.obliquid.datatype.UsernameShould;
 import org.obliquid.datatype.VatPercentShould;
 import org.obliquid.datatype.companytaxid.ItalianCompanyTaxIdShould;
@@ -30,15 +31,17 @@ import org.junit.runners.Suite.SuiteClasses;
  * @author stivlo
  */
 @RunWith(Suite.class)
-@SuiteClasses(value = { DateHelperShould.class, StopWatchShould.class,
-                StringHelperShould.class, DbNullShould.class,
-                BdHelperShould.class, SqlHelperShould.class,
-                BooleanTypeImplShould.class, EmailAddressImplShould.class,
-                EmailListImplShould.class, IpAddressImplShould.class,
-                IsoDateImplShould.class, VatPercentShould.class,
-                UsernameShould.class, Ec2TagShould.class, WgetShould.class,
-                CountryTypeImplShould.class, ItalianPostCodeShould.class,
-                ItalianCompanyTaxIdShould.class, MapCacheShould.class })
+@SuiteClasses(value = {
+                //org.obliquid.datatype
+                BooleanTypeImplShould.class, CountryTypeImplShould.class, EmailAddressImplShould.class,
+                EmailListImplShould.class, IpAddressImplShould.class, IsoDateImplShould.class,
+                ItalianPostCodeImplShould.class,
+                LanguageTypeImplShould.class,
+
+                //other uncategorised tests
+                DateHelperShould.class, StopWatchShould.class, StringHelperShould.class, DbNullShould.class,
+                BdHelperShould.class, SqlHelperShould.class, VatPercentShould.class, UsernameShould.class,
+                Ec2TagShould.class, WgetShould.class, ItalianCompanyTaxIdShould.class, MapCacheShould.class })
 public class SuiteForNonDb {
 
         //run all junit test

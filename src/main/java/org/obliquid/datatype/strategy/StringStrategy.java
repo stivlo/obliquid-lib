@@ -38,7 +38,7 @@ public class StringStrategy implements DataType<String> {
         @Override
         public final void setData(final String theData) throws IllegalArgumentException {
                 if (theData == null) {
-                        throw new IllegalStateException("The argument can't be null");
+                        throw new IllegalArgumentException("The argument can't be null");
                 }
                 data = theData;
         }
