@@ -8,6 +8,7 @@ import org.obliquid.datatype.IpAddressImplShould;
 import org.obliquid.datatype.IsoDateImplShould;
 import org.obliquid.datatype.ItalianPostCodeImplShould;
 import org.obliquid.datatype.LanguageTypeImplShould;
+import org.obliquid.datatype.PasswordImplShould;
 import org.obliquid.datatype.UsernameShould;
 import org.obliquid.datatype.VatPercentShould;
 import org.obliquid.datatype.companytaxid.ItalianCompanyTaxIdShould;
@@ -35,8 +36,8 @@ import org.junit.runners.Suite.SuiteClasses;
                 //org.obliquid.datatype
                 BooleanTypeImplShould.class, CountryTypeImplShould.class, EmailAddressImplShould.class,
                 EmailListImplShould.class, IpAddressImplShould.class, IsoDateImplShould.class,
-                ItalianPostCodeImplShould.class,
-                LanguageTypeImplShould.class,
+                ItalianPostCodeImplShould.class, LanguageTypeImplShould.class,
+                PasswordImplShould.class,
 
                 //other uncategorised tests
                 DateHelperShould.class, StopWatchShould.class, StringHelperShould.class, DbNullShould.class,

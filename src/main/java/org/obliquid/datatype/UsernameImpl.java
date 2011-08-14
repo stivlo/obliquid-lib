@@ -8,13 +8,13 @@ import org.obliquid.datatype.deprecated.DataTypeClass;
 
 /**
  * Hold and validate a Username. i.e. a String of at least 3 character and
- * maximum 30 characters and composed only of a-z lowercase characters, numbers
- * and the underscore. Just check for formal validity, doesn't check the db.
+ * maximum 30 characters and composed only of a-z lower case characters, numbers
+ * and the underscore. Just check for formal validity, doesn't check the DB.
  * Empty username is accepted.
  * 
  * @author stivlo
  */
-public class Username extends DataTypeClass {
+public class UsernameImpl extends DataTypeClass {
 
         /**
          * Universal version identifier.
@@ -24,8 +24,7 @@ public class Username extends DataTypeClass {
         /**
          * Validation pattern.
          */
-        private Pattern validationPattern = Pattern
-                        .compile("[A-Za-z0-9_]{3,30}+");
+        private Pattern validationPattern = Pattern.compile("[A-Za-z0-9_]{3,30}+");
 
         /**
          * Validation failed message.
@@ -37,7 +36,7 @@ public class Username extends DataTypeClass {
         /**
          * Construct an empty Username.
          */
-        public Username() {
+        public UsernameImpl() {
                 super();
         }
 
@@ -49,8 +48,7 @@ public class Username extends DataTypeClass {
          * @throws IllegalArgumentException
          *                 when the username is not valid
          */
-        public Username(final String usernameString)
-                        throws IllegalArgumentException {
+        public UsernameImpl(final String usernameString) throws IllegalArgumentException {
                 set(usernameString);
         }
 
@@ -73,10 +71,7 @@ public class Username extends DataTypeClass {
                 } else {
                         Matcher matcher = validationPattern.matcher(username);
                         valid = matcher.find();
-                        if (valid
-                                        && (matcher.start() != 0 || matcher
-                                                        .end() != username
-                                                        .length())) {
+                        if (valid && (matcher.start() != 0 || matcher.end() != username.length())) {
                                 setMessage(failedValidationMessage);
                                 valid = false;
                         }
@@ -91,8 +86,7 @@ public class Username extends DataTypeClass {
          * @param validationPatternString
          *                regex pattern
          */
-        public final void setValidationPattern(
-                        final String validationPatternString) {
+        public final void setValidationPattern(final String validationPatternString) {
                 validationPattern = Pattern.compile(validationPatternString);
         }
 
@@ -106,8 +100,7 @@ public class Username extends DataTypeClass {
          *                 if the value wasn't set
          */
         @Override
-        public final String getFormattedString(final Locale locale)
-                        throws IllegalStateException {
+        public final String getFormattedString(final Locale locale) throws IllegalStateException {
                 return getData();
         }
 
