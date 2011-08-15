@@ -3,6 +3,7 @@ package org.obliquid.datatype.impl;
 import java.util.Locale;
 
 import org.obliquid.datatype.PathName;
+import org.obliquid.datatype.strategy.StringStrategy;
 
 /**
  * Hold and validate a relative path according to my rules (I admit only lower
@@ -14,11 +15,23 @@ import org.obliquid.datatype.PathName;
  */
 public class PathNameImpl implements PathName {
 
+        /**
+         * External String Strategy implementation. (Strategy Pattern)
+         */
+        private StringStrategy stringStrategy = new StringStrategy();
+
         @Override
         public final boolean isValid(final String data) {
-                char aChar;
+                char aChar, lastChar = 0;
+                if (data == null) {
+                        return false;
+                }
                 for (int i = 0; i < data.length(); i++) {
                         aChar = data.charAt(i);
+                        if (lastChar == aChar && aChar == '/') {
+                                return false; //two consecutive path separators are not allowed
+                        }
+                        lastChar = aChar;
                         if ((aChar >= 'a' && aChar <= 'z') || (aChar >= 'A' && aChar <= 'Z')
                                         || (aChar >= '0' && aChar <= '9') || aChar == '_' || aChar == '-'
                                         || aChar == '/' || aChar == '.') {
@@ -31,8 +44,7 @@ public class PathNameImpl implements PathName {
 
         @Override
         public final boolean isTheStringValid(final String theData) {
-                // TODO Auto-generated method stub
-                return false;
+                return isValid(theData);
         }
 
         @Override
@@ -42,8 +54,7 @@ public class PathNameImpl implements PathName {
 
         @Override
         public final String getData() throws IllegalStateException {
-                // TODO Auto-generated method stub
-                return null;
+                return stringStrategy.getData();
         }
 
         @Override
