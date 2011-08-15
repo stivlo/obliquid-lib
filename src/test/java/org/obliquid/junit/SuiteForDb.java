@@ -10,15 +10,16 @@ import org.obliquid.db.PriKeyListerShould;
 import org.obliquid.db.TableIteratorBuilderShould;
 
 /**
- * Test Suite for all tests that require a db obliquidlib and host configuration
+ * Test Suite for all tests that require a DB obliquid-lib and host
+ * configuration.
  * 
  * @author stivlo
  */
 @RunWith(Suite.class)
 @SuiteClasses(value = { TableIteratorBuilderShould.class, PriKeyListerShould.class,
-        FieldIteratorBuilderShould.class, MetaDbShould.class })
+                FieldIteratorBuilderShould.class, MetaDbShould.class })
 public class SuiteForDb {
 
-    //annotation driven
+        //annotation driven
 
 }
