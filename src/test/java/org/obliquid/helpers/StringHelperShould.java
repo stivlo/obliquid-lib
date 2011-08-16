@@ -131,26 +131,39 @@ public class StringHelperShould {
                 assertEquals("", StringHelper.repeatWithSeparator(sentence, 0, ", "));
         }
 
+        /**
+         * Repeat with separator negative times should return an empty string.
+         */
         @Test
         public final void repeatWithSeparatorNegativeTimesShouldReturnAnEmptyString() {
                 String sentence = "very good";
                 assertEquals("", StringHelper.repeatWithSeparator(sentence, -1, ", "));
         }
 
+        /**
+         * Testing quote.
+         */
         @Test
         public final void quote() {
                 final int length = 3;
+                final int numberToBeQuoted = 55;
                 String result = StringHelper.quote("l'altro giorno");
                 assertEquals("'l''altro giorno'", result);
-                result = StringHelper.quote(55, length);
+                result = StringHelper.quote(numberToBeQuoted, length);
                 assertEquals("'055'", result);
         }
 
+        /**
+         * Quoting null should return 'NULL'.
+         */
         @Test
         public final void quoteNullShouldReturnTheStringNULL() {
                 assertEquals("NULL", StringHelper.quote(null));
         }
 
+        /**
+         * zeroPad with too short length throws exception.
+         */
         @Test(expected = IllegalArgumentException.class)
         public final void zeroPad() {
                 final int length = 3;
@@ -168,6 +181,9 @@ public class StringHelperShould {
          * BigDecimal("-1.2"), 4, 2); }
          */
 
+        /**
+         * Various tests with implode.
+         */
         @Test
         public final void implode() {
                 String result = StringHelper.implode(", ", new int[] {});
@@ -187,34 +203,96 @@ public class StringHelperShould {
                 assertEquals("uno, due", StringHelper.implode(", ", pieces));
         }
 
+        /**
+         * Various tests with truncate.
+         */
         @Test
         public final void truncate() {
-                String result = StringHelper.truncate("my string", 3);
+                final int shortLen = 3;
+                final int longLen = 20;
+                String result = StringHelper.truncate("my string", shortLen);
                 assertEquals("my ", result);
-                result = StringHelper.truncate("short", 20);
+                result = StringHelper.truncate("short", longLen);
                 assertEquals("short", result);
         }
 
+        /**
+         * Sub string tests: normal and with null.
+         */
         @Test
-        public final void subStr() {
+        public final void substrNormalAndNull() {
                 String input = "abcd";
                 assertEquals("bc", StringHelper.substr(input, 1, 2));
                 assertEquals("", StringHelper.substr(null, 1, 2));
-                assertEquals("cd", StringHelper.substr(input, -2, 2));
-                assertEquals("d", StringHelper.substr(input, 3, 4));
-                assertEquals("ab", StringHelper.substr(input, -20, 2));
-                assertEquals("", StringHelper.substr(input, 20, 2));
-                assertEquals("cd", StringHelper.substr(input, 2, 20));
         }
 
+        /**
+         * Sub string test with negative startIndex.
+         */
+        @Test
+        public final void substrWithNegativeStartIndex() {
+                final int startIndex = -2;
+                String input = "abcd";
+                assertEquals("cd", StringHelper.substr(input, startIndex, 2));
+        }
+
+        /**
+         * Testing sub string with length exceeding the remaining part.
+         */
+        @Test
+        public final void substrWithLengthExceedingRemainingPart() {
+                final int startIndex = 3, length = 4;
+                String input = "abcd";
+                assertEquals("d", StringHelper.substr(input, startIndex, length));
+        }
+
+        /**
+         * Testing sub string with start index exceeding the length of the
+         * string: in this case it will start from the beginning.
+         */
+        @Test
+        public final void substrWithHugeNegativeStartIndex() {
+                final int startIndex = -20;
+                String input = "abcd";
+                assertEquals("ab", StringHelper.substr(input, startIndex, 2));
+        }
+
+        /**
+         * Testing sub string with huge positive start index, in which case an
+         * empty string will be returned.
+         */
+        @Test
+        public final void substrWithHugePositiveStartIndex() {
+                final int startIndex = 20;
+                String input = "abcd";
+                assertEquals("", StringHelper.substr(input, startIndex, 2));
+        }
+
+        /**
+         * Testing sub string with huge length, in which case all the part that
+         * is available will be returned.
+         */
+        @Test
+        public final void substr() {
+                final int length = 20;
+                String input = "abcd";
+                assertEquals("cd", StringHelper.substr(input, 2, length));
+        }
+
+        /**
+         * Sub String should throw exception when length is negative.
+         */
         @Test(expected = IllegalArgumentException.class)
-        public final void subStrShouldThrowExceptionWhenLengthIsNegative() {
+        public final void substrShouldThrowExceptionWhenLengthIsNegative() {
                 final int length = -2;
                 StringHelper.substr("abcd", 1, length);
         }
 
+        /**
+         * Testing implodeAndQuote() with HashMap.
+         */
         @Test
-        public final void extractFieldNameTest() {
+        public final void implodeAndQuoteTest1() {
                 HashMap<String, Object> ingredients = new HashMap<String, Object>();
                 ingredients.put("spaghetti", "100g");
                 ingredients.put("sauce", "150g");
@@ -222,6 +300,18 @@ public class StringHelperShould {
                 assertEquals("'spaghetti','sauce'", result);
         }
 
+        /**
+         * Testing implode and Quote with String array.
+         */
+        @Test
+        public final void implodeAndQuoteTest2() {
+                String[] fields = { "uno", "due" };
+                assertEquals("\"uno\", \"due\"", StringHelper.implodeAndQuote(", ", fields, "\""));
+        }
+
+        /**
+         * computeRandomString() test.
+         */
         @Test
         public final void computeRandomStringTest() {
                 final int times = 20;
@@ -230,29 +320,33 @@ public class StringHelperShould {
                 }
         }
 
+        /**
+         * Testing ucFirst().
+         */
         @Test
         public final void ucFirstTest() {
                 assertEquals("Una Vita", StringHelper.ucFirst("una Vita"));
                 assertEquals("Una Vita", StringHelper.ucFirst("Una Vita"));
         }
 
-        @Test
-        public final void implodeAndQuoteTest() {
-                String fields[] = { "uno", "due" };
-                assertEquals("\"uno\", \"due\"", StringHelper.implodeAndQuote(", ", fields, "\""));
-        }
-
+        /**
+         * Testing implementEllipsis().
+         */
         @Test
         public final void implementEllipsis() {
-                assertEquals("0122345789", StringHelper.ellipsis("0122345789", 10));
-                assertEquals("0122345789", StringHelper.ellipsis("0122345789", 11));
-                assertEquals("012234578&hellip;", StringHelper.ellipsis("0122345789", 9));
+                final int shortLen = 9, mediumLen = 10, longLen = 11;
+                assertEquals("0122345789", StringHelper.ellipsis("0122345789", mediumLen));
+                assertEquals("0122345789", StringHelper.ellipsis("0122345789", longLen));
+                assertEquals("012234578&hellip;", StringHelper.ellipsis("0122345789", shortLen));
                 assertEquals("&hellip;", StringHelper.ellipsis("0122345789", 0));
                 assertEquals("0&hellip;", StringHelper.ellipsis("0122345789", 1));
                 assertEquals("", StringHelper.ellipsis("", 1));
                 assertEquals("", StringHelper.ellipsis("", 0));
         }
 
+        /**
+         * Testing negative max length for ellipsis().
+         */
         @Test(expected = IllegalArgumentException.class)
         public final void refuseToProcessNegativeMaxLengthInEllipsis() {
                 StringHelper.ellipsis("", -1);

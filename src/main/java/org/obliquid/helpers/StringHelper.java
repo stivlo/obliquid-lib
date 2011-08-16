@@ -562,10 +562,10 @@ public final class StringHelper {
                         return "";
                 }
                 if (startIndex < 0) {
-                        newStartIndex += str.length(); //we are subtracting since startIndex is negative
+                        newStartIndex = str.length() + startIndex; //subtracts since startIndex is negative
                 }
-                if (startIndex < 0) {
-                        newStartIndex = 0; //the previous if could have made startIndex negative
+                if (newStartIndex < 0) {
+                        newStartIndex = 0; //the previous if could have made newStartIndex negative
                 }
                 if (newStartIndex + length >= str.length()) {
                         endIndex = str.length();
@@ -599,7 +599,7 @@ public final class StringHelper {
          * 
          * @param input
          *                the String to process
-         * @return a String with the fist character of input capitalized, if
+         * @return a String with the fist character of input capitalised, if
          *         that character is alphabetic.
          */
         public static String ucFirst(final String input) {
