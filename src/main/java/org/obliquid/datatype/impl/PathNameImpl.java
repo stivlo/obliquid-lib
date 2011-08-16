@@ -59,14 +59,16 @@ public class PathNameImpl implements PathName {
 
         @Override
         public final void setDataFromString(final String theData) throws IllegalArgumentException {
-                // TODO Auto-generated method stub
+                setData(theData);
 
         }
 
         @Override
         public final void setData(final String theData) throws IllegalArgumentException {
-                // TODO Auto-generated method stub
-
+                if (!isValid(theData)) {
+                        throw new IllegalArgumentException();
+                }
+                stringStrategy.setData(theData);
         }
 
 }

@@ -1,5 +1,6 @@
 package org.obliquid.datatype;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -77,6 +78,57 @@ public class PathNameImplShould {
         public final void formatDataWithoutSettingThrowsException() {
                 PathName path = new PathNameImpl();
                 path.formatData(Locale.getDefault());
+        }
+
+        /**
+         * Setting and getting a path.
+         */
+        @Test
+        public final void settingAndGettingAPath() {
+                String pathStr = "a/valid/path";
+                PathName path = new PathNameImpl();
+                path.setData(pathStr);
+                assertEquals(pathStr, path.getData());
+                assertEquals(pathStr, path.formatData(Locale.getDefault()));
+        }
+
+        /**
+         * setDataFromString and getting a path.
+         */
+        @Test
+        public final void setDataFromStringAndGettingAPath() {
+                String pathStr = "this/is/a/path.";
+                PathName path = new PathNameImpl();
+                path.setDataFromString(pathStr);
+                assertEquals(pathStr, path.getData());
+                assertEquals(pathStr, path.formatData(Locale.getDefault()));
+        }
+
+        /**
+         * Setting null throws exception.
+         */
+        @Test(expected = IllegalArgumentException.class)
+        public final void settingNullThrowsException() {
+                PathName path = new PathNameImpl();
+                path.setData(null);
+        }
+
+        /**
+         * setDataFromString(null) throws exception.
+         */
+        @Test(expected = IllegalArgumentException.class)
+        public final void setDataFromStringNullThrowsException() {
+                PathName path = new PathNameImpl();
+                path.setDataFromString(null);
+        }
+
+        /**
+         * Setting an invalid path throws exception.
+         */
+        @Test(expected = IllegalArgumentException.class)
+        public final void setAnInvalidPath() {
+                PathName path = new PathNameImpl();
+                path.setData("//");
         }
 
 }
