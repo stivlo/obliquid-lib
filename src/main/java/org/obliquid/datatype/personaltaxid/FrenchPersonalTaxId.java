@@ -1,20 +1,18 @@
 package org.obliquid.datatype.personaltaxid;
 
-import java.util.Locale;
+import org.obliquid.datatype.impl.PersonalTaxIdImpl;
 
-public class FrenchPersonalTaxId extends PersonalTaxId {
-
-        private static final long serialVersionUID = 1L;
+/**
+ * Check a French Personal Tax Id.
+ * 
+ * @author stivlo
+ * 
+ */
+public class FrenchPersonalTaxId extends PersonalTaxIdImpl {
 
         @Override
-        public boolean isValid(String data) {
+        public final boolean isValid(final String data) {
                 return true;
-        }
-
-        @Override
-        public String getFormattedString(Locale locale) throws IllegalStateException {
-                // TODO Auto-generated method stub
-                return null;
         }
 
 }

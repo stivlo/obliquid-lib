@@ -1,28 +1,18 @@
 package org.obliquid.datatype.vatid;
 
-import java.util.Locale;
+import org.obliquid.datatype.impl.VatIdImpl;
 
 /**
+ * Check a German vat id.
  * 
  * @author stivlo
  * 
  */
-public class GermanVatId extends VatId {
-
-        /**
-         * Universal Serial Identifier.
-         */
-        private static final long serialVersionUID = 1L;
+public class GermanVatId extends VatIdImpl {
 
         @Override
-        public boolean isValid(final String data) {
+        public final boolean isValid(final String data) {
                 return true;
-        }
-
-        @Override
-        public String getFormattedString(final Locale locale)
-                        throws IllegalStateException {
-                return getData();
         }
 
 }

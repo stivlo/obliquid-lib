@@ -1,6 +1,6 @@
 package org.obliquid.datatype.vatid;
 
-import java.util.Locale;
+import org.obliquid.datatype.impl.VatIdImpl;
 
 /**
  * Hold and verify a Spanish VAT Id. For the moment the class only checks that
@@ -8,38 +8,27 @@ import java.util.Locale;
  * 
  * @author stivlo
  */
-public class SpanishVatId extends VatId {
+public class SpanishVatId extends VatIdImpl {
 
-        /**
-         * Universal version identifier.
-         */
-        private static final long serialVersionUID = 1L;
-
-        protected SpanishVatId() {
-                //use createInstance() method in the parent class 
-        }
+        /** Expected length of a Spanish Vat Id. */
+        private static final int EXPECTED_LEN = 12;
 
         @Override
-        public boolean isValid(final String data) {
-                setMessage("");
-                String start = data.substring(0, 3);
+        public final boolean isValid(final String data) {
+                final int prefixLen = 3;
+                //setMessage("");
+                String start = data.substring(0, prefixLen);
                 if (!start.equals("ES-")) {
-                        setMessage("A Spanish Vat Id should start with 'ES-', instead is starting with '"
-                                        + start + "'");
+                        //setMessage("A Spanish Vat Id should start with 'ES-', instead is starting with '"
+                        //                + start + "'");
                         return false;
                 }
-                if (data.length() != 12) {
-                        setMessage("A Spanish Vat Id should be long 12 chars, instead it's "
-                                        + data.length() + " chars");
+                if (data.length() != EXPECTED_LEN) {
+                        //setMessage("A Spanish Vat Id should be long 12 chars, instead it's " + data.length()
+                        //                + " chars");
                         return false;
                 }
                 return true;
-        }
-
-        @Override
-        public String getFormattedString(final Locale locale)
-                        throws IllegalStateException {
-                return getData();
         }
 
 }

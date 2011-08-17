@@ -1,38 +1,20 @@
 package org.obliquid.datatype.companytaxid;
 
-import java.util.Locale;
-
-import org.obliquid.datatype.deprecated.DataTypeClass;
-import org.obliquid.datatype.vatid.VatId;
+import org.obliquid.datatype.TaxId;
+import org.obliquid.datatype.impl.CompanyTaxIdImpl;
+import org.obliquid.datatype.impl.VatIdImpl;
 
 /**
  * Hold and validate a Spanish Company Tax Id (NIF).
  * 
  * @author stivlo
  */
-public class SpanishCompanyTaxId extends CompanyTaxId {
-
-        /**
-         * Universal Serial Identifier.
-         */
-        private static final long serialVersionUID = 1L;
-
-        private final DataTypeClass vatId;
-
-        protected SpanishCompanyTaxId() {
-                vatId = VatId.createInstance("ES");
-        }
+public class SpanishCompanyTaxId extends CompanyTaxIdImpl {
 
         @Override
-        public boolean isValid(String taxIdString) {
+        public final boolean isValid(final String taxIdString) {
+                TaxId vatId = VatIdImpl.createInstance("ES");
                 return vatId.isValid(taxIdString);
-        }
-
-        @Override
-        public String getFormattedString(Locale locale)
-                        throws IllegalStateException {
-                // TODO Auto-generated method stub
-                return null;
         }
 
 }

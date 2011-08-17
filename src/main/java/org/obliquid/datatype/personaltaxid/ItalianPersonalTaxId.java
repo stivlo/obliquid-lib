@@ -1,49 +1,49 @@
 package org.obliquid.datatype.personaltaxid;
 
-import java.util.Locale;
+import org.obliquid.datatype.impl.PersonalTaxIdImpl;
 
 /**
- * Hold and validate an Italian Personal Tax Id
+ * Hold and validate an Italian Personal Tax Id.
  * 
  * @author stivlo
  */
-public class ItalianPersonalTaxId extends PersonalTaxId {
+public class ItalianPersonalTaxId extends PersonalTaxIdImpl {
 
-        private static final long serialVersionUID = 1L;
-
-        private static final int expectedLength = 16;
-
-        protected ItalianPersonalTaxId() {
-                //use the createInstance() method in the parent class
-        }
+        /** Expected length of an Italian Personal Tax Id. */
+        private static final int EXPECTED_LEN = 16;
 
         /**
-         * Check Italian Tax Id http://www.icosaedro.it/cf-pi/index.html
+         * Check Italian Tax Id http://www.icosaedro.it/cf-pi/index.html .
+         * 
+         * @param taxId
+         *                the taxId to check
+         * @return true if valid
          */
         @Override
-        public boolean isValid(String taxId) {
-                setMessage("");
+        public final boolean isValid(final String taxId) {
                 if (hasInvalidLength(taxId) || hasInvalidCharacter(taxId)) {
                         return false;
                 }
-                if (computeCheckDigit(taxId) != taxId.charAt(15)) {
-                        setMessage("Wrong check digit");
+                if (computeCheckDigit(taxId) != taxId.charAt(EXPECTED_LEN - 1)) {
                         return false;
                 }
                 return true;
         }
 
         /**
-         * Compute the check digit
+         * Compute the check digit.
          * 
          * @param taxId
-         * @return
+         *                tax Id for which we have to compute the check digit
+         * @return the check digit
          */
-        private char computeCheckDigit(String taxId) {
-                int setdisp[] = { 1, 0, 5, 7, 9, 13, 15, 17, 19, 21, 2, 4, 18,
-                                20, 11, 3, 6, 8, 12, 14, 16, 10, 22, 25, 24, 23 };
+        private char computeCheckDigit(final String taxId) {
+                final int lettersInAlphabet = 26;
+                final int maxOdd = 13, maxEven = 14;
+                final int[] setdisp = { 1, 0, 5, 7, 9, 13, 15, 17, 19, 21, 2, 4, 18, 20, 11, 3, 6, 8, 12, 14,
+                                16, 10, 22, 25, 24, 23 };
                 int charWeight = 0, aChar;
-                for (int i = 1; i <= 13; i += 2) {
+                for (int i = 1; i <= maxOdd; i += 2) {
                         aChar = taxId.charAt(i);
                         if (aChar >= '0' && aChar <= '9') {
                                 charWeight = charWeight + aChar - '0';
@@ -51,25 +51,25 @@ public class ItalianPersonalTaxId extends PersonalTaxId {
                                 charWeight = charWeight + aChar - 'A';
                         }
                 }
-                for (int i = 0; i <= 14; i += 2) {
+                for (int i = 0; i <= maxEven; i += 2) {
                         aChar = taxId.charAt(i);
                         if (aChar >= '0' && aChar <= '9') {
                                 aChar = aChar - '0' + 'A';
                         }
                         charWeight = charWeight + setdisp[aChar - 'A'];
                 }
-                return (char) (charWeight % 26 + 'A');
+                return (char) (charWeight % lettersInAlphabet + 'A');
         }
 
         /**
-         * Check for invalid length
+         * Check for invalid length.
          * 
          * @param taxId
+         *                the taxId to check
          * @return true if the String has an invalid length
          */
-        private boolean hasInvalidLength(String taxId) {
-                if (taxId == null || taxId.length() != expectedLength) {
-                        setMessage("Invalid length");
+        private boolean hasInvalidLength(final String taxId) {
+                if (taxId == null || taxId.length() != EXPECTED_LEN) {
                         return true;
                 }
                 return false;
@@ -84,21 +84,13 @@ public class ItalianPersonalTaxId extends PersonalTaxId {
          */
         private boolean hasInvalidCharacter(final String taxId) {
                 char aChar;
-                for (int i = 0; i < expectedLength; i++) {
+                for (int i = 0; i < EXPECTED_LEN; i++) {
                         aChar = taxId.charAt(i);
-                        if (!(aChar >= '0' && aChar <= '9' || aChar >= 'A'
-                                        && aChar <= 'Z')) {
-                                setMessage("Invalid character");
+                        if (!(aChar >= '0' && aChar <= '9' || aChar >= 'A' && aChar <= 'Z')) {
                                 return true;
                         }
                 }
                 return false;
-        }
-
-        @Override
-        public String getFormattedString(final Locale locale)
-                        throws IllegalStateException {
-                return getData();
         }
 
 }

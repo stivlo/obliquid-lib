@@ -1,20 +1,18 @@
 package org.obliquid.datatype.vatid;
 
-import java.util.Locale;
+import org.obliquid.datatype.impl.VatIdImpl;
 
-public class FrenchVatId extends VatId {
-
-        private static final long serialVersionUID = 1L;
+/**
+ * Check a French Vat Id.
+ * 
+ * @author stivlo
+ * 
+ */
+public class FrenchVatId extends VatIdImpl {
 
         @Override
-        public boolean isValid(String data) {
+        public final boolean isValid(final String data) {
                 return true;
-        }
-
-        @Override
-        public String getFormattedString(final Locale locale)
-                        throws IllegalStateException {
-                return getData();
         }
 
 }

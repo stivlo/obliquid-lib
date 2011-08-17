@@ -39,14 +39,18 @@ import org.junit.runners.Suite.SuiteClasses;
                 BooleanTypeImplShould.class, CountryTypeImplShould.class, EmailAddressImplShould.class,
                 EmailListImplShould.class, IpAddressImplShould.class, IsoDateImplShould.class,
                 ItalianPostCodeImplShould.class, LanguageTypeImplShould.class, PasswordImplShould.class,
-                UsernameImplShould.class, VatPercentImplShould.class,
+                UsernameImplShould.class,
+                VatPercentImplShould.class,
                 PhoneNumberImplShould.class,
                 UrlTypeImplShould.class,
 
+                //org.obliquid.helpers
+                StringHelperShould.class,
+
                 //other uncategorised tests
-                DateHelperShould.class, StopWatchShould.class, StringHelperShould.class, DbNullShould.class,
-                BdHelperShould.class, SqlHelperShould.class, Ec2TagShould.class, WgetShould.class,
-                ItalianCompanyTaxIdShould.class, MapCacheShould.class })
+                DateHelperShould.class, StopWatchShould.class, DbNullShould.class, BdHelperShould.class,
+                SqlHelperShould.class, Ec2TagShould.class, WgetShould.class, ItalianCompanyTaxIdShould.class,
+                MapCacheShould.class })
 public class SuiteForNonDb {
 
         //run all junit test
