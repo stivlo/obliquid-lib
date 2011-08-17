@@ -23,940 +23,669 @@ import org.obliquid.helpers.StringHelper;
  */
 public class MetaDbImpl implements MetaDb {
 
-    /** Holds the connection - one MetaDb Object one ConnectionManager Object, one Connection Object */
-    private final ConnectionManager connectionManager;
+        /**
+         * Holds the connection - one MetaDb Object one ConnectionManager
+         * Object, one Connection Object.
+         */
+        private final ConnectionManager connectionManager;
 
-    /** Db Connection */
-    private Connection conn = null;
+        /** DB Connection. */
+        private Connection conn = null;
 
-    /** Statement for raw Query */
-    private Statement statement;
+        /** Statement for raw Query. */
+        private Statement statement;
 
-    /** ResultSet for raw Query */
-    private ResultSet res;
+        /** ResultSet for raw Query. */
+        private ResultSet res;
 
-    /** Log4j instance */
-    private static final Logger log = Logger.getLogger(ConnectionManager.class);
+        /** Log4j instance. */
+        private static final Logger LOG = Logger.getLogger(ConnectionManager.class);
 
-    /**
-     * Create a new instance of Db
-     * 
-     */
-    public MetaDbImpl() {
-        connectionManager = new ConnectionManager();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#executeRawQuery(java.lang.String)
-     */
-    @Override
-    public ResultSet executeRawQuery(String sql) throws SQLException {
-        statement = null;
-        res = null;
-        statement = conn.createStatement();
-        res = statement.executeQuery(sql);
-        return res;
-    }
-
-    /**
-     * Close ResulSet and Statement after a raw query. Exception are trapped.
-     */
-    public void closeResultSetAndStatement() {
-        SqlHelper.close(statement);
-        SqlHelper.close(res);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#getConnection(boolean)
-     */
-    @Override
-    public Connection getConnection(boolean usePool) throws SQLException {
-        conn = connectionManager.getConnection(usePool);
-        return conn;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#getConnection()
-     */
-    @Override
-    public Connection getConnection() throws SQLException {
-        conn = connectionManager.getConnection();
-        return conn;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#releaseConnection()
-     */
-    @Override
-    public void releaseConnection() {
-        conn = null;
-        try {
-            connectionManager.releaseConnection();
-        } catch (SQLException ex) {
-            log.error(ex.getMessage());
+        /**
+         * Create a new instance of DB.
+         * 
+         */
+        public MetaDbImpl() {
+                connectionManager = new ConnectionManager();
         }
-    }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#execute(java.lang.String)
-     */
-    @Override
-    public int execute(String sql) throws SQLException {
-        Statement stmt = null;
-        int rowCount = 0;
-        try {
-            stmt = conn.createStatement();
-            rowCount = stmt.executeUpdate(sql);
-        } finally {
-            SqlHelper.close(stmt);
+        @Override
+        public final ResultSet executeRawQuery(final String sql) throws SQLException {
+                statement = null;
+                res = null;
+                statement = conn.createStatement();
+                res = statement.executeQuery(sql);
+                return res;
         }
-        return rowCount;
-    }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#execute(java.lang.String, java.util.List)
-     */
-    @Override
-    public int execute(String sql, List<?> param) throws SQLException {
-        PreparedStatement statement = null;
-        int rowCount = 0;
-        try {
-            statement = SqlHelper.buildPreparedStatement(conn, sql, param);
-            rowCount = statement.executeUpdate();
-        } finally {
-            SqlHelper.close(statement);
+        @Override
+        public final void closeResultSetAndStatement() {
+                SqlHelper.close(statement);
+                SqlHelper.close(res);
         }
-        return rowCount;
-    }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#execute(java.lang.String, java.lang.String[])
-     */
-    @Override
-    public int execute(String sql, String[] param) throws SQLException {
-        ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
-        return execute(sql, arList);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#execute(java.lang.String, T)
-     */
-    @Override
-    public <T> int execute(String sql, T param) throws SQLException {
-        ArrayList<Object> arList = new ArrayList<Object>();
-        arList.add(param);
-        return execute(sql, arList);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#execute(java.lang.String, java.util.Map)
-     */
-    @Override
-    public int execute(String sql, Map<String, Object> param) throws SQLException {
-        ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
-        return execute(sql, arList);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#execute(java.lang.String, int[])
-     */
-    @Override
-    public int execute(String sql, int[] param) throws SQLException {
-        ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
-        return execute(sql, arList);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectField(java.lang.String)
-     */
-    @Override
-    public Object selectField(String sql) throws SQLException {
-        Statement stmt = null;
-        ResultSet res = null;
-        Object field = null;
-        try {
-            stmt = conn.createStatement();
-            res = stmt.executeQuery(sql);
-            if (res.next()) {
-                field = res.getObject(1);
-            } else {
-                throw new SQLException("*** Empty ResultSet ***");
-            }
-        } finally {
-            SqlHelper.close(stmt);
-            SqlHelper.close(res);
+        @Override
+        public final Connection getConnection(final boolean usePool) throws SQLException {
+                conn = connectionManager.getConnection(usePool);
+                return conn;
         }
-        return field;
-    }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectField(java.lang.String, java.util.List)
-     */
-    @Override
-    public Object selectField(String sql, List<?> param) throws SQLException {
-        PreparedStatement stmt = null;
-        ResultSet res = null;
-        Object field = null;
-        try {
-            stmt = SqlHelper.buildPreparedStatement(conn, sql, param);
-            res = stmt.executeQuery();
-            if (res.next()) {
-                field = res.getObject(1);
-            } else {
-                return null;
-            }
-        } finally {
-            SqlHelper.close(stmt);
-            SqlHelper.close(res);
+        @Override
+        public final Connection getConnection() throws SQLException {
+                conn = connectionManager.getConnection();
+                return conn;
         }
-        return field;
-    }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectField(java.lang.String, java.lang.String[])
-     */
-    @Override
-    public Object selectField(String sql, String[] param) throws SQLException {
-        ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
-        return selectField(sql, arList);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectField(java.lang.String, int[])
-     */
-    @Override
-    public Object selectField(String sql, int[] param) throws SQLException {
-        ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
-        return selectField(sql, arList);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectField(java.lang.String, T)
-     */
-    @Override
-    public <T> Object selectField(String sql, T param) throws SQLException {
-        ArrayList<Object> arList = new ArrayList<Object>();
-        arList.add(param);
-        return selectField(sql, arList);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectRow(java.lang.String)
-     */
-    @Override
-    public List<Object> selectRow(String sql) throws SQLException {
-        Statement statement = null;
-        ResultSet res = null;
-        List<Object> row = null;
-        try {
-            statement = conn.createStatement();
-            res = statement.executeQuery(sql);
-            int numCols = SqlHelper.getColumnCount(res);
-            if (res.next()) {
-                row = SqlHelper.extractRowFromResultSet(res, numCols);
-            }
-        } finally {
-            SqlHelper.close(statement);
-            SqlHelper.close(res);
+        @Override
+        public final void releaseConnection() {
+                conn = null;
+                try {
+                        connectionManager.releaseConnection();
+                } catch (SQLException ex) {
+                        LOG.error(ex.getMessage());
+                }
         }
-        return row;
-    }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectRow(java.lang.String, java.util.List)
-     */
-    @Override
-    public List<Object> selectRow(String sql, List<?> param) throws SQLException {
-        PreparedStatement stmt = null;
-        ResultSet res = null;
-        List<Object> row = null;
-        try {
-            stmt = SqlHelper.buildPreparedStatement(conn, sql, param);
-            res = stmt.executeQuery();
-            int numCols = SqlHelper.getColumnCount(res);
-            if (res.next()) {
-                row = SqlHelper.extractRowFromResultSet(res, numCols);
-            }
-        } finally {
-            SqlHelper.close(res);
-            SqlHelper.close(stmt);
+        @Override
+        public final int execute(final String sql) throws SQLException {
+                Statement stmt = null;
+                int rowCount = 0;
+                try {
+                        stmt = conn.createStatement();
+                        rowCount = stmt.executeUpdate(sql);
+                } finally {
+                        SqlHelper.close(stmt);
+                }
+                return rowCount;
         }
-        return row;
-    }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectRow(java.lang.String, int)
-     */
-    @Override
-    public List<Object> selectRow(String sql, int param) throws SQLException {
-        List<Object> arList = new ArrayList<Object>();
-        arList.add(param);
-        return selectRow(sql, arList);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectRow(java.lang.String, java.lang.String)
-     */
-    @Override
-    public List<Object> selectRow(String sql, String param) throws SQLException {
-        ArrayList<Object> arList = new ArrayList<Object>();
-        arList.add(param);
-        return selectRow(sql, arList);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectRow(java.lang.String, java.lang.String[])
-     */
-    @Override
-    public List<Object> selectRow(String sql, String[] param) throws SQLException {
-        ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
-        return selectRow(sql, arList);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectRow(java.lang.String, int[])
-     */
-    @Override
-    public List<Object> selectRow(String sql, int[] param) throws SQLException {
-        ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
-        return selectRow(sql, arList);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectColumn(java.lang.String)
-     */
-    @Override
-    public List<Object> selectColumn(String sql) throws SQLException {
-        Statement stmt = null;
-        ResultSet res = null;
-        ArrayList<Object> column = new ArrayList<Object>();
-        try {
-            stmt = conn.createStatement();
-            res = stmt.executeQuery(sql);
-            while (res.next()) {
-                res.getRow();
-                column.add(res.getObject(1));
-            }
-        } finally {
-            SqlHelper.close(res);
-            SqlHelper.close(stmt);
+        @Override
+        public final int execute(final String sql, final List<?> param) throws SQLException {
+                PreparedStatement st = null;
+                int rowCount = 0;
+                try {
+                        st = SqlHelper.buildPreparedStatement(conn, sql, param);
+                        rowCount = st.executeUpdate();
+                } finally {
+                        SqlHelper.close(st);
+                }
+                return rowCount;
         }
-        return column;
-    }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectColumnToStringArray(java.lang.String)
-     */
-    @Override
-    public String[] selectColumnToStringArray(String sql) throws SQLException {
-        List<Object> res = selectColumn(sql);
-        String[] ar = new String[res.size()];
-        for (int i = 0; i < res.size(); i++) {
-            ar[i] = (String) res.get(i);
+        @Override
+        public final int execute(final String sql, final String[] param) throws SQLException {
+                ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
+                return execute(sql, arList);
         }
-        return ar;
-    }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectColumnToIntArray(java.lang.String)
-     */
-    @Override
-    public int[] selectColumnToIntArray(String sql) throws SQLException {
-        List<Object> res = selectColumn(sql);
-        int[] ar = new int[res.size()];
-        for (int i = 0; i < res.size(); i++) {
-            ar[i] = (Integer) res.get(i);
+        @Override
+        public final <T> int execute(final String sql, final T param) throws SQLException {
+                ArrayList<Object> arList = new ArrayList<Object>();
+                arList.add(param);
+                return execute(sql, arList);
         }
-        return ar;
-    }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectColumn(java.lang.String, int[])
-     */
-    @Override
-    public List<Object> selectColumn(String sql, int[] param) throws SQLException {
-        ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
-        return selectColumn(sql, arList);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectColumn(java.lang.String, int)
-     */
-    @Override
-    public List<Object> selectColumn(String sql, int param) throws SQLException {
-        ArrayList<Object> arList = new ArrayList<Object>();
-        arList.add(param);
-        return selectColumn(sql, arList);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectColumn(java.lang.String, java.util.List)
-     */
-    @Override
-    public List<Object> selectColumn(String sql, List<?> param) throws SQLException {
-        PreparedStatement stmt = null;
-        ResultSet res = null;
-        ArrayList<Object> row = new ArrayList<Object>();
-        try {
-            stmt = SqlHelper.buildPreparedStatement(conn, sql, param);
-            res = stmt.executeQuery();
-            while (res.next()) {
-                res.getRow();
-                row.add(res.getObject(1));
-            }
-        } finally {
-            SqlHelper.close(res);
-            SqlHelper.close(stmt);
+        @Override
+        public final int execute(final String sql, final Map<String, Object> param) throws SQLException {
+                ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
+                return execute(sql, arList);
         }
-        return row;
-    }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectAll(java.lang.String)
-     */
-    @Override
-    public List<List<Object>> selectAll(String sql) throws SQLException {
-        Statement statement = null;
-        ResultSet res = null;
-        List<List<Object>> matrix = null;
-        try {
-            statement = conn.createStatement();
-            res = statement.executeQuery(sql);
-            matrix = SqlHelper.extractMatrixFromResultSet(res);
-        } finally {
-            SqlHelper.close(res);
-            SqlHelper.close(statement);
+        @Override
+        public final int execute(final String sql, final int[] param) throws SQLException {
+                ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
+                return execute(sql, arList);
         }
-        return matrix;
-    }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectAll(java.lang.String, java.util.List)
-     */
-    @Override
-    public List<List<Object>> selectAll(String sql, List<?> param) throws SQLException {
-        PreparedStatement stmt = null;
-        ResultSet res = null;
-        List<List<Object>> matrix = null;
-        try {
-            stmt = SqlHelper.buildPreparedStatement(conn, sql, param);
-            res = stmt.executeQuery();
-            matrix = SqlHelper.extractMatrixFromResultSet(res);
-        } finally {
-            SqlHelper.close(res);
-            SqlHelper.close(stmt);
+        @Override
+        public final Object selectField(final String sql) throws SQLException {
+                Statement stmt = null;
+                ResultSet result = null;
+                Object field = null;
+                try {
+                        stmt = conn.createStatement();
+                        result = stmt.executeQuery(sql);
+                        if (result.next()) {
+                                field = result.getObject(1);
+                        } else {
+                                throw new SQLException("*** Empty ResultSet ***");
+                        }
+                } finally {
+                        SqlHelper.close(stmt);
+                        SqlHelper.close(result);
+                }
+                return field;
         }
-        return matrix;
-    }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectAll(java.lang.String, java.lang.String[])
-     */
-    @Override
-    public List<List<Object>> selectAll(String sql, String[] param) throws SQLException {
-        ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
-        return selectAll(sql, arList);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectAll(java.lang.String, int[])
-     */
-    @Override
-    public List<List<Object>> selectAll(String sql, int[] param) throws SQLException {
-        ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
-        return selectAll(sql, arList);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectAll(java.lang.String, T)
-     */
-    @Override
-    public <T> List<List<Object>> selectAll(String sql, T param) throws SQLException {
-        ArrayList<Object> arList = new ArrayList<Object>();
-        arList.add(param);
-        return selectAll(sql, arList);
-    }
-
-    /**
-     * Creates a new Id to use in an INSERT statement. The returned Id won't be returned again, even
-     * if it's not used.
-     * 
-     * @param tablename
-     *            the name of the table for which we are requesting a new Id.
-     * @return an Object of type Long containing an Id that we can use for an insert statement.
-     * @throws SQLException
-     */
-    public int newIdUsingSequence(String tablename) throws SQLException {
-        String sql = "INSERT INTO _sequence_" + tablename + " VALUES (null)";
-        execute(sql);
-        Long id = (Long) selectField("SELECT LAST_INSERT_ID()");
-        sql = "DELETE FROM _sequence_" + tablename + " WHERE sequence<" + id;
-        execute(sql);
-        return id.intValue();
-    }
-
-    /**
-     * Returns a new id using sequences.
-     * 
-     * @param sequenceName
-     *            a mnemonic for the sequence. it's a good idea to use the same name as a table
-     *            name, but it's not required.
-     * @return an integer that is the next val to be used
-     * @throws SQLException
-     */
-    public int newIdUsingSequenceNoCommit(String sequenceName) throws SQLException {
-        String sql = "SELECT nextval FROM sequence WHERE sequencename=? FOR UPDATE";
-        List<Object> res = selectRow(sql, sequenceName);
-        if (res == null) {
-            sql = "INSERT INTO equence(nextval, sequencename) VALUES (2, ?)";
-            execute(sql, sequenceName);
-            return 1;
+        @Override
+        public final Object selectField(final String sql, final List<?> param) throws SQLException {
+                PreparedStatement stmt = null;
+                ResultSet result = null;
+                Object field = null;
+                try {
+                        stmt = SqlHelper.buildPreparedStatement(conn, sql, param);
+                        result = stmt.executeQuery();
+                        if (result.next()) {
+                                field = result.getObject(1);
+                        } else {
+                                return null;
+                        }
+                } finally {
+                        SqlHelper.close(stmt);
+                        SqlHelper.close(result);
+                }
+                return field;
         }
-        Integer nextval = (Integer) res.get(0);
-        sql = "UPDATE sequence SET nextval=nextval+1 WHERE sequencename=?";
-        execute(sql, sequenceName);
-        return nextval;
-    }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#insertDelayed(java.lang.String, java.util.Map)
-     */
-    @Override
-    public String insertDelayed(String tablename, Map<String, Object> fields) throws SQLException {
-        StringBuilder sb = new StringBuilder(128);
-        sb.append("INSERT DELAYED INTO ");
-        sb.append(tablename);
-        sb.append("(");
-        sb.append(StringHelper.implode(", ", fields));
-        sb.append(") VALUES (");
-        sb.append(StringHelper.repeatWithSeparator("?", fields.size(), ","));
-        sb.append(")");
-        String sql = sb.toString();
-        execute(sql, fields);
-        return sql;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#insert(java.lang.String, java.util.Map)
-     */
-    @Override
-    public String insert(String tablename, Map<String, Object> fields) throws SQLException {
-        String sql;
-        StringBuilder sqlB = new StringBuilder(128);
-        sqlB.append("INSERT INTO ");
-        sqlB.append(tablename);
-        sqlB.append("(");
-        sqlB.append(StringHelper.implode(", ", fields));
-        sqlB.append(") VALUES (");
-        sqlB.append(StringHelper.repeatWithSeparator("?", fields.size(), ","));
-        sqlB.append(")");
-        sql = sqlB.toString();
-        execute(sql, fields);
-        return sql;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#update(java.lang.String, java.util.Map, java.util.Map)
-     */
-    @Override
-    public int update(String tablename, Map<String, Object> fields, Map<String, Object> priKeys)
-            throws SQLException {
-        String sql = "UPDATE " + tablename + " SET " + StringHelper.implodeAndQuote("=?, ", fields, "`")
-                + "=? WHERE " + StringHelper.implode("=? AND ", priKeys) + "=?";
-        ArrayList<Object> arList = ArrayHelper.buildArrayList(fields, priKeys);
-        return execute(sql, arList);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#update(java.lang.String, java.util.Map, java.lang.String, T)
-     */
-    @Override
-    public <T> int update(String tablename, Map<String, Object> fields, String priName, T priValue)
-            throws SQLException {
-        Map<String, Object> priKeys = new HashMap<String, Object>();
-        priKeys.put(priName, priValue);
-        return update(tablename, fields, priKeys);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectRow(java.lang.String[], java.lang.String)
-     */
-    @Override
-    public List<Object> selectRow(String[] fields, String query) throws SQLException {
-        String sql = "SELECT " + StringHelper.implode(", ", fields) + " " + query;
-        List<Object> row = selectRow(sql);
-        return row;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectRow(java.lang.String[], java.lang.String, java.util.List)
-     */
-    @Override
-    public List<Object> selectRow(String[] fields, String query, List<?> param) throws SQLException {
-        String sql = "SELECT " + StringHelper.implode(", ", fields) + " " + query;
-        List<Object> row = selectRow(sql, param);
-        return row;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectRow(java.lang.String[], java.lang.String, int)
-     */
-    @Override
-    public List<Object> selectRow(String[] fields, String query, int param) throws SQLException {
-        String sql = "SELECT " + StringHelper.implode(", ", fields) + " " + query;
-        List<Object> row = selectRow(sql, param);
-        return row;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectRowHashMap(java.lang.String[], java.lang.String)
-     */
-    @Override
-    public Map<String, Object> selectRowHashMap(String[] fields, String query) throws SQLException {
-        Map<String, Object> res = new HashMap<String, Object>();
-        String sql = "SELECT " + StringHelper.implode(", ", fields) + " " + query;
-        List<Object> row = selectRow(sql);
-        if (row == null) {
-            return null;
+        @Override
+        public final Object selectField(final String sql, final String[] param) throws SQLException {
+                ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
+                return selectField(sql, arList);
         }
-        for (int i = 0; i < fields.length; i++) {
-            res.put(SqlHelper.extractFieldName(fields[i]), row.get(i));
+
+        @Override
+        public final Object selectField(final String sql, final int[] param) throws SQLException {
+                ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
+                return selectField(sql, arList);
         }
-        return res;
-    }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectRowHashMap(java.lang.String[], java.lang.String,
-     * java.util.List)
-     */
-    @Override
-    public Map<String, Object> selectRowHashMap(String[] fields, String query, List<?> param)
-            throws SQLException {
-        Map<String, Object> res = new HashMap<String, Object>();
-        String sql = "SELECT " + StringHelper.implode(", ", fields) + " " + query;
-        List<Object> row = selectRow(sql, param);
-        if (row == null) {
-            return null;
+        @Override
+        public final <T> Object selectField(final String sql, final T param) throws SQLException {
+                ArrayList<Object> arList = new ArrayList<Object>();
+                arList.add(param);
+                return selectField(sql, arList);
         }
-        for (int i = 0; i < fields.length; i++) {
-            res.put(SqlHelper.extractFieldName(fields[i]), row.get(i));
+
+        @Override
+        public final List<Object> selectRow(final String sql) throws SQLException {
+                Statement stat = null;
+                ResultSet result = null;
+                List<Object> row = null;
+                try {
+                        stat = conn.createStatement();
+                        result = stat.executeQuery(sql);
+                        int numCols = SqlHelper.getColumnCount(result);
+                        if (result.next()) {
+                                row = SqlHelper.extractRowFromResultSet(result, numCols);
+                        }
+                } finally {
+                        SqlHelper.close(stat);
+                        SqlHelper.close(result);
+                }
+                return row;
         }
-        return res;
-    }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectRowHashMap(java.lang.String[], java.lang.String, int)
-     */
-    @Override
-    public Map<String, Object> selectRowHashMap(String[] fields, String query, int param) throws SQLException {
-        ArrayList<Object> arList = new ArrayList<Object>();
-        arList.add(param);
-        return selectRowHashMap(fields, query, arList);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectRowHashMap(java.util.List, java.lang.String, int)
-     */
-    @Override
-    public Map<String, Object> selectRowHashMap(List<String> fields, String query, int param)
-            throws SQLException {
-        return selectRowHashMap(fields.toArray(new String[0]), query, param);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectRowHashMap(java.lang.String[], java.lang.String,
-     * java.lang.String)
-     */
-    @Override
-    public Map<String, Object> selectRowHashMap(String[] fields, String query, String param)
-            throws SQLException {
-        ArrayList<Object> arList = new ArrayList<Object>();
-        arList.add(param);
-        return selectRowHashMap(fields, query, arList);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectRowHashMap(java.lang.String[], java.lang.String, int[])
-     */
-    @Override
-    public Map<String, Object> selectRowHashMap(String[] fields, String query, int[] param)
-            throws SQLException {
-        ArrayList<Object> paramList = ArrayHelper.buildArrayList(param);
-        return selectRowHashMap(fields, query, paramList);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectAll(java.lang.String[], java.lang.String)
-     */
-    @Override
-    public List<List<Object>> selectAll(String[] fields, String query) throws SQLException {
-        String sql = "SELECT " + StringHelper.implodeAndQuote(", ", fields, "`") + " " + query;
-        List<List<Object>> matrix = selectAll(sql);
-        return matrix;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectAll(java.util.List, java.lang.String)
-     */
-    @Override
-    public List<List<Object>> selectAll(List<String> fields, String sql) throws SQLException {
-        return selectAll(fields.toArray(new String[0]), sql);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectAll(java.lang.String[], java.lang.String, java.util.List)
-     */
-    @Override
-    public List<List<Object>> selectAll(String[] fields, String query, List<?> param) throws SQLException {
-        String sql = "SELECT " + StringHelper.implode(", ", fields) + " " + query;
-        List<List<Object>> matrix = selectAll(sql, param);
-        return matrix;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectAll(java.lang.String[], java.lang.String, int)
-     */
-    @Override
-    public List<List<Object>> selectAll(String[] fields, String query, int param) throws SQLException {
-        String sql = "SELECT " + StringHelper.implode(", ", fields) + " " + query;
-        List<List<Object>> matrix = selectAll(sql, param);
-        return matrix;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectAllHashMap(java.util.List, java.lang.String)
-     */
-    @Override
-    public List<Map<String, Object>> selectAllHashMap(List<String> fields, String query) throws SQLException {
-        return selectAllHashMap(fields.toArray(new String[0]), query);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectAllHashMap(java.lang.String[], java.lang.String)
-     */
-    @Override
-    public List<Map<String, Object>> selectAllHashMap(String[] fields, String query) throws SQLException {
-        Map<String, Object> rowAsHashMap;
-        List<Object> rowAsList;
-        ArrayList<Map<String, Object>> res;
-        String sql = "SELECT " + StringHelper.implode(", ", fields) + " " + query;
-        List<List<Object>> matrix = selectAll(sql);
-        if (matrix == null) {
-            return null;
+        @Override
+        public final List<Object> selectRow(final String sql, final List<?> param) throws SQLException {
+                PreparedStatement stmt = null;
+                ResultSet result = null;
+                List<Object> row = null;
+                try {
+                        stmt = SqlHelper.buildPreparedStatement(conn, sql, param);
+                        result = stmt.executeQuery();
+                        int numCols = SqlHelper.getColumnCount(result);
+                        if (result.next()) {
+                                row = SqlHelper.extractRowFromResultSet(result, numCols);
+                        }
+                } finally {
+                        SqlHelper.close(result);
+                        SqlHelper.close(stmt);
+                }
+                return row;
         }
-        res = new ArrayList<Map<String, Object>>();
-        for (Iterator<List<Object>> it = matrix.iterator(); it.hasNext();) {
-            rowAsHashMap = new HashMap<String, Object>();
-            rowAsList = it.next();
-            for (int i = 0; i < fields.length; i++) {
-                rowAsHashMap.put(SqlHelper.extractFieldName(fields[i]), rowAsList.get(i));
-            }
-            res.add(rowAsHashMap);
+
+        @Override
+        public final List<Object> selectRow(final String sql, final int param) throws SQLException {
+                List<Object> arList = new ArrayList<Object>();
+                arList.add(param);
+                return selectRow(sql, arList);
         }
-        return res;
-    }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectAllHashMap(java.lang.String[], java.lang.String,
-     * java.util.ArrayList)
-     */
-    @Override
-    public List<Map<String, Object>> selectAllHashMap(String[] fields, String query, ArrayList<?> param)
-            throws SQLException {
-        Map<String, Object> rowHM;
-        List<Object> rowAL;
-        ArrayList<Map<String, Object>> res;
-        String sql = "SELECT " + StringHelper.implode(", ", fields) + " " + query;
-        List<List<Object>> matrix = selectAll(sql, param);
-        if (matrix == null) {
-            return null;
+        @Override
+        public final List<Object> selectRow(final String sql, final String param) throws SQLException {
+                ArrayList<Object> arList = new ArrayList<Object>();
+                arList.add(param);
+                return selectRow(sql, arList);
         }
-        res = new ArrayList<Map<String, Object>>();
-        for (Iterator<List<Object>> it = matrix.iterator(); it.hasNext();) {
-            rowHM = new HashMap<String, Object>();
-            rowAL = it.next();
-            for (int i = 0; i < fields.length; i++) {
-                rowHM.put(SqlHelper.extractFieldName(fields[i]), rowAL.get(i));
-            }
-            res.add(rowHM);
+
+        @Override
+        public final List<Object> selectRow(final String sql, final String[] param) throws SQLException {
+                ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
+                return selectRow(sql, arList);
         }
-        return res;
-    }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectAllHashMap(java.lang.String[], java.lang.String, int[])
-     */
-    @Override
-    public List<Map<String, Object>> selectAllHashMap(String[] fields, String sql, int[] param)
-            throws SQLException {
-        ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
-        return selectAllHashMap(fields, sql, arList);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectAllHashMap(java.lang.String[], java.lang.String, T)
-     */
-    @Override
-    public <T> List<Map<String, Object>> selectAllHashMap(String[] fields, String sql, T param)
-            throws SQLException {
-        ArrayList<Object> arList = new ArrayList<Object>();
-        arList.add(param);
-        return selectAllHashMap(fields, sql, arList);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#autoCommitTransactions(boolean)
-     */
-    @Override
-    public void autoCommitTransactions(boolean autoCommit) throws SQLException {
-        conn.setAutoCommit(autoCommit);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#commitTransaction()
-     */
-    @Override
-    public void commitTransaction() throws SQLException {
-        connectionManager.commitTransaction();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#rollbackTransaction()
-     */
-    @Override
-    public void rollbackTransaction() throws SQLException {
-        connectionManager.rollbackTransaction();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.obliquid.db.MetaDb#selectBlobField(java.lang.String)
-     */
-    @Override
-    public byte[] selectBlobField(String sql) throws SQLException {
-        ResultSet res = executeRawQuery(sql);
-        byte[] immagine = null;
-        if (!res.next()) {
-            throw new SQLException("No rows returned");
+        @Override
+        public final List<Object> selectRow(final String sql, final int[] param) throws SQLException {
+                ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
+                return selectRow(sql, arList);
         }
-        immagine = SqlHelper.fetchBlobFromCurrentRowInResulSet(res, 1);
-        closeResultSetAndStatement();
-        return immagine;
-    }
+
+        @Override
+        public final List<Object> selectColumn(final String sql) throws SQLException {
+                Statement stmt = null;
+                ResultSet result = null;
+                ArrayList<Object> column = new ArrayList<Object>();
+                try {
+                        stmt = conn.createStatement();
+                        result = stmt.executeQuery(sql);
+                        while (result.next()) {
+                                result.getRow();
+                                column.add(result.getObject(1));
+                        }
+                } finally {
+                        SqlHelper.close(result);
+                        SqlHelper.close(stmt);
+                }
+                return column;
+        }
+
+        @Override
+        public final String[] selectColumnToStringArray(final String sql) throws SQLException {
+                List<Object> result = selectColumn(sql);
+                String[] ar = new String[result.size()];
+                for (int i = 0; i < result.size(); i++) {
+                        ar[i] = (String) result.get(i);
+                }
+                return ar;
+        }
+
+        @Override
+        public final int[] selectColumnToIntArray(final String sql) throws SQLException {
+                List<Object> result = selectColumn(sql);
+                int[] ar = new int[result.size()];
+                for (int i = 0; i < result.size(); i++) {
+                        ar[i] = (Integer) result.get(i);
+                }
+                return ar;
+        }
+
+        @Override
+        public final List<Object> selectColumn(final String sql, final int[] param) throws SQLException {
+                ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
+                return selectColumn(sql, arList);
+        }
+
+        @Override
+        public final List<Object> selectColumn(final String sql, final int param) throws SQLException {
+                ArrayList<Object> arList = new ArrayList<Object>();
+                arList.add(param);
+                return selectColumn(sql, arList);
+        }
+
+        @Override
+        public final List<Object> selectColumn(final String sql, final List<?> param) throws SQLException {
+                PreparedStatement stmt = null;
+                ResultSet result = null;
+                ArrayList<Object> row = new ArrayList<Object>();
+                try {
+                        stmt = SqlHelper.buildPreparedStatement(conn, sql, param);
+                        result = stmt.executeQuery();
+                        while (result.next()) {
+                                result.getRow();
+                                row.add(result.getObject(1));
+                        }
+                } finally {
+                        SqlHelper.close(result);
+                        SqlHelper.close(stmt);
+                }
+                return row;
+        }
+
+        @Override
+        public final List<List<Object>> selectAll(final String sql) throws SQLException {
+                Statement st = null;
+                ResultSet result = null;
+                List<List<Object>> matrix = null;
+                try {
+                        st = conn.createStatement();
+                        result = st.executeQuery(sql);
+                        matrix = SqlHelper.extractMatrixFromResultSet(result);
+                } finally {
+                        SqlHelper.close(result);
+                        SqlHelper.close(st);
+                }
+                return matrix;
+        }
+
+        @Override
+        public final List<List<Object>> selectAll(final String sql, final List<?> param) throws SQLException {
+                PreparedStatement stmt = null;
+                ResultSet result = null;
+                List<List<Object>> matrix = null;
+                try {
+                        stmt = SqlHelper.buildPreparedStatement(conn, sql, param);
+                        result = stmt.executeQuery();
+                        matrix = SqlHelper.extractMatrixFromResultSet(result);
+                } finally {
+                        SqlHelper.close(result);
+                        SqlHelper.close(stmt);
+                }
+                return matrix;
+        }
+
+        @Override
+        public final List<List<Object>> selectAll(final String sql, final String[] param)
+                        throws SQLException {
+                ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
+                return selectAll(sql, arList);
+        }
+
+        @Override
+        public final List<List<Object>> selectAll(final String sql, final int[] param) throws SQLException {
+                ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
+                return selectAll(sql, arList);
+        }
+
+        @Override
+        public final <T> List<List<Object>> selectAll(final String sql, final T param) throws SQLException {
+                ArrayList<Object> arList = new ArrayList<Object>();
+                arList.add(param);
+                return selectAll(sql, arList);
+        }
+
+        /**
+         * Creates a new Id to use in an INSERT statement. The returned Id won't
+         * be returned again, even if it's not used.
+         * 
+         * @param tablename
+         *                the name of the table for which we are requesting a
+         *                new Id.
+         * @return an Object of type Long containing an Id that we can use for
+         *         an insert statement.
+         * @throws SQLException
+         *                 mostly could mean that the _sequence_<tablename>
+         *                 table doesn't exists
+         */
+        public final int newIdUsingSequence(final String tablename) throws SQLException {
+                String sql = "INSERT INTO _sequence_" + tablename + " VALUES (null)";
+                execute(sql);
+                Long id = (Long) selectField("SELECT LAST_INSERT_ID()");
+                sql = "DELETE FROM _sequence_" + tablename + " WHERE sequence<" + id;
+                execute(sql);
+                return id.intValue();
+        }
+
+        /**
+         * Returns a new id using sequences.
+         * 
+         * @param sequenceName
+         *                a mnemonic for the sequence. it's a good idea to use
+         *                the same name as a table name, but it's not required.
+         * @return an integer that is the next value to be used
+         * @throws SQLException
+         *                 when some DB problem happens
+         */
+        public final int newIdUsingSequenceNoCommit(final String sequenceName) throws SQLException {
+                String sql = "SELECT nextval FROM sequence WHERE sequencename=? FOR UPDATE";
+                List<Object> result = selectRow(sql, sequenceName);
+                if (result == null) {
+                        sql = "INSERT INTO equence(nextval, sequencename) VALUES (2, ?)";
+                        execute(sql, sequenceName);
+                        return 1;
+                }
+                Integer nextval = (Integer) result.get(0);
+                sql = "UPDATE sequence SET nextval=nextval+1 WHERE sequencename=?";
+                execute(sql, sequenceName);
+                return nextval;
+        }
+
+        @Override
+        public final String insertDelayed(final String tablename, final Map<String, Object> fields)
+                        throws SQLException {
+                final int initialBufferSize = 128;
+                StringBuilder sb = new StringBuilder(initialBufferSize);
+                sb.append("INSERT DELAYED INTO ");
+                sb.append(tablename);
+                sb.append("(");
+                sb.append(StringHelper.implode(", ", fields));
+                sb.append(") VALUES (");
+                sb.append(StringHelper.repeatWithSeparator("?", fields.size(), ","));
+                sb.append(")");
+                String sql = sb.toString();
+                execute(sql, fields);
+                return sql;
+        }
+
+        @Override
+        public final String insert(final String tablename, final Map<String, Object> fields)
+                        throws SQLException {
+                final int initialBufferSize = 128;
+                String sql;
+                StringBuilder sqlB = new StringBuilder(initialBufferSize);
+                sqlB.append("INSERT INTO ");
+                sqlB.append(tablename);
+                sqlB.append("(");
+                sqlB.append(StringHelper.implode(", ", fields));
+                sqlB.append(") VALUES (");
+                sqlB.append(StringHelper.repeatWithSeparator("?", fields.size(), ","));
+                sqlB.append(")");
+                sql = sqlB.toString();
+                execute(sql, fields);
+                return sql;
+        }
+
+        @Override
+        public final int update(final String tablename, final Map<String, Object> fields,
+                        final Map<String, Object> priKeys) throws SQLException {
+                String sql = "UPDATE " + tablename + " SET "
+                                + StringHelper.implodeAndQuote("=?, ", fields, "`") + "=? WHERE "
+                                + StringHelper.implode("=? AND ", priKeys) + "=?";
+                ArrayList<Object> arList = ArrayHelper.buildArrayList(fields, priKeys);
+                return execute(sql, arList);
+        }
+
+        @Override
+        public final <T> int update(final String tablename, final Map<String, Object> fields,
+                        final String priName, final T priValue) throws SQLException {
+                Map<String, Object> priKeys = new HashMap<String, Object>();
+                priKeys.put(priName, priValue);
+                return update(tablename, fields, priKeys);
+        }
+
+        @Override
+        public final List<Object> selectRow(final String[] fields, final String query) throws SQLException {
+                String sql = "SELECT " + StringHelper.implode(", ", fields) + " " + query;
+                List<Object> row = selectRow(sql);
+                return row;
+        }
+
+        @Override
+        public final List<Object> selectRow(final String[] fields, final String query, final List<?> param)
+                        throws SQLException {
+                String sql = "SELECT " + StringHelper.implode(", ", fields) + " " + query;
+                List<Object> row = selectRow(sql, param);
+                return row;
+        }
+
+        @Override
+        public final List<Object> selectRow(final String[] fields, final String query, final int param)
+                        throws SQLException {
+                String sql = "SELECT " + StringHelper.implode(", ", fields) + " " + query;
+                List<Object> row = selectRow(sql, param);
+                return row;
+        }
+
+        @Override
+        public final Map<String, Object> selectRowHashMap(final String[] fields, final String query)
+                        throws SQLException {
+                Map<String, Object> result = new HashMap<String, Object>();
+                String sql = "SELECT " + StringHelper.implode(", ", fields) + " " + query;
+                List<Object> row = selectRow(sql);
+                if (row == null) {
+                        return null;
+                }
+                for (int i = 0; i < fields.length; i++) {
+                        result.put(SqlHelper.extractFieldName(fields[i]), row.get(i));
+                }
+                return result;
+        }
+
+        @Override
+        public final Map<String, Object> selectRowHashMap(final String[] fields, final String query,
+                        final List<?> param) throws SQLException {
+                Map<String, Object> result = new HashMap<String, Object>();
+                String sql = "SELECT " + StringHelper.implode(", ", fields) + " " + query;
+                List<Object> row = selectRow(sql, param);
+                if (row == null) {
+                        return null;
+                }
+                for (int i = 0; i < fields.length; i++) {
+                        result.put(SqlHelper.extractFieldName(fields[i]), row.get(i));
+                }
+                return result;
+        }
+
+        @Override
+        public final Map<String, Object> selectRowHashMap(final String[] fields, final String query,
+                        final int param) throws SQLException {
+                ArrayList<Object> arList = new ArrayList<Object>();
+                arList.add(param);
+                return selectRowHashMap(fields, query, arList);
+        }
+
+        @Override
+        public final Map<String, Object> selectRowHashMap(final List<String> fields, final String query,
+                        final int param) throws SQLException {
+                return selectRowHashMap(fields.toArray(new String[0]), query, param);
+        }
+
+        @Override
+        public final Map<String, Object> selectRowHashMap(final String[] fields, final String query,
+                        final String param) throws SQLException {
+                ArrayList<Object> arList = new ArrayList<Object>();
+                arList.add(param);
+                return selectRowHashMap(fields, query, arList);
+        }
+
+        @Override
+        public final Map<String, Object> selectRowHashMap(final String[] fields, final String query,
+                        final int[] param) throws SQLException {
+                ArrayList<Object> paramList = ArrayHelper.buildArrayList(param);
+                return selectRowHashMap(fields, query, paramList);
+        }
+
+        @Override
+        public final List<List<Object>> selectAll(final String[] fields, final String query)
+                        throws SQLException {
+                String sql = "SELECT " + StringHelper.implodeAndQuote(", ", fields, "`") + " " + query;
+                List<List<Object>> matrix = selectAll(sql);
+                return matrix;
+        }
+
+        @Override
+        public final List<List<Object>> selectAll(final List<String> fields, final String sql)
+                        throws SQLException {
+                return selectAll(fields.toArray(new String[0]), sql);
+        }
+
+        @Override
+        public final List<List<Object>> selectAll(final String[] fields, final String query,
+                        final List<?> param) throws SQLException {
+                String sql = "SELECT " + StringHelper.implode(", ", fields) + " " + query;
+                List<List<Object>> matrix = selectAll(sql, param);
+                return matrix;
+        }
+
+        @Override
+        public final List<List<Object>> selectAll(final String[] fields, final String query, final int param)
+                        throws SQLException {
+                String sql = "SELECT " + StringHelper.implode(", ", fields) + " " + query;
+                List<List<Object>> matrix = selectAll(sql, param);
+                return matrix;
+        }
+
+        @Override
+        public final List<Map<String, Object>> selectAllHashMap(final List<String> fields, final String query)
+                        throws SQLException {
+                return selectAllHashMap(fields.toArray(new String[0]), query);
+        }
+
+        @Override
+        public final List<Map<String, Object>> selectAllHashMap(final String[] fields, final String query)
+                        throws SQLException {
+                Map<String, Object> rowAsHashMap;
+                List<Object> rowAsList;
+                ArrayList<Map<String, Object>> result;
+                String sql = "SELECT " + StringHelper.implode(", ", fields) + " " + query;
+                List<List<Object>> matrix = selectAll(sql);
+                if (matrix == null) {
+                        return null;
+                }
+                result = new ArrayList<Map<String, Object>>();
+                for (Iterator<List<Object>> it = matrix.iterator(); it.hasNext();) {
+                        rowAsHashMap = new HashMap<String, Object>();
+                        rowAsList = it.next();
+                        for (int i = 0; i < fields.length; i++) {
+                                rowAsHashMap.put(SqlHelper.extractFieldName(fields[i]), rowAsList.get(i));
+                        }
+                        result.add(rowAsHashMap);
+                }
+                return result;
+        }
+
+        @Override
+        public final List<Map<String, Object>> selectAllHashMap(final String[] fields, final String query,
+                        final List<?> param) throws SQLException {
+                Map<String, Object> rowHM;
+                List<Object> rowAL;
+                ArrayList<Map<String, Object>> result;
+                String sql = "SELECT " + StringHelper.implode(", ", fields) + " " + query;
+                List<List<Object>> matrix = selectAll(sql, param);
+                if (matrix == null) {
+                        return null;
+                }
+                result = new ArrayList<Map<String, Object>>();
+                for (Iterator<List<Object>> it = matrix.iterator(); it.hasNext();) {
+                        rowHM = new HashMap<String, Object>();
+                        rowAL = it.next();
+                        for (int i = 0; i < fields.length; i++) {
+                                rowHM.put(SqlHelper.extractFieldName(fields[i]), rowAL.get(i));
+                        }
+                        result.add(rowHM);
+                }
+                return result;
+        }
+
+        @Override
+        public final List<Map<String, Object>> selectAllHashMap(final String[] fields, final String sql,
+                        final int[] param) throws SQLException {
+                ArrayList<Object> arList = ArrayHelper.buildArrayList(param);
+                return selectAllHashMap(fields, sql, arList);
+        }
+
+        @Override
+        public final <T> List<Map<String, Object>> selectAllHashMap(final String[] fields, final String sql,
+                        final T param) throws SQLException {
+                ArrayList<Object> arList = new ArrayList<Object>();
+                arList.add(param);
+                return selectAllHashMap(fields, sql, arList);
+        }
+
+        @Override
+        public final void autoCommitTransactions(final boolean autoCommit) throws SQLException {
+                conn.setAutoCommit(autoCommit);
+        }
+
+        @Override
+        public final void commitTransaction() throws SQLException {
+                connectionManager.commitTransaction();
+        }
+
+        @Override
+        public final void rollbackTransaction() throws SQLException {
+                connectionManager.rollbackTransaction();
+        }
+
+        @Override
+        public final byte[] selectBlobField(final String sql) throws SQLException {
+                ResultSet result = executeRawQuery(sql);
+                byte[] immagine = null;
+                if (!result.next()) {
+                        throw new SQLException("No rows returned");
+                }
+                immagine = SqlHelper.fetchBlobFromCurrentRowInResulSet(result, 1);
+                closeResultSetAndStatement();
+                return immagine;
+        }
 
 }
