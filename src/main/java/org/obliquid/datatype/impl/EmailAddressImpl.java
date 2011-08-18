@@ -19,6 +19,22 @@ public class EmailAddressImpl implements EmailAddress {
         private StringStrategy stringStrategy = new StringStrategy();
 
         /**
+         * Default constructor.
+         */
+        public EmailAddressImpl() {
+        }
+
+        /**
+         * Constructor setting an email address.
+         * 
+         * @param anEmail
+         *                the email address to set
+         */
+        public EmailAddressImpl(final String anEmail) {
+                setData(anEmail);
+        }
+
+        /**
          * Check if the email address is valid, an empty email is OK.
          * 
          * @param anEmail

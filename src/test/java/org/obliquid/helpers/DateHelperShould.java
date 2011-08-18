@@ -64,9 +64,11 @@ public class DateHelperShould {
         @Test
         public final void formatIsoDateFromJavaDate() {
                 String isoDate = "2009-09-24";
-                assertEquals(isoDate, DateHelper.formatIsoDate(DateHelper.buildJavaDateFromIsoDate(isoDate)));
+                assertEquals(isoDate, DateHelper.buildIsoDateFromJavaDate(DateHelper
+                                .buildJavaDateFromIsoDate(isoDate)));
                 isoDate = "2011-02-09";
-                assertEquals(isoDate, DateHelper.formatIsoDate(DateHelper.buildJavaDateFromIsoDate(isoDate)));
+                assertEquals(isoDate, DateHelper.buildIsoDateFromJavaDate(DateHelper
+                                .buildJavaDateFromIsoDate(isoDate)));
         }
 
         /**
