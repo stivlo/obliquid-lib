@@ -11,10 +11,23 @@ import org.junit.Test;
 
 import com.google.common.collect.ImmutableList;
 
+/**
+ * Class under test TableIteratorBuilder.
+ * 
+ * @author stivlo
+ * 
+ */
 public class TableIteratorBuilderShould {
 
+        /**
+         * Return all tables.
+         * 
+         * @throws SQLException
+         *                 in case of problems
+         */
         @Test
         public final void returnSixteenTablesForDb2() throws SQLException {
+                final int expectedTables = 16;
                 TableIteratorBuilder builder = new TableIteratorBuilder();
                 builder.setDb(new MetaDbImpl());
                 Iterator<String> tableIterator = builder.tableIterator();
@@ -24,9 +37,15 @@ public class TableIteratorBuilderShould {
                         tableIterator.next();
                         count++;
                 }
-                assertEquals(16, count);
+                assertEquals(expectedTables, count);
         }
 
+        /**
+         * In the DB obliquid_db1 there are no tables.
+         * 
+         * @throws SQLException
+         *                 in case of problems
+         */
         @Test
         public final void returnZeroTablesForDb1() throws SQLException {
                 TableIteratorBuilder builder = new TableIteratorBuilder();
@@ -41,6 +60,12 @@ public class TableIteratorBuilderShould {
                 assertEquals(0, count);
         }
 
+        /**
+         * When selecting a wrong DB an exception will be thrown.
+         * 
+         * @throws SQLException
+         *                 should be thrown
+         */
         @Test(expected = SQLException.class)
         public final void throwExceptionForOtherDbs() throws SQLException {
                 TableIteratorBuilder builder = new TableIteratorBuilder();
@@ -52,6 +77,12 @@ public class TableIteratorBuilderShould {
                 }
         }
 
+        /**
+         * Text field types should be recognised.
+         * 
+         * @throws SQLException
+         *                 in case of problems
+         */
         @Test
         public final void dbFieldShouldRecognizeTextTypes() throws SQLException {
                 Iterator<String> tableIt = TableIteratorBuilder.tableIteratorWithAutoDb();

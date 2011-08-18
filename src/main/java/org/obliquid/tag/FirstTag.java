@@ -7,60 +7,87 @@ import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.Tag;
 
+/**
+ * An example implementation of a JSP tag.
+ * 
+ * @author stivlo
+ * 
+ */
 public class FirstTag implements Tag {
 
-    private PageContext pc = null;
-    private Tag parent = null;
-    private String name = null;
+        /**
+         * A PageContext instance provides access to all the namespaces
+         * associated with a JSP page, provides access to several page
+         * attributes, as well as a layer above the implementation details.
+         * Implicit objects are added to the pageContext automatically.
+         */
+        private PageContext pc = null;
 
-    @Override
-    public void setPageContext(PageContext p) {
-        pc = p;
-    }
+        /** Parent tag. */
+        private Tag parent = null;
 
-    @Override
-    public void setParent(Tag t) {
-        parent = t;
-    }
+        /** Person's name parameter. */
+        private String name = null;
 
-    @Override
-    public Tag getParent() {
-        return parent;
-    }
-
-    public void setName(String s) {
-        name = s;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public int doStartTag() throws JspException {
-        try {
-            if (name != null) {
-                pc.getOut().write("Hello " + name + "!");
-            } else {
-                pc.getOut().write("You didn't enter your name");
-                pc.getOut().write(", what are you afraid of ?");
-            }
-        } catch (IOException e) {
-            throw new JspTagException("An IOException occurred.");
+        @Override
+        public final void setPageContext(final PageContext p) {
+                pc = p;
         }
-        return SKIP_BODY;
-    }
 
-    @Override
-    public int doEndTag() throws JspException {
-        return EVAL_PAGE;
-    }
+        @Override
+        public final void setParent(final Tag t) {
+                parent = t;
+        }
 
-    @Override
-    public void release() {
-        pc = null;
-        parent = null;
-        name = null;
-    }
+        @Override
+        public final Tag getParent() {
+                return parent;
+        }
+
+        /**
+         * Set the person's name.
+         * 
+         * @param theName
+         *                the name to set
+         */
+        public final void setName(final String theName) {
+                name = theName;
+        }
+
+        /**
+         * The name parameter.
+         * 
+         * @return the name parameter
+         */
+        public final String getName() {
+                return name;
+        }
+
+        @Override
+        public final int doStartTag() throws JspException {
+                try {
+                        if (name != null) {
+                                pc.getOut().write("Hello " + name + "!");
+                        } else {
+                                pc.getOut().write("You didn't enter your name");
+                                pc.getOut().write(", what are you afraid of ?");
+                        }
+                } catch (IOException e) {
+                        throw new JspTagException("An IOException occurred.");
+                }
+                return SKIP_BODY;
+        }
+
+        @Override
+        public final int doEndTag() throws JspException {
+                return EVAL_PAGE;
+        }
+
+        @Override
+        public final void release() {
+                pc = null;
+                parent = null;
+                name = null;
+        }
 
 }

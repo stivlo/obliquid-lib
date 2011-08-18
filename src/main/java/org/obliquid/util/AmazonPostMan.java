@@ -1,6 +1,5 @@
 package org.obliquid.util;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,82 +11,91 @@ import com.amazonaws.services.simpleemail.model.Message;
 import com.amazonaws.services.simpleemail.model.SendEmailRequest;
 
 /**
- * A class to send emails using Amazon Web Services. To instantiate it use ClientFactory.
+ * A class to send emails using Amazon Web Services. To instantiate it use
+ * ClientFactory.
  * 
  * @author stivlo
  * 
  */
 class AmazonPostMan implements PostMan {
 
-    private String from, to, subject, body;
+        /** Mail headers and body. */
+        private String from, to, subject, body;
 
-    public AmazonPostMan() {
-        //create only through factory class
-    }
+        /**
+         * Constructor.
+         */
+        public AmazonPostMan() {
+                //create only through factory class
+        }
 
-    @Override
-    public void setFrom(String from) {
-        this.from = from;
-    }
+        @Override
+        public void setFrom(final String fromIn) {
+                from = fromIn;
+        }
 
-    @Override
-    public String getFrom() {
-        return from;
-    }
+        @Override
+        public String getFrom() {
+                return from;
+        }
 
-    @Override
-    public void setTo(String to) {
-        this.to = to;
-    }
+        @Override
+        public void setTo(final String toIn) {
+                to = toIn;
+        }
 
-    @Override
-    public String getTo() {
-        return to;
-    }
+        @Override
+        public String getTo() {
+                return to;
+        }
 
-    @Override
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
+        @Override
+        public void setSubject(final String subjectIn) {
+                subject = subjectIn;
+        }
 
-    @Override
-    public String getSubject() {
-        return subject;
-    }
+        @Override
+        public String getSubject() {
+                return subject;
+        }
 
-    /**
-     * Set the message body
-     * 
-     * @param message
-     */
-    @Override
-    public void setBody(String message) {
-        this.body = message;
-    }
+        /**
+         * Set the message body.
+         * 
+         * @param message
+         *                the message body
+         */
+        @Override
+        public void setBody(final String message) {
+                this.body = message;
+        }
 
-    @Override
-    public String getBody() {
-        return body;
-    }
+        @Override
+        public String getBody() {
+                return body;
+        }
 
-    /**
-     * Actually send the email
-     * 
-     * @throws IOException
-     */
-    @Override
-    public void send() {
-        AmazonSimpleEmailService service = ClientFactory.createSimpleEmailServiceClient();
-        Destination destination = new Destination(getToAsList());
-        Body body = new Body();
-        body.setText(new Content(getBody()));
-        Message message = new Message(new Content(getSubject()), body);
-        SendEmailRequest request = new SendEmailRequest(getFrom(), destination, message);
-        service.sendEmail(request);
-    }
+        /**
+         * Actually send the email.
+         */
+        @Override
+        public void send() {
+                AmazonSimpleEmailService service = ClientFactory.createSimpleEmailServiceClient();
+                Destination destination = new Destination(getToAsList());
+                Body amazonBody = new Body();
+                amazonBody.setText(new Content(getBody()));
+                Message message = new Message(new Content(getSubject()), amazonBody);
+                SendEmailRequest request = new SendEmailRequest(getFrom(), destination, message);
+                service.sendEmail(request);
+        }
 
-    private List<String> getToAsList() {
-        return Arrays.asList(getTo().split(","));
-    }
+        /**
+         * Get a list of addressees (to be used in to: header).
+         * 
+         * @return a list of addresses
+         */
+        private List<String> getToAsList() {
+                return Arrays.asList(getTo().split(","));
+        }
 
 }

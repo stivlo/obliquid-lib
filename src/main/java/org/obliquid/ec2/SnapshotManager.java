@@ -27,6 +27,9 @@ import com.amazonaws.services.ec2.model.Snapshot;
  */
 public class SnapshotManager {
 
+        /**
+         * Amazon EC2 client.
+         */
         private AmazonEC2 ec2 = null;
 
         /**
@@ -63,6 +66,7 @@ public class SnapshotManager {
          * which has a simplified interface.
          * 
          * @param instance
+         *                an Amazon EC2 instance
          * @return a list of EBS volumes of an instance
          */
         public final List<MyVolume> listVolumesOfAnInstance(final Instance instance) {

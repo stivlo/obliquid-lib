@@ -11,19 +11,22 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
 import org.obliquid.helpers.StringHelper;
 
 /**
- * Truncate text after maxLength or 80 chars, adding "&hellip;" if the text was longer (this
- * actually means that the resulting String is longer than maxLength. Implementation inspired from
- * stackoverflow.com #2502282
+ * Truncate text after maxLength or 80 chars, adding "&hellip;" if the text was
+ * longer (this actually means that the resulting String is longer than
+ * maxLength. Implementation inspired from stackoverflow.com #2502282
  */
 public class Ellipsis extends SimpleTagSupport {
 
         /**
-         * How many characters are allowed (maximum). Sets default value.
+         * How many characters are allowed (maximum). Default value.
          */
-        private int maxLength = 80;
+        private static final int MAX_LENGTH = 80;
+
+        /** How many characters are allowed before truncating. */
+        private int maxLength = MAX_LENGTH;
 
         @Override
-        public void doTag() {
+        public final void doTag() {
                 final JspWriter out = getJspContext().getOut();
                 final JspFragment body = getJspBody();
                 final StringWriter stringWriter = new StringWriter();
@@ -40,18 +43,19 @@ public class Ellipsis extends SimpleTagSupport {
         /**
          * Set the maxLength. This method is called automatically
          * 
-         * @param maxLength
+         * @param maxLengthIn
+         *                how many character to keep before truncating
          */
-        public void setMaxLength(int maxLength) {
-                this.maxLength = maxLength;
+        public final void setMaxLength(final int maxLengthIn) {
+                maxLength = maxLengthIn;
         }
 
         /**
-         * Return the maxLenth
+         * Return the maxLenth.
          * 
          * @return maxLength
          */
-        public int getMaxLength() {
+        public final int getMaxLength() {
                 return maxLength;
         }
 

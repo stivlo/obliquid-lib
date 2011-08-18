@@ -5,38 +5,40 @@ import java.util.Map;
 import java.util.concurrent.Future;
 
 /**
- * In memory Map implementation of the OCache interface
+ * In memory Map implementation of the OCache interface. Should not be used for
+ * production, only for testing when memcache is not available.
  * 
  * @author stivlo
  * 
  */
 public class MapCache implements OCache {
 
+        /** Our cache buffer. */
         private final Map<String, Object> store = new HashMap<String, Object>(256);
 
         @Override
-        public Future<Boolean> set(String key, Object object) {
+        public final Future<Boolean> set(final String key, final Object object) {
                 boolean result = false;
                 if (key != null) {
                         try {
                                 store.put(key, object);
                                 result = true;
                         } catch (NullPointerException ex) {
-                                // result is false
+                                result = false;
                         } catch (IllegalArgumentException ex) {
-                                // result is false
+                                result = false;
                         }
                 }
                 return new FakeFutureBoolean(result);
         }
 
         @Override
-        public Object get(String key) {
+        public final Object get(final String key) {
                 return store.get(key);
         }
 
         @Override
-        public Future<Boolean> delete(String key) {
+        public final Future<Boolean> delete(final String key) {
                 Object value = store.remove(key);
                 return new FakeFutureBoolean(value != null);
         }

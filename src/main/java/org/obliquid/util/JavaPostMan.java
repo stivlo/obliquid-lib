@@ -17,63 +17,65 @@ import javax.mail.internet.MimeMessage;
  */
 class JavaPostMan implements PostMan {
 
-    private String from, to, subject, body;
+        /** Mail headers and body. */
+        private String from, to, subject, body;
 
-    @Override
-    public void setFrom(String from) {
-        this.from = from;
-    }
-
-    @Override
-    public String getFrom() {
-        return from;
-    }
-
-    @Override
-    public void setTo(String to) {
-        this.to = to;
-    }
-
-    @Override
-    public String getTo() {
-        return to;
-    }
-
-    @Override
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    @Override
-    public String getSubject() {
-        return subject;
-    }
-
-    @Override
-    public void setBody(String message) {
-        this.body = message;
-    }
-
-    @Override
-    public String getBody() {
-        return body;
-    }
-
-    @Override
-    public void send() {
-        Message emailMessage = new MimeMessage(ClientFactory.createJavaMailSession());
-        try {
-            emailMessage.setFrom(new InternetAddress(getFrom()));
-            emailMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(getTo(), false));
-            emailMessage.setSubject(getSubject());
-            emailMessage.setSentDate(new Date());
-            emailMessage.setText(getBody());
-            Transport.send(emailMessage);
-        } catch (AddressException ex) {
-            throw new RejectedExecutionException(ex);
-        } catch (MessagingException ex) {
-            throw new RejectedExecutionException(ex);
+        @Override
+        public void setFrom(final String fromIn) {
+                from = fromIn;
         }
-    }
+
+        @Override
+        public String getFrom() {
+                return from;
+        }
+
+        @Override
+        public void setTo(final String toIn) {
+                to = toIn;
+        }
+
+        @Override
+        public String getTo() {
+                return to;
+        }
+
+        @Override
+        public void setSubject(final String subjectIn) {
+                subject = subjectIn;
+        }
+
+        @Override
+        public String getSubject() {
+                return subject;
+        }
+
+        @Override
+        public void setBody(final String messageIn) {
+                body = messageIn;
+        }
+
+        @Override
+        public String getBody() {
+                return body;
+        }
+
+        @Override
+        public void send() {
+                Message emailMessage = new MimeMessage(ClientFactory.createJavaMailSession());
+                try {
+                        emailMessage.setFrom(new InternetAddress(getFrom()));
+                        emailMessage.setRecipients(Message.RecipientType.TO,
+                                        InternetAddress.parse(getTo(), false));
+                        emailMessage.setSubject(getSubject());
+                        emailMessage.setSentDate(new Date());
+                        emailMessage.setText(getBody());
+                        Transport.send(emailMessage);
+                } catch (AddressException ex) {
+                        throw new RejectedExecutionException(ex);
+                } catch (MessagingException ex) {
+                        throw new RejectedExecutionException(ex);
+                }
+        }
 
 }
