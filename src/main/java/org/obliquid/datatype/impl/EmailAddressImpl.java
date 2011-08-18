@@ -97,4 +97,9 @@ public class EmailAddressImpl implements EmailAddress {
                 return stringStrategy.getData();
         }
 
+        @Override
+        public final boolean isAssigned() {
+                return stringStrategy.isAssigned();
+        }
+
 }

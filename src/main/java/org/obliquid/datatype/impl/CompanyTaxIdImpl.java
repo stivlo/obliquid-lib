@@ -66,4 +66,9 @@ public abstract class CompanyTaxIdImpl implements TaxId {
                 return stringStrategy.formatData(locale);
         }
 
+        @Override
+        public final boolean isAssigned() {
+                return stringStrategy.isAssigned();
+        }
+
 }

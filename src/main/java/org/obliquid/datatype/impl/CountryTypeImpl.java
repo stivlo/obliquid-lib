@@ -138,4 +138,9 @@ public class CountryTypeImpl implements CountryType {
                 setData(theData);
         }
 
+        @Override
+        public final boolean isAssigned() {
+                return stringStrategy.isAssigned();
+        }
+
 }

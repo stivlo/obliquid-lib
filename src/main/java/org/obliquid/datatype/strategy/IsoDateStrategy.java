@@ -78,4 +78,9 @@ public class IsoDateStrategy implements DataType<Date> {
                 return DateHelper.buildReadableDateTimeFromJavaDate(getData());
         }
 
+        @Override
+        public final boolean isAssigned() {
+                return date != null;
+        }
+
 }

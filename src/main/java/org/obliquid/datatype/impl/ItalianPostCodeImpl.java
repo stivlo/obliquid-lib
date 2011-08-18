@@ -64,4 +64,9 @@ public class ItalianPostCodeImpl implements ItalianPostCode {
                 setData(theData);
         }
 
+        @Override
+        public final boolean isAssigned() {
+                return stringStrategy.isAssigned();
+        }
+
 }

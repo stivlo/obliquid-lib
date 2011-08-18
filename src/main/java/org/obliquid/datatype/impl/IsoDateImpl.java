@@ -114,4 +114,9 @@ public class IsoDateImpl implements IsoDate {
                 return DateHelper.formatIsoDate(isoDateStrategy.getData());
         }
 
+        @Override
+        public final boolean isAssigned() {
+                return isoDateStrategy.isAssigned();
+        }
+
 }

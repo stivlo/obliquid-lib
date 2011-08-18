@@ -7,74 +7,95 @@ import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 
+/**
+ * List the primary keys of a table.
+ * 
+ * @author stivlo
+ * 
+ */
 public class PriKeyLister {
 
-    private MetaDb db;
+        /** A MetaDb instance. */
+        private MetaDb db;
 
-    public PriKeyLister() {
-        super();
-    }
-
-    public PriKeyLister(MetaDb db) {
-        super();
-    }
-
-    /**
-     * Release a connection. If it's a standalone Connection, the connection is closed, otherwise is
-     * returned to the pool.
-     */
-    public void releaseConnection() {
-        if (db != null) {
-            db.releaseConnection();
+        /** Default constructor. */
+        public PriKeyLister() {
         }
-    }
 
-    /**
-     * Get the list of primary key of the table specified
-     * 
-     * @param table
-     *            the table
-     * @return a list of primary key fields
-     * @throws SQLException
-     */
-    public ImmutableList<String> getPriKeys(String table) throws SQLException {
-        List<String> priKeys = new ArrayList<String>();
-        FieldIteratorBuilder builder = new FieldIteratorBuilder(db);
-        Iterator<DbField> fieldIterator = builder.fieldIterator(table);
-        while (fieldIterator.hasNext()) {
-            DbField field = fieldIterator.next();
-            if (field.isPrimary()) {
-                priKeys.add(field.getName());
-            }
+        /**
+         * Constructor injecting a MetaDb instance.
+         * 
+         * @param dbIn
+         *                a MetaDb instance
+         */
+        public PriKeyLister(final MetaDb dbIn) {
+                db = dbIn;
         }
-        return ImmutableList.copyOf(priKeys);
-    }
 
-    /**
-     * A static method that creates a new Object of this type, connects to the db, gets the primary
-     * keys of the specified table, disconnects from the db and returns them
-     * 
-     * @return list of the primary keys of the table
-     * @throws SQLException
-     */
-    public static List<String> getPriKeysWithAutoDb(String table) throws SQLException {
-        PriKeyLister lister = new PriKeyLister();
-        lister.db = new MetaDbImpl();
-        lister.db.getConnection();
-        List<String> priKeys = lister.getPriKeys(table);
-        lister.releaseConnection();
-        return priKeys;
-    }
+        /**
+         * Release a connection. If it's a stand-alone Connection, the
+         * connection is closed, otherwise is returned to the pool.
+         */
+        public final void releaseConnection() {
+                if (db != null) {
+                        db.releaseConnection();
+                }
+        }
 
-    /**
-     * Injects Db Connection
-     * 
-     * @param metaDb
-     * @throws SQLException
-     */
-    public void setDb(MetaDb db) throws SQLException {
-        this.db = db;
-        db.getConnection();
-    }
+        /**
+         * Get the list of primary key of the table specified.
+         * 
+         * @param table
+         *                the table
+         * @return a list of primary key fields
+         * @throws SQLException
+         *                 in case of problems
+         */
+        public final ImmutableList<String> getPriKeys(final String table) throws SQLException {
+                List<String> priKeys = new ArrayList<String>();
+                FieldIteratorBuilder builder = new FieldIteratorBuilder(db);
+                Iterator<DbField> fieldIterator = builder.fieldIterator(table);
+                while (fieldIterator.hasNext()) {
+                        DbField field = fieldIterator.next();
+                        if (field.isPrimary()) {
+                                priKeys.add(field.getName());
+                        }
+                }
+                return ImmutableList.copyOf(priKeys);
+        }
+
+        /**
+         * A static method that creates a new Object of this type, connects to
+         * the DB, gets the primary keys of the specified table, disconnects
+         * from the DB and returns them.
+         * 
+         * @param table
+         *                the table to consider
+         * @return list of the primary keys of the table
+         * @throws SQLException
+         *                 in case of problems (non existing table, connection
+         *                 problem, credentials problems)
+         */
+        public static List<String> getPriKeysWithAutoDb(final String table) throws SQLException {
+                PriKeyLister lister = new PriKeyLister();
+                lister.db = new MetaDbImpl();
+                lister.db.getConnection();
+                List<String> priKeys = lister.getPriKeys(table);
+                lister.releaseConnection();
+                return priKeys;
+        }
+
+        /**
+         * Injects a DB Connection.
+         * 
+         * @param dbIn
+         *                a MetaDb instance
+         * @throws SQLException
+         *                 in case of problem connecting
+         */
+        public final void setDb(final MetaDb dbIn) throws SQLException {
+                db = dbIn;
+                db.getConnection();
+        }
 
 }

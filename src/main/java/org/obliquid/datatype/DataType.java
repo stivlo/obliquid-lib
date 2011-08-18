@@ -52,4 +52,11 @@ public interface DataType<T> {
          */
         void setData(final T theData) throws IllegalArgumentException;
 
+        /**
+         * Check whether the data is assigned.
+         * 
+         * @return true if the data is assigned.
+         */
+        boolean isAssigned();
+
 }

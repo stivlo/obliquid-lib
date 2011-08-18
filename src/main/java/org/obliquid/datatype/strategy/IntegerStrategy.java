@@ -5,7 +5,7 @@ import java.util.Locale;
 import org.obliquid.datatype.DataType;
 
 /**
- * Implement Integer Data Type behaviour for reuse. (Strategy Pattern)
+ * Implement Integer Data Type behaviour for reuse. (Strategy Pattern).
  * 
  * @author stivlo
  * 
@@ -51,6 +51,11 @@ public class IntegerStrategy implements DataType<Integer> {
                         throw new IllegalArgumentException();
                 }
                 data = theData;
+        }
+
+        @Override
+        public final boolean isAssigned() {
+                return data != null;
         }
 
 }

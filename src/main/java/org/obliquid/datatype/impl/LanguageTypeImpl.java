@@ -108,4 +108,9 @@ public class LanguageTypeImpl implements LanguageType {
                 setData(languageString);
         }
 
+        @Override
+        public final boolean isAssigned() {
+                return stringStrategy.isAssigned();
+        }
+
 }

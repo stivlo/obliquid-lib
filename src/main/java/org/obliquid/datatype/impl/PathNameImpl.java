@@ -71,4 +71,9 @@ public class PathNameImpl implements PathName {
                 stringStrategy.setData(theData);
         }
 
+        @Override
+        public final boolean isAssigned() {
+                return stringStrategy.isAssigned();
+        }
+
 }

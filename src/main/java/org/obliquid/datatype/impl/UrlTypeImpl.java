@@ -52,4 +52,9 @@ public class UrlTypeImpl implements UrlType {
                 stringStrategy.setData(theData);
         }
 
+        @Override
+        public final boolean isAssigned() {
+                return stringStrategy.isAssigned();
+        }
+
 }

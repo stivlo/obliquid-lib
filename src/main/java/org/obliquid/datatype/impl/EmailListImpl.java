@@ -114,4 +114,9 @@ public class EmailListImpl implements EmailList {
                 return true;
         }
 
+        @Override
+        public final boolean isAssigned() {
+                return listStrategy.isAssigned();
+        }
+
 }

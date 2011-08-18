@@ -79,4 +79,9 @@ public class BooleanTypeImpl implements BooleanType {
                 return formatData(Locale.getDefault());
         }
 
+        @Override
+        public final boolean isAssigned() {
+                return booleanStrategy.isAssigned();
+        }
+
 }

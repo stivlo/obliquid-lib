@@ -43,4 +43,9 @@ public class StringStrategy implements DataType<String> {
                 data = theData;
         }
 
+        @Override
+        public final boolean isAssigned() {
+                return data != null;
+        }
+
 }

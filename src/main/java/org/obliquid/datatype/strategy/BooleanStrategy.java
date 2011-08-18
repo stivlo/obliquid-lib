@@ -68,4 +68,9 @@ public class BooleanStrategy implements DataType<Boolean> {
                 data = theData;
         }
 
+        @Override
+        public final boolean isAssigned() {
+                return data != null;
+        }
+
 }

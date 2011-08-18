@@ -90,4 +90,9 @@ public class UsernameImpl implements Username {
                 stringStrategy.setData(username);
         }
 
+        @Override
+        public final boolean isAssigned() {
+                return stringStrategy.isAssigned();
+        }
+
 }

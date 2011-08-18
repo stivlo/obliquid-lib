@@ -93,4 +93,9 @@ public class PhoneNumberImpl implements PhoneNumber {
                 return stringStrategy.getData();
         }
 
+        @Override
+        public final boolean isAssigned() {
+                return stringStrategy.isAssigned();
+        }
+
 }

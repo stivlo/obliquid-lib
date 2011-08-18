@@ -59,4 +59,9 @@ public class IpAddressImpl implements IpAddress {
                 setData(theData);
         }
 
+        @Override
+        public final boolean isAssigned() {
+                return stringStrategy.isAssigned();
+        }
+
 }

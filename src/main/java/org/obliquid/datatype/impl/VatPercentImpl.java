@@ -115,4 +115,9 @@ public class VatPercentImpl implements VatPercent {
                 return integerStrategy.getData();
         }
 
+        @Override
+        public final boolean isAssigned() {
+                return integerStrategy.isAssigned();
+        }
+
 }

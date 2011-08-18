@@ -117,4 +117,9 @@ public class PasswordImpl implements Password {
                 return stringStrategy.getData();
         }
 
+        @Override
+        public final boolean isAssigned() {
+                return stringStrategy.isAssigned();
+        }
+
 }

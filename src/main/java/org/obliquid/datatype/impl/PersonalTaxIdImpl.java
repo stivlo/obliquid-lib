@@ -35,8 +35,8 @@ public abstract class PersonalTaxIdImpl implements TaxId {
                 } else if (countryCode.equals("RO")) {
                         return new ItalianPersonalTaxId();
                 }
-                throw new IllegalArgumentException("PersonalTaxId doesn't support the country " + countryCode
-                                + " yet");
+                throw new IllegalArgumentException("PersonalTaxId doesn't support the country "
+                                + countryCode + " yet");
         }
 
         @Override
@@ -66,6 +66,11 @@ public abstract class PersonalTaxIdImpl implements TaxId {
         @Override
         public final String formatData(final Locale locale) {
                 return stringStrategy.formatData(locale);
+        }
+
+        @Override
+        public final boolean isAssigned() {
+                return stringStrategy.isAssigned();
         }
 
 }

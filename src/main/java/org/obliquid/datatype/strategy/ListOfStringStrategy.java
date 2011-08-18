@@ -68,4 +68,9 @@ public class ListOfStringStrategy implements DataType<List<String>> {
                 }
         }
 
+        @Override
+        public final boolean isAssigned() {
+                return !list.isEmpty();
+        }
+
 }

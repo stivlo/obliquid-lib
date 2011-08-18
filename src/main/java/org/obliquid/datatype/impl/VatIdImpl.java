@@ -71,4 +71,9 @@ public abstract class VatIdImpl implements TaxId {
                 setData(vatId);
         }
 
+        @Override
+        public final boolean isAssigned() {
+                return stringStrategy.isAssigned();
+        }
+
 }
