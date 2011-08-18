@@ -8,6 +8,15 @@ package org.obliquid.datatype;
  */
 public interface VatPercent extends DataType<Integer>, DataTypeValidator<Integer> {
 
-        //just combines interfaces
+        /**
+         * Compute the VAT percentage to be applied.
+         * 
+         * @param invoiceFromCountry
+         *                the country of the supplier
+         * @param invoiceToCountry
+         *                the country of the customer
+         * @return vat percentage
+         */
+        int computeVatPercent(String invoiceFromCountry, String invoiceToCountry);
 
 }

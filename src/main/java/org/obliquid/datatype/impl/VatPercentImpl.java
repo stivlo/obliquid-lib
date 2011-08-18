@@ -51,26 +51,18 @@ public class VatPercentImpl implements VatPercent {
                 return true;
         }
 
-        /**
-         * Compute the VAT percentage to be applied.
-         * 
-         * @param invoiceFromCountry
-         *                the country of the supplier
-         * @param invoiceToCountry
-         *                the country of the customer
-         * @return vat percentage
-         */
-        //        public static int computeVatPercent(final String invoiceFromCountry,
-        //                        final String invoiceToCountry) {
-        //                if (invoiceFromCountry.equals("IT")) {
-        //                        if (invoiceToCountry.equals("IT")) {
-        //                                return 20;
-        //                        }
-        //                        return 0;
-        //                }
-        //                throw new UnsupportedOperationException(
-        //                                "getVatPercent() implemented only for invoiceFromCounty='IT'");
-        //        }
+        @Override
+        public final int computeVatPercent(final String invoiceFromCountry, final String invoiceToCountry) {
+                final int italyVat = 20;
+                if (invoiceFromCountry.equals("IT")) {
+                        if (invoiceToCountry.equals("IT")) {
+                                return italyVat;
+                        }
+                        return 0;
+                }
+                throw new UnsupportedOperationException(
+                                "getVatPercent() implemented only for invoiceFromCounty='IT'");
+        }
 
         /**
          * @param locale
