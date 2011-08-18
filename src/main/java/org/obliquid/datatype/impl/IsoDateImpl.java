@@ -66,26 +66,22 @@ public class IsoDateImpl implements IsoDate {
                 return isoDateStrategy.formatData(locale);
         }
 
-        /**
-         * Compute the number of days from the date inside the object to the
-         * date specified as parameter.
-         * 
-         * @param dateString
-         *                an ISO date in the format yyyy-MM-dd
-         * @return number of days between the dates
-         */
-        //        private final int daysUntil(final String dateString) {
-        //                //return DateHelper.computeDaysBetween(getData(), dateString);
-        //        }
+        //        /**
+        //         * Compute the number of days from the date inside the object to the
+        //         * date specified as parameter.
+        //         * 
+        //         * @param dateString
+        //         *                an ISO date in the format yyyy-MM-dd
+        //         * @return number of days between the dates
+        //         */
+        //private int daysUntil(final String dateString) {
+        //        return DateHelper.computeDaysBetween(toString(), dateString);
+        //}
 
-        /**
-         * Computes the number of days in the year of the date of this object.
-         * 
-         * @return number of days in the year (either 365 or 366)
-         */
-        //        public int daysInTheYear() {
-        //                return DateHelper.computeDaysInTheYear(getData());
-        //        }
+        @Override
+        public final int daysInTheYear() {
+                return DateHelper.computeDaysInTheYear(toString());
+        }
 
         /**
          * Return the date stored.
@@ -111,7 +107,7 @@ public class IsoDateImpl implements IsoDate {
 
         @Override
         public final String toString() {
-                return DateHelper.formatIsoDate(isoDateStrategy.getData());
+                return DateHelper.buildIsoDateFromJavaDate(isoDateStrategy.getData());
         }
 
         @Override

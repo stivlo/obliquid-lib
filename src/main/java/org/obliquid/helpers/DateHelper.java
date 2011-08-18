@@ -109,7 +109,7 @@ public final class DateHelper {
          *                a Java Date
          * @return the formatted date
          */
-        public static String formatIsoDate(final Date aDate) {
+        public static String buildIsoDateFromJavaDate(final Date aDate) {
                 Calendar cal = new GregorianCalendar();
                 cal.setTime(aDate);
                 int year = cal.get(Calendar.YEAR);
