@@ -31,33 +31,43 @@ public class CountryTypeImpl implements CountryType {
                                         put("en", Collections.unmodifiableMap(new HashMap<String, String>() {
                                                 {
                                                         put("AU", "Australia");
+                                                        put("CN", "China");
                                                         put("DE", "Germany");
                                                         put("ES", "Spain");
+                                                        put("FR", "France");
                                                         put("GB", "Great Britain");
                                                         put("HK", "Hong Kong");
+                                                        put("ID", "Indonesia");
                                                         put("IN", "India");
                                                         put("IT", "Italy");
                                                         put("MY", "Malaysia");
                                                         put("NL", "Netherlands");
                                                         put("TH", "Thailand");
                                                         put("PH", "Philippines");
+                                                        put("RO", "Romania");
                                                         put("UK", "United Kingdom");
+                                                        put("US", "United States");
                                                 }
                                         }));
                                         put("it", Collections.unmodifiableMap(new HashMap<String, String>() {
                                                 {
                                                         put("AU", "Australia");
+                                                        put("CN", "Cina");
                                                         put("DE", "Germania");
                                                         put("ES", "Spagna");
+                                                        put("FR", "Francia");
                                                         put("GB", "Gran Bretagna");
                                                         put("HK", "Hong Kong");
+                                                        put("ID", "Indonesia");
                                                         put("IN", "India");
                                                         put("IT", "Italia");
                                                         put("MY", "Malesia");
                                                         put("NL", "Paesi Bassi");
                                                         put("TH", "Tailandia");
                                                         put("PH", "Filippine");
+                                                        put("RO", "Romania");
                                                         put("UK", "Regno Unito");
+                                                        put("US", "Stati Uniti");
                                                 }
                                         }));
                                 }

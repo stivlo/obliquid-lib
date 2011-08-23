@@ -28,9 +28,9 @@ public class UsernameImpl implements Username {
         /**
          * Validation failed message.
          */
-        //        private String failedValidationMessage = "Username can only be composed of a-z letters "
-        //                        + "(lower case or upper case), numbers and the underscore. Minimum length "
-        //                        + "is 3 chars, maximum length is 30 chars.";
+        //  private String failedValidationMessage = "Username can only be composed of a-z letters "
+        //             + "(lower case or upper case), numbers and the underscore. Minimum length "
+        //             + "is 3 chars, maximum length is 30 chars.";
 
         /**
          * Check if the username is valid without assigning it.
