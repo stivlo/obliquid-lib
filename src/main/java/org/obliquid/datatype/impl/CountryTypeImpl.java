@@ -34,6 +34,7 @@ public class CountryTypeImpl implements CountryType {
                                                         put("ES", "Spain");
                                                         put("HK", "Hong Kong");
                                                         put("IT", "Italy");
+                                                        put("MY", "Malaysia");
                                                         put("TH", "Thailand");
                                                         put("PH", "Philippines");
                                                         put("UK", "United Kingdom");
@@ -45,6 +46,7 @@ public class CountryTypeImpl implements CountryType {
                                                         put("ES", "Spagna");
                                                         put("HK", "Hong Kong");
                                                         put("IT", "Italia");
+                                                        put("MY", "Malesia");
                                                         put("TH", "Tailandia");
                                                         put("PH", "Filippine");
                                                         put("UK", "Regno Unito");

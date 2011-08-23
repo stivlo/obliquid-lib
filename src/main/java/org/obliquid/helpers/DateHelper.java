@@ -40,6 +40,9 @@ public final class DateHelper {
         /** The month of December. */
         private static final int DECEMBER = 12;
 
+        /** Length of an ISO Date in characters. */
+        public static final int ISO_DATE_LENGTH = 10;
+
         /** Utility class. */
         private DateHelper() {
                 //all methods are static
