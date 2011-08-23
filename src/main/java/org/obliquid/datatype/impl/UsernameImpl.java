@@ -8,7 +8,7 @@ import org.obliquid.datatype.Username;
 import org.obliquid.datatype.strategy.StringStrategy;
 
 /**
- * Hold and validate a Username. i.e. a String of at least 3 character and
+ * Hold and validate a Username. i.e. a String of at least 2 characters and
  * maximum 30 characters and composed only of a-z lower case characters, numbers
  * and the underscore. Just check for formal validity, doesn't check the DB.
  * Empty username is accepted.
@@ -23,13 +23,13 @@ public class UsernameImpl implements Username {
         /**
          * Validation pattern.
          */
-        private Pattern validationPattern = Pattern.compile("[A-Za-z0-9_]{3,30}+");
+        private Pattern validationPattern = Pattern.compile("[A-Za-z0-9_]{2,30}+");
 
         /**
          * Validation failed message.
          */
         //        private String failedValidationMessage = "Username can only be composed of a-z letters "
-        //                        + "(lowercase or uppercase), numbers and the underscore. Minimum length "
+        //                        + "(lower case or upper case), numbers and the underscore. Minimum length "
         //                        + "is 3 chars, maximum length is 30 chars.";
 
         /**

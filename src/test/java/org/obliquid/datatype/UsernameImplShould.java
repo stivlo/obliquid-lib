@@ -42,12 +42,12 @@ public class UsernameImplShould {
                 assertFalse(user.isTheStringValid(""));
         }
 
-        /** A two letters username isn't valid. */
+        /** A one letter username isn't valid. */
         @Test
-        public final void aTwoLettersUsernameIsntValid() {
+        public final void aOneLetterUsernameIsntValid() {
                 Username user = new UsernameImpl();
-                assertFalse(user.isValid("ab"));
-                assertFalse(user.isTheStringValid("ab"));
+                assertFalse(user.isValid("a"));
+                assertFalse(user.isTheStringValid("a"));
         }
 
         /** A three letters username is valid. */
@@ -116,18 +116,18 @@ public class UsernameImplShould {
                 user.setDataFromString("");
         }
 
-        /** Setting a two letters username throws exception. */
+        /** Setting a one letter username throws exception. */
         @Test(expected = IllegalArgumentException.class)
-        public final void settingATwoLettersUsernameThrowsException() {
+        public final void settingAOneLetterUsernameThrowsException() {
                 Username user = new UsernameImpl();
-                user.setData("ab");
+                user.setData("a");
         }
 
-        /** setFromString a two letters username throws exception. */
+        /** setFromString a one letter username throws exception. */
         @Test(expected = IllegalArgumentException.class)
-        public final void setFromStringATwoLettersUsernameThrowsException() {
+        public final void setFromStringAOneLetterUsernameThrowsException() {
                 Username user = new UsernameImpl();
-                user.setData("ab");
+                user.setData("a");
         }
 
         /** Setting and getting a valid username. */
