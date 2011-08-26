@@ -90,7 +90,7 @@ public class PasswordImpl implements Password {
         @Override
         public final void setDataFromString(final String passwordClearText) throws IllegalArgumentException {
                 if (!isTheStringValid(passwordClearText)) {
-                        throw new IllegalArgumentException("The password isn't valid");
+                        throw new IllegalArgumentException("The clear text password isn't valid");
                 }
                 String passwordSha1 = StringHelper.computeSha1OfString(passwordClearText);
                 setData(passwordSha1);
@@ -107,7 +107,8 @@ public class PasswordImpl implements Password {
         @Override
         public final void setData(final String passwordSha1) throws IllegalArgumentException {
                 if (!isValid(passwordSha1)) {
-                        throw new IllegalArgumentException("Not a valid SHA-1 encoded password.");
+                        throw new IllegalArgumentException("Not a valid SHA-1 encoded password: '"
+                                        + passwordSha1 + "'.");
                 }
                 stringStrategy.setData(passwordSha1);
         }
