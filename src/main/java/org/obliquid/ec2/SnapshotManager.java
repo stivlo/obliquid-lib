@@ -150,10 +150,14 @@ public class SnapshotManager {
          * 
          * @param instance
          *                Represents an Amazon EC2 instance
-         * @return a String representation of the instance
+         * @return a String representation of the instance or null if the
+         *         instance is not running
          */
         public final String toString(final Instance instance) {
                 String ipAddressString = instance.getPublicIpAddress();
+                if (ipAddressString == null) {
+                        return null;
+                }
                 StringBuilder sb = new StringBuilder(ipAddressString);
                 //TODO reverse DNS lookup to find the server name
                 return sb.toString();
