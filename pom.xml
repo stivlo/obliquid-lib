@@ -32,12 +32,14 @@
         <connection>scm:git://github.com/stivlo/obliquid-lib.git</connection>
         <url>https://github.com/stivlo/obliquid-lib</url>
     </scm>
-    
+     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
     
     <distributionManagement>
+    
         <!-- Publish versioned releases here -->
         <repository>
             <id>obliquid</id>
@@ -51,7 +53,8 @@
             <name>Obliquid snapshots</name>
             <url>http://nexus.obliquid.com/nexus/content/repositories/snapshots</url>
         </snapshotRepository>
-    </distributionManagement>
+        
+   </distributionManagement>
     
     <repositories>
         <repository>
@@ -194,7 +197,7 @@
             <artifactId>log4j</artifactId>
             <version>1.2.16</version>
         </dependency>
-        
+
     </dependencies>
     
     <profiles>
