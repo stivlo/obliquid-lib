@@ -1,7 +1,6 @@
 package org.obliquid.util;
 
 import java.util.Properties;
-import java.util.concurrent.RejectedExecutionException;
 
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
@@ -30,32 +29,6 @@ public final class ClientFactory {
 
         /** Utility class. */
         private ClientFactory() {
-
-        }
-
-        /**
-         * Create a new PostMan class using the class specified in mailerClass
-         * configuration parameter. At the moment works with Amazon Simple Email
-         * Service and Java Mail.
-         * 
-         * @return a PostMan implementation
-         * @throws RejectedExecutionException
-         *                 if the class wasn't found, is not of the right type,
-         *                 can't be loaded, etc.
-         */
-        public static PostMan createPostMan() throws RejectedExecutionException {
-                String className = AppConfig.getInstance().getProperty("mailerClass");
-                PostMan instance;
-                try {
-                        instance = (PostMan) Class.forName(className).newInstance();
-                } catch (InstantiationException ex) {
-                        throw new RejectedExecutionException(ex);
-                } catch (IllegalAccessException ex) {
-                        throw new RejectedExecutionException(ex);
-                } catch (ClassNotFoundException ex) {
-                        throw new RejectedExecutionException(ex);
-                }
-                return instance;
 
         }
 
