@@ -39,7 +39,7 @@ public class MetaDbImpl implements MetaDb {
         private ResultSet res;
 
         /** Log4j instance. */
-        private static final Logger LOG = Logger.getLogger(ConnectionManager.class);
+        private static final Logger LOG = Logger.getLogger(MetaDbImpl.class);
 
         /**
          * Create a new instance of DB.
