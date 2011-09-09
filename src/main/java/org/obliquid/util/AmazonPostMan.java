@@ -22,13 +22,6 @@ class AmazonPostMan implements PostMan {
         /** Mail headers and body. */
         private String from, to, subject, body;
 
-        /**
-         * Constructor.
-         */
-        public AmazonPostMan() {
-                //create only through factory class
-        }
-
         @Override
         public void setFrom(final String fromIn) {
                 from = fromIn;
