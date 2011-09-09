@@ -29,12 +29,12 @@ class ConnectionManager {
         /**
          * Configuration parameters.
          */
-        private final String driver, url, username, password, dataSourceName;
+        private String driver, url, username, password, dataSourceName;
 
         /**
          * Whether to use a connection pool or not.
          */
-        private final boolean usePool;
+        private boolean usePool;
 
         /** A reference to application configuration. */
         private final AppConfig conf;
@@ -44,6 +44,66 @@ class ConnectionManager {
 
         /** Log4j instance. */
         private static final Logger LOG = Logger.getLogger(ConnectionManager.class);
+
+        /**
+         * Set the driver.
+         * 
+         * @param driverArg
+         *                fully qualified driver class
+         */
+        public void setDriver(final String driverArg) {
+                driver = driverArg;
+        }
+
+        /**
+         * Set the connection URL.
+         * 
+         * @param urlArg
+         *                connection URL
+         */
+        public void setUrl(final String urlArg) {
+                url = urlArg;
+        }
+
+        /**
+         * Set the connection Username.
+         * 
+         * @param usernameArg
+         *                the connection username
+         */
+        public void setUsername(final String usernameArg) {
+                username = usernameArg;
+        }
+
+        /**
+         * Set the connection Password.
+         * 
+         * @param passwordArg
+         *                the connection password
+         */
+        public void setPassword(final String passwordArg) {
+                password = passwordArg;
+        }
+
+        /**
+         * Set the data source name.
+         * 
+         * @param dataSourceNameArg
+         *                data source name
+         */
+        public void setDataSourceName(final String dataSourceNameArg) {
+                dataSourceName = dataSourceNameArg;
+        }
+
+        /**
+         * Use the connection pool or not.
+         * 
+         * @param usePoolArg
+         *                whether to use the connection pool
+         */
+        public void setUsePool(final boolean usePoolArg) {
+                usePool = usePoolArg;
+        }
 
         /**
          * Default constructor.
