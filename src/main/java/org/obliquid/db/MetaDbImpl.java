@@ -550,6 +550,12 @@ public class MetaDbImpl implements MetaDb {
         }
 
         @Override
+        public final Map<String, Object> selectRowHashMap(final List<String> fields, final String query,
+                        final String param) throws SQLException {
+                return selectRowHashMap(fields.toArray(new String[0]), query, param);
+        }
+
+        @Override
         public final Map<String, Object> selectRowHashMap(final String[] fields, final String query,
                         final String param) throws SQLException {
                 ArrayList<Object> arList = new ArrayList<Object>();

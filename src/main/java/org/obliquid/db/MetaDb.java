@@ -669,6 +669,24 @@ public interface MetaDb {
          * @param query
          *                the rest of the query starting from FROM (included)
          * @param param
+         *                an String IN parameters to be set in the query
+         * @return an HashMap with the results, or null
+         * @throws SQLException
+         *                 in case of problems
+         */
+        Map<String, Object> selectRowHashMap(List<String> fields, String query, String param)
+                        throws SQLException;
+
+        /**
+         * Build a SELECT query as SELECT <fields> <query>. <fields> is a comma
+         * separated list of fields built from the List. It supports AS to
+         * rename fields/give names to expressions.
+         * 
+         * @param fields
+         *                the fields of the SELECT statement
+         * @param query
+         *                the rest of the query starting from FROM (included)
+         * @param param
          *                a String IN parameter to be set in the query
          * @return an HashMap with the results, or null
          * @throws SQLException
