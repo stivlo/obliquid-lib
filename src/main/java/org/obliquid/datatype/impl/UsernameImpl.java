@@ -95,4 +95,12 @@ public class UsernameImpl implements Username {
                 return stringStrategy.isAssigned();
         }
 
+        @Override
+        public final String toString() {
+                if (!stringStrategy.isAssigned()) {
+                        return "";
+                }
+                return stringStrategy.getData();
+        }
+
 }
