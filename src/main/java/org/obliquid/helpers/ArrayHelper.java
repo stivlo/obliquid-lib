@@ -54,8 +54,9 @@ public final class ArrayHelper {
         }
 
         /**
-         * Builds an ArrayList from two HashMap. First all elements from param1
-         * are added, after all elements from param2.
+         * Builds an ArrayList from two HashMap. First all the values from
+         * param1 are added (values), after all elements from param2 (primary
+         * keys).
          * 
          * @param param1
          *                HashMap with values to be used to populate our
@@ -71,7 +72,13 @@ public final class ArrayHelper {
                 Iterator<Map.Entry<String, Object>> it;
                 it = param1.entrySet().iterator();
                 while (it.hasNext()) {
-                        arList.add((it.next()).getValue());
+                        Object value = (it.next()).getValue();
+                        if (value != null && value.equals("true")) {
+                                value = "Y";
+                        } else if (value != null && value.equals("false")) {
+                                value = "N";
+                        }
+                        arList.add(value);
                 }
                 it = param2.entrySet().iterator();
                 while (it.hasNext()) {
