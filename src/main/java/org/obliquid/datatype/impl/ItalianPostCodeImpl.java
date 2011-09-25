@@ -69,4 +69,18 @@ public class ItalianPostCodeImpl implements ItalianPostCode {
                 return stringStrategy.isAssigned();
         }
 
+        /**
+         * Like formatData, but returns the empty string instead of throwing
+         * IllegalStateException.
+         * 
+         * @return the post code or the empty string if no post code was set
+         */
+        @Override
+        public final String toString() {
+                if (!isAssigned()) {
+                        return "";
+                }
+                return formatData(Locale.ENGLISH);
+        }
+
 }
