@@ -30,6 +30,9 @@ public class StringHelperShould {
         public final void computeSha1OfString() {
                 String sha1Hash = StringHelper.computeSha1OfString(STRING_TO_HASH);
                 assertEquals("b4aadff1f039adb3f88bd84ceaa56e0eb62e1ba7", sha1Hash);
+                //stackoverflow.com 7605217
+                sha1Hash = StringHelper.computeSha1OfString("abcdef12");
+                assertEquals("d253e3bd69ce1e7ce6074345fd5faa1a3c2e89ef", sha1Hash);
         }
 
         /**
@@ -65,8 +68,9 @@ public class StringHelperShould {
          */
         @Test
         public final void computeMd5OfInputStream() throws IOException {
-                String md5Hash = StringHelper.computeMd5OfInputStream(new ByteArrayInputStream(STRING_TO_HASH
-                                .getBytes("UTF-8")));
+                String md5Hash = StringHelper.computeMd5OfInputStream(new ByteArrayInputStream(
+                                STRING_TO_HASH
+                                                .getBytes("UTF-8")));
                 assertEquals("a40b928eea9b71984fbf3beee15a83e8", md5Hash);
         }
 
