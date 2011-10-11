@@ -55,7 +55,7 @@ import java.security.cert.X509Certificate;
  * Usage: java InstallCert <host>[:port] [passphrase]
  * 
  * Install HTTPS certificates, actually save them to a file. That file has to be
- * referenced by the VM. Used to be in SUN blobs, but it has been deleted and I
+ * referenced by the VM. Used to be in a SUN blog, but it has been deleted and I
  * can't find the new URL on Oracle.
  */
 public final class InstallCert {
