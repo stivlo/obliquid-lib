@@ -155,6 +155,43 @@ public final class FileManager {
         }
 
         /**
+         * Rename/Move source file to destination file.
+         * 
+         * @param source
+         *                source file name
+         * @param destination
+         *                destination file name
+         * @throws IOException
+         *                 when the operation is unsuccessful
+         */
+        public void rename(final String source, final String destination) throws IOException {
+                File sourceFile = new File(source);
+                File destinationFile = new File(destination);
+                rename(sourceFile, destinationFile);
+        }
+
+        /**
+         * Rename/Move source file to destination file.
+         * 
+         * @param source
+         *                source file
+         * @param destination
+         *                destination file
+         * @throws IOException
+         *                 when the operation is unsuccessful
+         */
+        public void rename(final File source, final File destination) throws IOException {
+                if (!source.isFile()) {
+                        throw new IOException("File '" + source.getPath()
+                                        + "' doesn't exist or is not a file");
+                }
+                boolean success = source.renameTo(destination);
+                if (!success) {
+                        throw new IOException("Could not rename file '" + source.getPath() + "'");
+                }
+        }
+
+        /**
          * Creates a file from a byte array.
          * 
          * @param fileName
