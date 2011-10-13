@@ -1,4 +1,4 @@
-package org.obliquid.helpers;
+package org.obliquid.util;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,12 +11,7 @@ import org.apache.commons.io.FileUtils;
  * @author stivlo
  * 
  */
-public final class FileHelper {
-
-        /** Utility class. */
-        private FileHelper() {
-
-        }
+public final class FileManager {
 
         /**
          * Creates the directory named by the pathName provided. If the
@@ -28,7 +23,7 @@ public final class FileHelper {
          * @throws IOException
          *                 if the directory could not be created
          */
-        public static void mkdir(final String pathName) throws IOException {
+        public void mkdir(final String pathName) throws IOException {
                 File dir = new File(pathName);
                 mkdir(dir);
         }
@@ -42,7 +37,7 @@ public final class FileHelper {
          * @throws IOException
          *                 if the directory could not be created
          */
-        public static void mkdir(final File path) throws IOException {
+        public void mkdir(final File path) throws IOException {
                 boolean success = false;
                 if (path.isDirectory()) {
                         return;
@@ -67,7 +62,7 @@ public final class FileHelper {
          *                 permissions), if the directory doesn't exist, if it's
          *                 not a directory but a file.
          */
-        public static void rmdir(final String pathName) throws IOException {
+        public void rmdir(final String pathName) throws IOException {
                 File path = new File(pathName);
                 rmdir(path);
         }
@@ -82,7 +77,7 @@ public final class FileHelper {
          *                 permissions), if the directory doesn't exist, if it's
          *                 not a directory but a file.
          */
-        public static void rmdir(final File path) throws IOException {
+        public void rmdir(final File path) throws IOException {
                 if (!path.isDirectory()) {
                         throw new IOException("Path '" + path.getPath()
                                         + "' doesn't exist or is not a directory");
@@ -104,7 +99,7 @@ public final class FileHelper {
          *                 if the permissions don't allow to create or modify
          *                 the file
          */
-        public static void touch(final String fileName) throws IOException {
+        public void touch(final String fileName) throws IOException {
                 File myFile = new File(fileName);
                 touch(myFile);
         }
@@ -120,7 +115,7 @@ public final class FileHelper {
          *                 if the permissions don't allow to create or modify
          *                 the file
          */
-        public static void touch(final File file) throws IOException {
+        public void touch(final File file) throws IOException {
                 FileUtils.touch(file);
         }
 
@@ -134,7 +129,7 @@ public final class FileHelper {
          *                 the file doesn't exist, if it's not a file but a
          *                 directory.
          */
-        public static void rm(final String fileName) throws IOException {
+        public void rm(final String fileName) throws IOException {
                 File file = new File(fileName);
                 rm(file);
         }
@@ -149,7 +144,7 @@ public final class FileHelper {
          *                 the file doesn't exist, if it's not a file but a
          *                 directory.
          */
-        public static void rm(final File file) throws IOException {
+        public void rm(final File file) throws IOException {
                 if (!file.isFile()) {
                         throw new IOException("File '" + file.getPath() + "' doesn't exist or is not a file");
                 }
@@ -169,7 +164,7 @@ public final class FileHelper {
          * @throws IOException
          *                 if the file can't be written
          */
-        public static void writeByteArrayToFile(final String fileName, final byte[] contents)
+        public void writeByteArrayToFile(final String fileName, final byte[] contents)
                         throws IOException {
                 File file = new File(fileName);
                 writeByteArrayToFile(file, contents);
@@ -185,7 +180,7 @@ public final class FileHelper {
          * @throws IOException
          *                 if the file can't be written
          */
-        public static void writeByteArrayToFile(final File file, final byte[] contents) throws IOException {
+        public void writeByteArrayToFile(final File file, final byte[] contents) throws IOException {
                 FileUtils.writeByteArrayToFile(file, contents);
         }
 
@@ -198,7 +193,7 @@ public final class FileHelper {
          * @throws IOException
          *                 if the file can't be read
          */
-        public static byte[] readFileToByteArray(final String fileName) throws IOException {
+        public byte[] readFileToByteArray(final String fileName) throws IOException {
                 File file = new File(fileName);
                 return readFileToByteArray(file);
         }
@@ -212,7 +207,7 @@ public final class FileHelper {
          * @throws IOException
          *                 if the file can't be read
          */
-        public static byte[] readFileToByteArray(final File file) throws IOException {
+        public byte[] readFileToByteArray(final File file) throws IOException {
                 byte[] contents;
                 contents = FileUtils.readFileToByteArray(file);
                 return contents;
