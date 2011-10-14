@@ -3,6 +3,7 @@ package org.obliquid.util;
 import java.io.File;
 import java.io.IOException;
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 
 /**
  * File management class: mkdir, rm, rmdir, touch, readFileToByteArray,
@@ -12,6 +13,9 @@ import org.apache.commons.io.FileUtils;
  * 
  */
 public final class FileManager {
+
+        /** Logger instance for this class. */
+        private static final Logger LOG = Logger.getLogger(FileManager.class);
 
         /**
          * Creates the directory named by the pathName provided. If the
@@ -117,6 +121,26 @@ public final class FileManager {
          */
         public void touch(final File file) throws IOException {
                 FileUtils.touch(file);
+        }
+
+        /**
+         * Removed the file named by the fileName provided.
+         * 
+         * @param fileName
+         *                the file to be removed
+         * @return true if successful
+         */
+        public boolean rmWithoutExceptions(final String fileName) {
+                File file = new File(fileName);
+                try {
+                        rm(file);
+                } catch (IOException ex) {
+                        if (LOG.isDebugEnabled()) {
+                                LOG.debug("rmWithoutExceptions(" + fileName + ")", ex);
+                        }
+                        return false;
+                }
+                return true;
         }
 
         /**
@@ -248,6 +272,17 @@ public final class FileManager {
                 byte[] contents;
                 contents = FileUtils.readFileToByteArray(file);
                 return contents;
+        }
+
+        /**
+         * Check if the specified fileName is an existing file (not directory).
+         * 
+         * @param fileName
+         *                the fileName to check
+         * @return true if the file exists and is a regular file
+         */
+        public boolean isFile(final String fileName) {
+                return new File(fileName).isFile();
         }
 
 }
