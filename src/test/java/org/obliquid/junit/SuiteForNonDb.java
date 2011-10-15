@@ -21,6 +21,7 @@ import org.obliquid.helpers.DateHelperShould;
 import org.obliquid.helpers.SqlHelperShould;
 import org.obliquid.helpers.StringHelperShould;
 import org.obliquid.util.MapCacheShould;
+import org.obliquid.util.MyImageShould;
 import org.obliquid.util.StopWatchShould;
 import org.obliquid.util.WgetShould;
 
@@ -49,8 +50,9 @@ import org.junit.runners.Suite.SuiteClasses;
 
                 //other uncategorised tests
                 DateHelperShould.class, StopWatchShould.class, DbNullShould.class, BdHelperShould.class,
-                SqlHelperShould.class, Ec2TagShould.class, WgetShould.class, ItalianCompanyTaxIdShould.class,
-                MapCacheShould.class })
+                SqlHelperShould.class, Ec2TagShould.class, WgetShould.class,
+                ItalianCompanyTaxIdShould.class,
+                MapCacheShould.class, MyImageShould.class })
 public class SuiteForNonDb {
 
         //run all junit test
