@@ -920,4 +920,19 @@ public interface MetaDb {
          */
         void closeResultSetAndStatement();
 
+        /**
+         * Creates a new Id to use in an INSERT statement. The returned Id won't
+         * be returned again, even if it's not used.
+         * 
+         * @param tablename
+         *                the name of the table for which we are requesting a
+         *                new Id.
+         * @return an Object of type Long containing an Id that we can use for
+         *         an insert statement.
+         * @throws SQLException
+         *                 mostly could mean that the _sequence_<tablename>
+         *                 table doesn't exists
+         */
+        int newIdUsingSequence(String tablename) throws SQLException;
+
 }
