@@ -270,6 +270,17 @@ public final class DateHelper {
         }
 
         /**
+         * Build a MutableDateTime from javaDate.
+         * 
+         * @param javaDate
+         *                a java.util.Date Object
+         * @return a MutableDateTime
+         */
+        public static MutableDateTime buildMutableDateTimeFromJavaDate(final Date javaDate) {
+                return new DateTime(javaDate).toMutableDateTime();
+        }
+
+        /**
          * Return the number of FULL days between two ReadableDates.
          * 
          * @param fromWhen
