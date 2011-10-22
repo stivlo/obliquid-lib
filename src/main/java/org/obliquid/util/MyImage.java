@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
@@ -31,8 +32,11 @@ public class MyImage {
         /** Source image buffer. */
         private BufferedImage sourceImage;
 
+        /** Destination image buffer. */
+        private BufferedImage destImage;
+
         /**
-         * Read an image to be manipulated.
+         * Read an image to be manipulated from a file.
          * 
          * @param sourceFileName
          *                the fileName of the original image
@@ -44,6 +48,21 @@ public class MyImage {
                 sourceImage = ImageIO.read(sourceFile);
                 if (sourceImage == null) {
                         throw new IOException("Problems reading image '" + sourceFileName + "'");
+                }
+        }
+
+        /**
+         * Read an image to be manipulated from an InputStream.
+         * 
+         * @param inputStream
+         *                the InputStream where to read from
+         * @throws IOException
+         *                 in case of problems
+         */
+        public final void read(final InputStream inputStream) throws IOException {
+                sourceImage = ImageIO.read(inputStream);
+                if (sourceImage == null) {
+                        throw new IOException("Problems reading image input stream");
                 }
         }
 
@@ -64,7 +83,7 @@ public class MyImage {
                 ResampleOp resampleOp = new ResampleOp(newWidth, newHeight);
                 resampleOp.setFilter(ResampleFilters.getLanczos3Filter());
                 resampleOp.setUnsharpenMask(AdvancedResizeOp.UnsharpenMask.Normal);
-                sourceImage = resampleOp.filter(sourceImage, null);
+                destImage = resampleOp.filter(sourceImage, null);
         }
 
         /**
@@ -77,7 +96,7 @@ public class MyImage {
          *                 in case source image is not present
          */
         public final void scaleByWidth(final int newWidth) throws IOException {
-                Dimension dimension = getDimension();
+                Dimension dimension = getSourceDimension();
                 int newHeight = (int) Math.round(dimension.height * (newWidth / dimension.getWidth()));
                 scale(newWidth, newHeight);
         }
@@ -92,7 +111,7 @@ public class MyImage {
          *                 in case source image is not present
          */
         public final void scaleByHeight(final int newHeight) throws IOException {
-                Dimension dimension = getDimension();
+                Dimension dimension = getSourceDimension();
                 int newWidth = (int) Math.round(dimension.width * (newHeight / dimension.getHeight()));
                 scale(newWidth, newHeight);
         }
@@ -119,7 +138,7 @@ public class MyImage {
                 int startingY = (int) Math.round((newDimension.height - sourceImage.getHeight()) / 2.0);
                 canvasGraph.drawImage(sourceImage, null, startingX, startingY);
                 canvasGraph.dispose();
-                sourceImage = canvas;
+                destImage = canvas;
         }
 
         /**
@@ -131,7 +150,7 @@ public class MyImage {
          *                 in case source image is not present
          */
         public final void scaleBoundingBox(final Dimension newDimension) throws IOException {
-                Dimension dimension = getDimension();
+                Dimension dimension = getSourceDimension();
                 double ratio = dimension.getWidth() / dimension.getHeight();
                 double newRatio = newDimension.getWidth() / newDimension.getHeight();
                 if (ratio > newRatio) {
@@ -142,16 +161,28 @@ public class MyImage {
         }
 
         /**
-         * Return the dimensions (width and height) of an image previously read.
+         * Return the dimensions (width and height) of a source image previously
+         * read.
          * 
          * @return image Dimensions
          */
-        public final Dimension getDimension() {
+        public final Dimension getSourceDimension() {
                 return new Dimension(sourceImage.getWidth(), sourceImage.getHeight());
         }
 
         /**
-         * Write the current image as JPEG file setting the compression quality.
+         * Return the dimensions (width and height) of the destination image
+         * computed.
+         * 
+         * @return image Dimensions
+         */
+        public final Dimension getDestinationDimension() {
+                return new Dimension(destImage.getWidth(), destImage.getHeight());
+        }
+
+        /**
+         * Write the current computed image as JPEG file setting the compression
+         * quality.
          * 
          * @param destFile
          *                destination file (absolute or relative path)
@@ -168,7 +199,7 @@ public class MyImage {
                 param.setCompressionQuality(quality);
                 FileImageOutputStream output = new FileImageOutputStream(new File(destFile));
                 writer.setOutput(output);
-                IIOImage iioImage = new IIOImage(sourceImage, null, null);
+                IIOImage iioImage = new IIOImage(destImage, null, null);
                 writer.write(null, iioImage, param);
                 writer.dispose();
         }

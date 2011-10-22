@@ -14,6 +14,8 @@ bin/
 Stivlox.java
 #
 # Don't commit log4j log
-log4j.log
+log4j.log*
 # Don't commit local configuration
 src/test/java/org/obliquid/config/
+# Don't commit qiv files
+.qiv-select

@@ -40,8 +40,8 @@ public class MyImageShould {
                 final int expectedHeight = 375;
                 MyImage image = new MyImage();
                 image.read(IMAGE[0]);
-                assertEquals(expectedWidth, (int) image.getDimension().getWidth());
-                assertEquals(expectedHeight, (int) image.getDimension().getHeight());
+                assertEquals(expectedWidth, (int) image.getSourceDimension().getWidth());
+                assertEquals(expectedHeight, (int) image.getSourceDimension().getHeight());
         }
 
         /**
@@ -59,8 +59,8 @@ public class MyImageShould {
                 image.scaleByWidth(newWidth);
                 image.writeJpeg(IMAGE_THUMB[0]);
                 image.read(IMAGE_THUMB[0]);
-                assertEquals(newWidth, (int) image.getDimension().getWidth());
-                assertEquals(newHeight, (int) image.getDimension().getHeight());
+                assertEquals(newWidth, (int) image.getDestinationDimension().getWidth());
+                assertEquals(newHeight, (int) image.getDestinationDimension().getHeight());
         }
 
         /**
@@ -78,8 +78,8 @@ public class MyImageShould {
                 image.scaleByHeight(newHeight);
                 image.writeJpeg(IMAGE_THUMB[1]);
                 image.read(IMAGE_THUMB[1]);
-                assertEquals(newWidth, (int) image.getDimension().getWidth());
-                assertEquals(newHeight, (int) image.getDimension().getHeight());
+                assertEquals(newWidth, (int) image.getDestinationDimension().getWidth());
+                assertEquals(newHeight, (int) image.getDestinationDimension().getHeight());
         }
 
         /**
@@ -95,8 +95,8 @@ public class MyImageShould {
                 image.read(IMAGE[2]);
                 image.scaleBoundingBox(newDimension);
                 image.writeJpeg(IMAGE_THUMB[2]);
-                assertEquals(newDimension.height, image.getDimension().height);
-                assertTrue(newDimension.width > image.getDimension().width);
+                assertEquals(newDimension.height, image.getDestinationDimension().height);
+                assertTrue(newDimension.width > image.getDestinationDimension().width);
         }
 
         /**
@@ -114,8 +114,8 @@ public class MyImageShould {
                 image.read(IMAGE[2]);
                 image.scaleBoundingBox(newDimension);
                 image.writeJpeg(IMAGE_THUMB[resultThumb]);
-                assertEquals(newDimension.width, image.getDimension().width);
-                assertTrue(newDimension.height > image.getDimension().height);
+                assertEquals(newDimension.width, image.getDestinationDimension().width);
+                assertTrue(newDimension.height > image.getDestinationDimension().height);
         }
 
         /**
@@ -131,8 +131,8 @@ public class MyImageShould {
                 image.read(IMAGE[2]);
                 image.scaleWhiteBand(newDimension);
                 image.writeJpeg(RESOURCE_DIR + "verticalband.jpg");
-                assertEquals(newDimension.height, image.getDimension().height);
-                assertEquals(newDimension.width, image.getDimension().width);
+                assertEquals(newDimension.height, image.getDestinationDimension().height);
+                assertEquals(newDimension.width, image.getDestinationDimension().width);
         }
 
         /**
@@ -148,8 +148,8 @@ public class MyImageShould {
                 image.read(IMAGE[2]);
                 image.scaleWhiteBand(newDimension);
                 image.writeJpeg(RESOURCE_DIR + "horizontalband.jpg");
-                assertEquals(newDimension.height, image.getDimension().height);
-                assertEquals(newDimension.width, image.getDimension().width);
+                assertEquals(newDimension.height, image.getDestinationDimension().height);
+                assertEquals(newDimension.width, image.getDestinationDimension().width);
         }
 
 }
