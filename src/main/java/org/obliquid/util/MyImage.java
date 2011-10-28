@@ -4,15 +4,17 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.FileImageOutputStream;
+
+import org.apache.log4j.Logger;
 
 import com.mortennobel.imagescaling.AdvancedResizeOp;
 import com.mortennobel.imagescaling.ResampleFilters;
@@ -35,6 +37,12 @@ public class MyImage {
         /** Destination image buffer. */
         private BufferedImage destImage;
 
+        /** Length in bytes of the source image. */
+        private long sourceSize;
+
+        /** Logger instance for this class. */
+        private final static Logger LOG = Logger.getLogger(MyImage.class);
+
         /**
          * Read an image to be manipulated from a file.
          * 
@@ -45,6 +53,7 @@ public class MyImage {
          */
         public final void read(final String sourceFileName) throws IOException {
                 File sourceFile = new File(sourceFileName);
+                sourceSize = sourceFile.length();
                 sourceImage = ImageIO.read(sourceFile);
                 if (sourceImage == null) {
                         throw new IOException("Problems reading image '" + sourceFileName + "'");
@@ -59,11 +68,28 @@ public class MyImage {
          * @throws IOException
          *                 in case of problems
          */
-        public final void read(final InputStream inputStream) throws IOException {
-                sourceImage = ImageIO.read(inputStream);
+        //        public final void read(final InputStream inputStream) throws IOException {
+        //                sourceImage = ImageIO.read(inputStream);
+        //                if (sourceImage == null) {
+        //                        throw new IOException("Problems reading image input stream");
+        //                }
+        //        }
+
+        /**
+         * Read an image to be manipulated from a byte array.
+         * 
+         * @param byteArray
+         *                the byte array containing the image
+         * @throws IOException
+         *                 in case of problems
+         */
+        public final void read(byte[] byteArray) throws IOException {
+                sourceSize = byteArray.length;
+                sourceImage = ImageIO.read(new ByteArrayInputStream(byteArray));
                 if (sourceImage == null) {
-                        throw new IOException("Problems reading image input stream");
+                        throw new IOException("Problems decoding the image");
                 }
+                LOG.debug("read() " + getSourceDimension());
         }
 
         /**
@@ -77,6 +103,7 @@ public class MyImage {
          *                 in case source image is not present
          */
         private void scale(final int newWidth, final int newHeight) throws IOException {
+                LOG.debug("scale() " + getSourceDimension() + " => " + newWidth + "x" + newHeight);
                 if (sourceImage == null) {
                         throw new IOException("sourceImage corrupted or not found");
                 }
@@ -127,16 +154,16 @@ public class MyImage {
          *                 in case source image is not present
          */
         public final void scaleWhiteBand(final Dimension newDimension) throws IOException {
-
+                LOG.debug("scaleWhiteBand " + getSourceDimension() + " => " + newDimension);
                 scaleBoundingBox(newDimension);
                 BufferedImage canvas = new BufferedImage(newDimension.width, newDimension.height,
                                 BufferedImage.TYPE_INT_RGB);
                 Graphics2D canvasGraph = canvas.createGraphics();
                 canvasGraph.setColor(Color.WHITE);
                 canvasGraph.fillRect(0, 0, newDimension.width, newDimension.height);
-                int startingX = (int) Math.round((newDimension.width - sourceImage.getWidth()) / 2.0);
-                int startingY = (int) Math.round((newDimension.height - sourceImage.getHeight()) / 2.0);
-                canvasGraph.drawImage(sourceImage, null, startingX, startingY);
+                int startingX = (int) Math.round((newDimension.width - destImage.getWidth()) / 2.0);
+                int startingY = (int) Math.round((newDimension.height - destImage.getHeight()) / 2.0);
+                canvasGraph.drawImage(destImage, null, startingX, startingY);
                 canvasGraph.dispose();
                 destImage = canvas;
         }
@@ -215,6 +242,15 @@ public class MyImage {
          */
         public final void writeJpeg(final String destFile) throws IOException {
                 writeJpeg(destFile, JPEG_QUALITY);
+        }
+
+        /**
+         * The size in bytes of the source image file.
+         * 
+         * @return size in bytes of the source image
+         */
+        public long getSourceSize() {
+                return sourceSize;
         }
 
 }
