@@ -233,6 +233,32 @@ public final class DateHelper {
         }
 
         /**
+         * Build a LocalDate from a ReadableDateTime.
+         * 
+         * @param dtDate
+         *                the ReadableDateTime to use as source
+         * @return a LocalDate
+         */
+        public static LocalDate buildLocalDateFromReadableDateTime(final ReadableDateTime dtDate) {
+                return new LocalDate(dtDate.getYear(), dtDate.getMonthOfYear(), dtDate.getDayOfMonth());
+        }
+
+        /**
+         * Build a Java Date from a LocalDate.
+         * 
+         * @param localDate
+         *                the local date to use as source
+         * @return a Java Date
+         */
+        public static Date buildJavaDateFromLocalDate(final LocalDate localDate) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.clear();
+                //month is 0 based in Java Date
+                calendar.set(localDate.getYear(), localDate.getMonthOfYear() - 1, localDate.getDayOfMonth());
+                return calendar.getTime();
+        }
+
+        /**
          * Build a Java Date from a ISO Date String.
          * 
          * @param isoDate
@@ -281,31 +307,50 @@ public final class DateHelper {
         }
 
         /**
-         * Return the number of FULL days between two ReadableDates.
+         * Return the number of days between two ReadableDates, considering only
+         * the date part and not the time part.
          * 
          * @param fromWhen
          *                start date
          * @param untilWhen
          *                end date
-         * @return the number of full days
+         * @return the number of days
          */
         public static int computeDaysBetween(final ReadableDateTime fromWhen,
                         final ReadableDateTime untilWhen) {
-                return Days.daysBetween(fromWhen, untilWhen).getDays();
+                LocalDate fromWhenLd = buildLocalDateFromReadableDateTime(fromWhen);
+                LocalDate untilWhenLd = buildLocalDateFromReadableDateTime(untilWhen);
+                return Days.daysBetween(fromWhenLd, untilWhenLd).getDays();
         }
 
         /**
-         * Return the number of FULL days between two ISO Dates.
+         * Return the number of days between two ISO Dates.
          * 
          * @param isoFromWhen
-         *                start date
+         *                start date as ISO date yyyy-MM-dd
          * @param isoUntilWhen
-         *                end date
-         * @return the number of full days
+         *                end date as ISO date yyyy-MM-dd
+         * @return the number of days
          */
         public static int computeDaysBetween(final String isoFromWhen, final String isoUntilWhen) {
                 ReadableDateTime jodaFromWhen = DateHelper.buildReadableDateTimeFromIsoDate(isoFromWhen);
                 ReadableDateTime jodaUntilWhen = DateHelper.buildReadableDateTimeFromIsoDate(isoUntilWhen);
+                return Days.daysBetween(jodaFromWhen, jodaUntilWhen).getDays();
+        }
+
+        /**
+         * Return the number of days between two Java Dates, considering only
+         * the date part and not the time part.
+         * 
+         * @param fromWhen
+         *                as JavaDate
+         * @param untilWhen
+         *                as JavaDate
+         * @return the number of days
+         */
+        public static int computeDaysBetween(Date fromWhen, Date untilWhen) {
+                LocalDate jodaFromWhen = DateHelper.buildLocalDateFromJavaDate(fromWhen);
+                LocalDate jodaUntilWhen = DateHelper.buildLocalDateFromJavaDate(untilWhen);
                 return Days.daysBetween(jodaFromWhen, jodaUntilWhen).getDays();
         }
 
@@ -485,6 +530,20 @@ public final class DateHelper {
                         return c1.get(Calendar.MONTH) - c2.get(Calendar.MONTH);
                 }
                 return c1.get(Calendar.DAY_OF_MONTH) - c2.get(Calendar.DAY_OF_MONTH);
+        }
+
+        /**
+         * Returns a copy of startDate plus the specified number of days.
+         * 
+         * @param startDate
+         *                the starting date
+         * @param days
+         *                the amount of days to add, may be negative
+         * @return a new Date obtained by startDate plus the requested days
+         */
+        public static Date plusDays(final Date startDate, final int days) {
+                LocalDate destDate = DateHelper.buildLocalDateFromJavaDate(startDate).plusDays(days);
+                return DateHelper.buildJavaDateFromLocalDate(destDate);
         }
 
 }
