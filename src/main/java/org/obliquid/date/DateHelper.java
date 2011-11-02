@@ -375,9 +375,20 @@ public final class DateHelper {
                 return DateBuilder.buildJavaDateFromLocalDate(destDate);
         }
 
-        public static boolean isDateInThePast(Date expiryDate) {
-                // TODO Auto-generated method stub
-                return false;
+        /**
+         * Return a copy of the max of the two supplied dates.
+         * 
+         * @param javaDate1
+         *                the first date
+         * @param javaDate2
+         *                the second date
+         * @return the max Date between the two
+         */
+        public static Date max(Date javaDate1, Date javaDate2) {
+                if (javaDate1.after(javaDate2)) {
+                        return new Date(javaDate1.getTime());
+                }
+                return new Date(javaDate2.getTime());
         }
 
 }
