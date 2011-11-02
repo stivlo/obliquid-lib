@@ -10,7 +10,7 @@ import org.joda.time.ReadableDateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.obliquid.datatype.DataType;
-import org.obliquid.helpers.DateHelper;
+import org.obliquid.date.DateBuilder;
 
 /**
  * Implement IsoDate Data Type behaviour for reuse. (Strategy Pattern)
@@ -75,7 +75,7 @@ public class IsoDateStrategy implements DataType<Date> {
          * @return a Joda ReadableDateTime
          */
         private ReadableDateTime getDateTime() {
-                return DateHelper.buildReadableDateTimeFromJavaDate(getData());
+                return DateBuilder.buildReadableDateTimeFromJavaDate(getData());
         }
 
         @Override

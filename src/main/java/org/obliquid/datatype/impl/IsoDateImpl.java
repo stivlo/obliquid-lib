@@ -7,7 +7,8 @@ import java.util.Locale;
 
 import org.obliquid.datatype.IsoDate;
 import org.obliquid.datatype.strategy.IsoDateStrategy;
-import org.obliquid.helpers.DateHelper;
+import org.obliquid.date.DateBuilder;
+import org.obliquid.date.DateHelper;
 
 /**
  * Hold and validate a date in ISO format yyyy-MM-dd.
@@ -107,7 +108,7 @@ public class IsoDateImpl implements IsoDate {
 
         @Override
         public final String toString() {
-                return DateHelper.buildIsoDateFromJavaDate(isoDateStrategy.getData());
+                return DateBuilder.buildIsoDateFromJavaDate(isoDateStrategy.getData());
         }
 
         @Override

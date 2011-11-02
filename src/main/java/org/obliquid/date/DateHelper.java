@@ -1,14 +1,10 @@
-package org.obliquid.helpers;
+package org.obliquid.date;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
-import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
@@ -19,8 +15,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 /**
  * Helper class for Dates, Java Dates, Joda Dates and ISO Dates in the String
- * form yyyy-MM-dd. If this class grows too big (say more than 800 lines I will
- * consider splitting it in a JavaDateHelper, JodaDateHelper and IsoDateHelper.
+ * form yyyy-MM-dd.
  * 
  * The methods implemented aren't mean to be comprehensive, it contains the
  * functions I need in my development, they give me a simple interface that it's
@@ -38,7 +33,7 @@ public final class DateHelper {
         private static final int MS_IN_ONE_SEC = 1000;
 
         /** The month of December. */
-        private static final int DECEMBER = 12;
+        public static final int DECEMBER = 12;
 
         /** Length of an ISO Date in characters. */
         public static final int ISO_DATE_LENGTH = 10;
@@ -92,33 +87,7 @@ public final class DateHelper {
          * @return the formatted date
          */
         public static String formatIsoDate(final ReadableDateTime aDate) {
-                return buildIsoFormatForJodaDate().print(aDate);
-        }
-
-        /**
-         * Simple ISO Format for Joda Dates. I need to build a new one each time
-         * because is not thread safe.
-         * 
-         * @return a DateTimeFormatter instance
-         */
-        private static DateTimeFormatter buildIsoFormatForJodaDate() {
-                return DateTimeFormat.forPattern("yyyy-MM-dd");
-        }
-
-        /**
-         * Format a Java Date in ISO short format as in yyyy-MM-dd.
-         * 
-         * @param aDate
-         *                a Java Date
-         * @return the formatted date
-         */
-        public static String buildIsoDateFromJavaDate(final Date aDate) {
-                Calendar cal = new GregorianCalendar();
-                cal.setTime(aDate);
-                int year = cal.get(Calendar.YEAR);
-                int month = cal.get(Calendar.MONTH) + 1;
-                int day = cal.get(Calendar.DAY_OF_MONTH);
-                return String.format("%04d-%02d-%02d", year, month, day);
+                return DateBuilder.buildIsoFormatForJodaDate().print(aDate);
         }
 
         /**
@@ -153,160 +122,6 @@ public final class DateHelper {
         }
 
         /**
-         * Return the date at the end of the current year. i.e. 31/Dec/YYYY
-         * 
-         * @return a date at the end of the current year
-         */
-        public static ReadableDateTime buildReadableDateTimeOfTheEndOfCurrentYear() {
-                final int lastDayOfDecember = 31;
-                ReadableDateTime endOfYear = new DateMidnight(computeCurrentYear(), DECEMBER,
-                                lastDayOfDecember);
-                return endOfYear;
-        }
-
-        /**
-         * Return a Joda DateTime at the end of the month in the current year.
-         * example 30/Jun/YYYY
-         * 
-         * @param month
-         *                the month numeral (1=January)
-         * @return a DateTime at the end of the month
-         */
-        public static ReadableDateTime buildReadableDateTimeOfTheEndOfMonthInTheCurrentYear(final int month) {
-                DateMidnight firstOfMonth = new DateMidnight(computeCurrentYear(), month, 1);
-                return firstOfMonth.dayOfMonth().withMaximumValue();
-        }
-
-        /**
-         * Return a Joda DateTime at the first of the month in the current year.
-         * example 01/June/YYYY
-         * 
-         * @param month
-         *                the month numeral (1=January)
-         * @return a DateTime at the first of the month
-         */
-        public static ReadableDateTime buildReadableDateTimeOfTheBeginningOfMonthInTheCurrentYear(
-                        final int month) {
-                ReadableDateTime firstOfMonth = new DateMidnight(computeCurrentYear(), month, 1);
-                return firstOfMonth;
-        }
-
-        /**
-         * Build a ReadableDateTime from an isoDate.
-         * 
-         * @param isoDate
-         *                a String in the format yyyy-MM-dd
-         * @return a ReadableDateTime
-         */
-        public static ReadableDateTime buildReadableDateTimeFromIsoDate(final String isoDate) {
-                return buildIsoFormatForJodaDate().parseDateTime(isoDate);
-        }
-
-        /**
-         * Build a LocalDate from an isoDate.
-         * 
-         * @param isoDate
-         *                a string in the format yyyy-MM-dd
-         * @return a LocalDate
-         */
-        public static LocalDate buildLocalDateFromIsoDate(final String isoDate) {
-                ReadableDateTime dateTime = buildIsoFormatForJodaDate().parseDateTime(isoDate);
-                LocalDate date = new LocalDate(dateTime.getYear(), dateTime.getMonthOfYear(),
-                                dateTime.getDayOfMonth());
-                return date;
-        }
-
-        /**
-         * Build a LocalDate from a Java Date.
-         * 
-         * @param javaDate
-         *                the Java Date to use as source
-         * @return a LocalDate
-         */
-        public static LocalDate buildLocalDateFromJavaDate(final Date javaDate) {
-                Calendar calendar = new GregorianCalendar();
-                calendar.setTime(javaDate);
-                int year = calendar.get(Calendar.YEAR);
-                int month = calendar.get(Calendar.MONTH) + 1; //month is 0 based in Java Date
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
-                return new LocalDate(year, month, day);
-        }
-
-        /**
-         * Build a LocalDate from a ReadableDateTime.
-         * 
-         * @param dtDate
-         *                the ReadableDateTime to use as source
-         * @return a LocalDate
-         */
-        public static LocalDate buildLocalDateFromReadableDateTime(final ReadableDateTime dtDate) {
-                return new LocalDate(dtDate.getYear(), dtDate.getMonthOfYear(), dtDate.getDayOfMonth());
-        }
-
-        /**
-         * Build a Java Date from a LocalDate.
-         * 
-         * @param localDate
-         *                the local date to use as source
-         * @return a Java Date
-         */
-        public static Date buildJavaDateFromLocalDate(final LocalDate localDate) {
-                Calendar calendar = Calendar.getInstance();
-                calendar.clear();
-                //month is 0 based in Java Date
-                calendar.set(localDate.getYear(), localDate.getMonthOfYear() - 1, localDate.getDayOfMonth());
-                return calendar.getTime();
-        }
-
-        /**
-         * Build a Java Date from a ISO Date String.
-         * 
-         * @param isoDate
-         *                a String in the format yyyy-MM-dd
-         * @return a Java Date
-         */
-        public static Date buildJavaDateFromIsoDate(final String isoDate) {
-                Date date;
-                try {
-                        date = buildIsoFormatForJavaDate().parse(isoDate);
-                } catch (ParseException ex) {
-                        throw new IllegalArgumentException(ex);
-                }
-                return date;
-        }
-
-        /**
-         * Simple ISO Format for Java Dates.
-         * 
-         * @return a new SimpleDateFormat (every time a new instance)
-         */
-        private static DateFormat buildIsoFormatForJavaDate() {
-                return new SimpleDateFormat("yyyy-MM-dd");
-        }
-
-        /**
-         * Build a ReadableDateTime from javaDate.
-         * 
-         * @param javaDate
-         *                a java.util.Date Object
-         * @return a ReadableDateTime
-         */
-        public static ReadableDateTime buildReadableDateTimeFromJavaDate(final Date javaDate) {
-                return new DateTime(javaDate);
-        }
-
-        /**
-         * Build a MutableDateTime from javaDate.
-         * 
-         * @param javaDate
-         *                a java.util.Date Object
-         * @return a MutableDateTime
-         */
-        public static MutableDateTime buildMutableDateTimeFromJavaDate(final Date javaDate) {
-                return new DateTime(javaDate).toMutableDateTime();
-        }
-
-        /**
          * Return the number of days between two ReadableDates, considering only
          * the date part and not the time part.
          * 
@@ -318,8 +133,8 @@ public final class DateHelper {
          */
         public static int computeDaysBetween(final ReadableDateTime fromWhen,
                         final ReadableDateTime untilWhen) {
-                LocalDate fromWhenLd = buildLocalDateFromReadableDateTime(fromWhen);
-                LocalDate untilWhenLd = buildLocalDateFromReadableDateTime(untilWhen);
+                LocalDate fromWhenLd = DateBuilder.buildLocalDateFromReadableDateTime(fromWhen);
+                LocalDate untilWhenLd = DateBuilder.buildLocalDateFromReadableDateTime(untilWhen);
                 return Days.daysBetween(fromWhenLd, untilWhenLd).getDays();
         }
 
@@ -333,8 +148,8 @@ public final class DateHelper {
          * @return the number of days
          */
         public static int computeDaysBetween(final String isoFromWhen, final String isoUntilWhen) {
-                ReadableDateTime jodaFromWhen = DateHelper.buildReadableDateTimeFromIsoDate(isoFromWhen);
-                ReadableDateTime jodaUntilWhen = DateHelper.buildReadableDateTimeFromIsoDate(isoUntilWhen);
+                ReadableDateTime jodaFromWhen = DateBuilder.buildReadableDateTimeFromIsoDate(isoFromWhen);
+                ReadableDateTime jodaUntilWhen = DateBuilder.buildReadableDateTimeFromIsoDate(isoUntilWhen);
                 return Days.daysBetween(jodaFromWhen, jodaUntilWhen).getDays();
         }
 
@@ -349,8 +164,8 @@ public final class DateHelper {
          * @return the number of days
          */
         public static int computeDaysBetween(Date fromWhen, Date untilWhen) {
-                LocalDate jodaFromWhen = DateHelper.buildLocalDateFromJavaDate(fromWhen);
-                LocalDate jodaUntilWhen = DateHelper.buildLocalDateFromJavaDate(untilWhen);
+                LocalDate jodaFromWhen = DateBuilder.buildLocalDateFromJavaDate(fromWhen);
+                LocalDate jodaUntilWhen = DateBuilder.buildLocalDateFromJavaDate(untilWhen);
                 return Days.daysBetween(jodaFromWhen, jodaUntilWhen).getDays();
         }
 
@@ -403,7 +218,7 @@ public final class DateHelper {
          * @return the day after the date
          */
         public static String computeNextDayInIsoFormat(final String isoDate) {
-                MutableDateTime nextDay = DateHelper.buildReadableDateTimeFromIsoDate(isoDate)
+                MutableDateTime nextDay = DateBuilder.buildReadableDateTimeFromIsoDate(isoDate)
                                 .toMutableDateTime();
                 nextDay.addDays(1);
                 return DateHelper.formatIsoDate(nextDay);
@@ -418,7 +233,7 @@ public final class DateHelper {
          * @return the day before the date
          */
         public static String computePreviousDayInIsoFormat(final String isoDate) {
-                MutableDateTime nextDay = DateHelper.buildReadableDateTimeFromIsoDate(isoDate)
+                MutableDateTime nextDay = DateBuilder.buildReadableDateTimeFromIsoDate(isoDate)
                                 .toMutableDateTime();
                 nextDay.addDays(-1);
                 return DateHelper.formatIsoDate(nextDay);
@@ -533,7 +348,7 @@ public final class DateHelper {
         }
 
         /**
-         * Returns a copy of startDate plus the specified number of days.
+         * Return a copy of startDate plus the specified number of days.
          * 
          * @param startDate
          *                the starting date
@@ -542,8 +357,27 @@ public final class DateHelper {
          * @return a new Date obtained by startDate plus the requested days
          */
         public static Date plusDays(final Date startDate, final int days) {
-                LocalDate destDate = DateHelper.buildLocalDateFromJavaDate(startDate).plusDays(days);
-                return DateHelper.buildJavaDateFromLocalDate(destDate);
+                LocalDate destDate = DateBuilder.buildLocalDateFromJavaDate(startDate).plusDays(days);
+                return DateBuilder.buildJavaDateFromLocalDate(destDate);
+        }
+
+        /**
+         * Return a copy of startDate minus the specified number of days.
+         * 
+         * @param startDate
+         *                the starting date
+         * @param days
+         *                the amount of days to subtract, may be negative
+         * @return a new Date obtained by startDate minus the requested days
+         */
+        public static Date minusDays(final Date startDate, final int days) {
+                LocalDate destDate = DateBuilder.buildLocalDateFromJavaDate(startDate).minusDays(days);
+                return DateBuilder.buildJavaDateFromLocalDate(destDate);
+        }
+
+        public static boolean isDateInThePast(Date expiryDate) {
+                // TODO Auto-generated method stub
+                return false;
         }
 
 }

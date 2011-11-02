@@ -14,10 +14,11 @@ import org.obliquid.datatype.UrlTypeImplShould;
 import org.obliquid.datatype.UsernameImplShould;
 import org.obliquid.datatype.VatPercentImplShould;
 import org.obliquid.datatype.companytaxid.ItalianCompanyTaxIdShould;
+import org.obliquid.date.DateBuilderShould;
+import org.obliquid.date.DateHelperShould;
 import org.obliquid.db.DbNullShould;
 import org.obliquid.ec2.Ec2TagShould;
 import org.obliquid.helpers.BdHelperShould;
-import org.obliquid.helpers.DateHelperShould;
 import org.obliquid.helpers.SqlHelperShould;
 import org.obliquid.helpers.StringHelperShould;
 import org.obliquid.util.MapCacheShould;
@@ -40,19 +41,18 @@ import org.junit.runners.Suite.SuiteClasses;
                 BooleanTypeImplShould.class, CountryTypeImplShould.class, EmailAddressImplShould.class,
                 EmailListImplShould.class, IpAddressImplShould.class, IsoDateImplShould.class,
                 ItalianPostCodeImplShould.class, LanguageTypeImplShould.class, PasswordImplShould.class,
-                UsernameImplShould.class,
-                VatPercentImplShould.class,
-                PhoneNumberImplShould.class,
+                UsernameImplShould.class, VatPercentImplShould.class, PhoneNumberImplShould.class,
                 UrlTypeImplShould.class,
 
                 //org.obliquid.helpers
-                StringHelperShould.class,
+                StringHelperShould.class, SqlHelperShould.class,
+
+                //org.obliquid.date
+                DateHelperShould.class, DateBuilderShould.class,
 
                 //other uncategorised tests
-                DateHelperShould.class, StopWatchShould.class, DbNullShould.class, BdHelperShould.class,
-                SqlHelperShould.class, Ec2TagShould.class, WgetShould.class,
-                ItalianCompanyTaxIdShould.class,
-                MapCacheShould.class, MyImageShould.class })
+                StopWatchShould.class, DbNullShould.class, BdHelperShould.class, Ec2TagShould.class,
+                WgetShould.class, ItalianCompanyTaxIdShould.class, MapCacheShould.class, MyImageShould.class })
 public class SuiteForNonDb {
 
         //run all junit test
