@@ -37,6 +37,16 @@ public abstract class RecodeDb {
         private boolean dryRun = true;
 
         /**
+         * Injects a MetaDb instance.
+         * 
+         * @param dbArg
+         *                an instance of MetaDb
+         */
+        public final void setDb(final MetaDb dbArg) {
+                db = dbArg;
+        }
+
+        /**
          * Release a connection. If it's a stand-alone Connection, the
          * connection is closed, otherwise is returned to the pool.
          */
@@ -88,7 +98,7 @@ public abstract class RecodeDb {
          * @throws SQLException
          *                 in case of problems
          */
-        private void recodeTable(final String table) throws SQLException {
+        public final void recodeTable(final String table) throws SQLException {
                 Iterator<DbField> fieldIterator = FieldIteratorBuilder.fieldIteratorWithAutoDb(table);
                 while (fieldIterator.hasNext()) {
                         DbField aField = fieldIterator.next();
