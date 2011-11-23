@@ -12,6 +12,12 @@ import java.util.GregorianCalendar;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 
+/**
+ * Class under test: DateBuilder.
+ * 
+ * @author stivlo
+ * 
+ */
 public class DateBuilderShould {
 
         /**
