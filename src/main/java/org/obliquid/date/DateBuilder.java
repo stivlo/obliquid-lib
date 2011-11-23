@@ -21,7 +21,14 @@ import org.joda.time.format.DateTimeFormatter;
  * 
  * @author stivlo
  */
-public class DateBuilder {
+public final class DateBuilder {
+
+        /**
+         * Utility class with static methods.
+         */
+        private DateBuilder() {
+                //utility class
+        }
 
         /**
          * Format a Java Date in ISO short format as in yyyy-MM-dd.

@@ -7,50 +7,77 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
+/**
+ * Response wrapper for Http Servlets.
+ * 
+ * @author stivlo
+ * 
+ */
 public class GenericResponseWrapper extends HttpServletResponseWrapper {
 
+        /** the output. */
         private ByteArrayOutputStream output;
+
+        /** content length. */
         private int contentLength;
+
+        /** content type (mime type). */
         private String contentType;
 
-        public GenericResponseWrapper(HttpServletResponse response) {
+        /**
+         * Creates a new GenericResponseWrapper from an HttpServletResponse.
+         * 
+         * @param response
+         *                the response to wrap.
+         */
+        public GenericResponseWrapper(final HttpServletResponse response) {
                 super(response);
-
                 output = new ByteArrayOutputStream();
         }
 
-        public byte[] getData() {
+        /**
+         * Return the whole output as a byte array.
+         * 
+         * @return the output as a byte array
+         */
+        public final byte[] getData() {
                 return output.toByteArray();
         }
 
         @Override
-        public ServletOutputStream getOutputStream() {
+        public final ServletOutputStream getOutputStream() {
                 return new FilterServletOutputStream(output);
         }
 
         @Override
-        public PrintWriter getWriter() {
+        public final PrintWriter getWriter() {
                 return new PrintWriter(getOutputStream(), true);
         }
 
         @Override
-        public void setContentLength(int length) {
+        public final void setContentLength(final int length) {
                 this.contentLength = length;
                 super.setContentLength(length);
         }
 
-        public int getContentLength() {
+        /**
+         * Return the content length.
+         * 
+         * @return content length in bytes.
+         */
+        public final int getContentLength() {
                 return contentLength;
         }
 
         @Override
-        public void setContentType(String type) {
+        public final void setContentType(final String type) {
                 this.contentType = type;
                 super.setContentType(type);
         }
 
         @Override
-        public String getContentType() {
+        public final String getContentType() {
                 return contentType;
         }
+
 }

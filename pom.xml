@@ -4,7 +4,7 @@
     
     <groupId>org.obliquid</groupId>
     <artifactId>obliquid-lib</artifactId>
-    <version>0.9.13-SNAPSHOT</version>
+    <version>0.9.14-SNAPSHOT</version>
     
     <packaging>jar</packaging>
     <name>obliquid-lib</name>
@@ -146,7 +146,7 @@
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk</artifactId>
-            <version>1.2.6</version>
+            <version>1.2.12</version>
             <scope>compile</scope>
         </dependency>
         

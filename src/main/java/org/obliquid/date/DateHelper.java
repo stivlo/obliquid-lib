@@ -163,7 +163,7 @@ public final class DateHelper {
          *                as JavaDate
          * @return the number of days
          */
-        public static int computeDaysBetween(Date fromWhen, Date untilWhen) {
+        public static int computeDaysBetween(final Date fromWhen, final Date untilWhen) {
                 LocalDate jodaFromWhen = DateBuilder.buildLocalDateFromJavaDate(fromWhen);
                 LocalDate jodaUntilWhen = DateBuilder.buildLocalDateFromJavaDate(untilWhen);
                 return Days.daysBetween(jodaFromWhen, jodaUntilWhen).getDays();
@@ -384,7 +384,7 @@ public final class DateHelper {
          *                the second date
          * @return the max Date between the two
          */
-        public static Date max(Date javaDate1, Date javaDate2) {
+        public static Date max(final Date javaDate1, final Date javaDate2) {
                 if (javaDate1.after(javaDate2)) {
                         return new Date(javaDate1.getTime());
                 }

@@ -8,10 +8,17 @@ import java.util.List;
  * @author stivlo
  * 
  */
-public class Dump {
+public final class Dump {
 
         /** How many characters to indent. */
         private static final int INDENT = 4;
+
+        /**
+         * Class composed of static methods.
+         */
+        private Dump() {
+                //utility class
+        }
 
         /**
          * Build a String composed by size spaces.
@@ -50,8 +57,6 @@ public class Dump {
          * 
          * @param var
          *                the variable to dump
-         * @param initialIndent
-         *                the initial indent
          * @return a String representing the String Array content
          */
         public static String the(final String[] var) {
@@ -97,6 +102,7 @@ public class Dump {
          * 
          * @param var
          *                the Object to be dumped
+         * @return String representation of the object
          */
         public static String the(final Object var) {
                 if (var instanceof String) {

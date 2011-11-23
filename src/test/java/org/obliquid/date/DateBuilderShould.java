@@ -66,7 +66,8 @@ public class DateBuilderShould {
                 Calendar calendar = Calendar.getInstance();
                 int year = calendar.get(Calendar.YEAR);
                 assertEquals(DateBuilder.buildReadableDateTimeFromIsoDate(year + "-04-01"),
-                                DateBuilder.buildReadableDateTimeOfTheBeginningOfMonthInTheCurrentYear(month));
+                                DateBuilder.buildReadableDateTimeOfTheBeginningOfMonthInTheCurrentYear(
+                                                month));
         }
 
         /**

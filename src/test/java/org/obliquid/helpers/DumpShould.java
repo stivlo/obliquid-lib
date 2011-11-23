@@ -45,10 +45,11 @@ public class DumpShould {
          */
         @Test
         public final void dumpAListOfInt() {
+                final int[] theInts = new int[] { 1, 5, 2091 };
                 List<Integer> list = new ArrayList<Integer>();
-                list.add(1);
-                list.add(5);
-                list.add(2091);
+                list.add(theInts[0]);
+                list.add(theInts[1]);
+                list.add(theInts[2]);
                 String expected = "List {\n    [0] = 1\n    [1] = 5\n    [2] = 2091\n}\n";
                 String computed = Dump.the(list);
                 assertEquals(expected, computed);

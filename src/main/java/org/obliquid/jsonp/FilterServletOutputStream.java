@@ -6,26 +6,41 @@ import java.io.OutputStream;
 
 import javax.servlet.ServletOutputStream;
 
+/**
+ * FilterOutputStream for Servlets.
+ * 
+ * @author stivlo
+ * 
+ */
 public class FilterServletOutputStream extends ServletOutputStream {
 
+        /**
+         * Output Stream to write to.
+         */
         private DataOutputStream stream;
 
-        public FilterServletOutputStream(OutputStream output) {
+        /**
+         * Create a new FilterServletOutputStream.
+         * 
+         * @param output
+         *                the output stream to write to
+         */
+        public FilterServletOutputStream(final OutputStream output) {
                 stream = new DataOutputStream(output);
         }
 
         @Override
-        public void write(int b) throws IOException {
+        public final void write(final int b) throws IOException {
                 stream.write(b);
         }
 
         @Override
-        public void write(byte[] b) throws IOException {
+        public final void write(final byte[] b) throws IOException {
                 stream.write(b);
         }
 
         @Override
-        public void write(byte[] b, int off, int len) throws IOException {
+        public final void write(final byte[] b, final int off, final int len) throws IOException {
                 stream.write(b, off, len);
         }
 

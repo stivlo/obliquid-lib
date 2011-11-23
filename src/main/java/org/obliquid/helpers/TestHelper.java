@@ -8,7 +8,14 @@ import java.lang.reflect.Field;
  * @author stivlo
  * 
  */
-public class TestHelper {
+public final class TestHelper {
+
+        /**
+         * Utility class of static methods.
+         */
+        private TestHelper() {
+                //utility class
+        }
 
         /**
          * Set a value in a field of the object bean, even if it's private.
@@ -29,7 +36,7 @@ public class TestHelper {
          * @throws NoSuchFieldException
          *                 in case the field couldn't be found
          */
-        public static void setValue(Object bean, String fieldName, Object value)
+        public static void setValue(final Object bean, final String fieldName, final Object value)
                         throws IllegalArgumentException, IllegalAccessException,
                         SecurityException, NoSuchFieldException {
                 Field privateVar = bean.getClass().getDeclaredField(fieldName);

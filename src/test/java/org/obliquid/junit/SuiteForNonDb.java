@@ -52,7 +52,8 @@ import org.junit.runners.Suite.SuiteClasses;
 
                 //other uncategorised tests
                 StopWatchShould.class, DbNullShould.class, BdHelperShould.class, Ec2TagShould.class,
-                WgetShould.class, ItalianCompanyTaxIdShould.class, MapCacheShould.class, MyImageShould.class })
+                WgetShould.class, ItalianCompanyTaxIdShould.class, MapCacheShould.class,
+                MyImageShould.class })
 public class SuiteForNonDb {
 
         //run all junit test
