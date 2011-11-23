@@ -41,7 +41,7 @@ public class MyImage {
         private long sourceSize;
 
         /** Logger instance for this class. */
-        private final static Logger LOG = Logger.getLogger(MyImage.class);
+        private static final Logger LOG = Logger.getLogger(MyImage.class);
 
         /**
          * Read an image to be manipulated from a file.
@@ -83,7 +83,7 @@ public class MyImage {
          * @throws IOException
          *                 in case of problems
          */
-        public final void read(byte[] byteArray) throws IOException {
+        public final void read(final byte[] byteArray) throws IOException {
                 sourceSize = byteArray.length;
                 sourceImage = ImageIO.read(new ByteArrayInputStream(byteArray));
                 if (sourceImage == null) {
@@ -249,7 +249,7 @@ public class MyImage {
          * 
          * @return size in bytes of the source image
          */
-        public long getSourceSize() {
+        public final long getSourceSize() {
                 return sourceSize;
         }
 
