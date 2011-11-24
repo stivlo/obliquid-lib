@@ -20,14 +20,23 @@ import org.obliquid.date.DateBuilder;
  */
 public class IsoDateStrategy implements DataType<Date> {
 
+        /**
+         * Universal serial identifier.
+         */
+        private static final long serialVersionUID = 1L;
+
         /** The value held. */
         private Date date;
 
-        /** Check an ISO Date in the format yyyy-MM-dd only. */
-        private Pattern regexp = Pattern.compile("^([0-9]{4})-(1[0-2]|0[1-9])-(3[0-1]|[1-2][0-9]|0[1-9])$");
+        /**
+         * Check an ISO Date in the format yyyy-MM-dd only.
+         */
+        private static final Pattern VALID_DATE = Pattern
+                        .compile("^([0-9]{4})-(1[0-2]|0[1-9])-(3[0-1]|[1-2][0-9]|0[1-9])$");
 
         /**
-         * ISO Date parser.
+         * ISO Date parser. I let it Serialize, because is not thread safe, so
+         * it can't be static.
          */
         private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -50,7 +59,7 @@ public class IsoDateStrategy implements DataType<Date> {
                 if (isoDate == null) {
                         throw new IllegalArgumentException("ISO Date can't be null");
                 }
-                if (!regexp.matcher(isoDate).find()) {
+                if (!VALID_DATE.matcher(isoDate).find()) {
                         throw new IllegalArgumentException("Date '" + isoDate + "' not in ISO format");
                 }
                 try {

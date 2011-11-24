@@ -14,6 +14,11 @@ import org.obliquid.datatype.strategy.BooleanStrategy;
 public class BooleanTypeImpl implements BooleanType {
 
         /**
+         * Universal serial identifier.
+         */
+        private static final long serialVersionUID = 1L;
+
+        /**
          * Boolean Strategy.
          */
         private DataType<Boolean> booleanStrategy = new BooleanStrategy();

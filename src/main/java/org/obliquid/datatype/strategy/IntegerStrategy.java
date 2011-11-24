@@ -12,6 +12,11 @@ import org.obliquid.datatype.DataType;
  */
 public class IntegerStrategy implements DataType<Integer> {
 
+        /**
+         * Universal serial identifier.
+         */
+        private static final long serialVersionUID = 1L;
+
         /** The data item. */
         private Integer data;
 

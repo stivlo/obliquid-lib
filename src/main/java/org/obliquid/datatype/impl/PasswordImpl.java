@@ -19,6 +19,11 @@ import org.obliquid.helpers.StringHelper;
 public class PasswordImpl implements Password {
 
         /**
+         * Universal serial identifier.
+         */
+        private static final long serialVersionUID = 1L;
+
+        /**
          * The string strategy algorithm implementation.
          */
         private StringStrategy stringStrategy = new StringStrategy();
@@ -26,7 +31,7 @@ public class PasswordImpl implements Password {
         /**
          * Validation pattern for passwords.
          */
-        private final Pattern validationPattern = Pattern.compile("[a-zA-Z0-9_\\-\\.\\!\\?;]{5,30}+");
+        private static final Pattern VALID_PATTERN = Pattern.compile("[a-zA-Z0-9_\\-\\.\\!\\?;]{5,30}+");
 
         /**
          * Return an empty String, we don't want to show passwords.
@@ -69,7 +74,7 @@ public class PasswordImpl implements Password {
                 } else if (passwordClearText.length() == 0) {
                         return false; //password is empty
                 } else {
-                        Matcher matcher = validationPattern.matcher(passwordClearText);
+                        Matcher matcher = VALID_PATTERN.matcher(passwordClearText);
                         valid = matcher.find();
                         if (valid && (matcher.start() != 0 || matcher.end() != passwordClearText.length())) {
                                 return false; //password is invalid

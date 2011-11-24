@@ -16,6 +16,11 @@ import com.google.common.collect.ImmutableMap;
 public class LanguageTypeImpl implements LanguageType {
 
         /**
+         * Universal serial identifier.
+         */
+        private static final long serialVersionUID = 1L;
+
+        /**
          * Supported languages with their translation in the language itself.
          */
         private ImmutableMap<String, String> supported = ImmutableMap.of("en", "English", "it", "Italiano");

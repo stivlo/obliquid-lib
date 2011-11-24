@@ -13,6 +13,11 @@ import org.obliquid.datatype.DataType;
 public class BooleanStrategy implements DataType<Boolean> {
 
         /**
+         * Universal serial identifier.
+         */
+        private static final long serialVersionUID = 1L;
+
+        /**
          * The data item.
          */
         private Boolean data;

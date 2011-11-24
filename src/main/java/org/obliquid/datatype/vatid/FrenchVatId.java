@@ -10,6 +10,11 @@ import org.obliquid.datatype.impl.VatIdImpl;
  */
 public class FrenchVatId extends VatIdImpl {
 
+        /**
+         * Universal serial identifier.
+         */
+        private static final long serialVersionUID = 1L;
+
         @Override
         public final boolean isValid(final String data) {
                 return true;

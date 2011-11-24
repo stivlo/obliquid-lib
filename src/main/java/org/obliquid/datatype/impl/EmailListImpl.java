@@ -15,6 +15,11 @@ import org.obliquid.datatype.strategy.ListOfStringStrategy;
 public class EmailListImpl implements EmailList {
 
         /**
+         * Universal serial identifier.
+         */
+        private static final long serialVersionUID = 1L;
+
+        /**
          * The list of String Strategy. (Strategy Pattern)
          */
         private ListOfStringStrategy listStrategy = new ListOfStringStrategy();

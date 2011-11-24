@@ -14,6 +14,11 @@ import org.obliquid.datatype.strategy.StringStrategy;
 public class UrlTypeImpl implements UrlType {
 
         /**
+         * Universal serial identifier.
+         */
+        private static final long serialVersionUID = 1L;
+
+        /**
          * String store algorithm (Strategy Pattern).
          */
         private StringStrategy stringStrategy = new StringStrategy();

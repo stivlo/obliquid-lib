@@ -12,6 +12,11 @@ import org.obliquid.datatype.strategy.StringStrategy;
  */
 public class PhoneNumberImpl implements PhoneNumber {
 
+        /**
+         * Universal serial identifier.
+         */
+        private static final long serialVersionUID = 1L;
+
         /** String strategy algorithm. (Strategy Pattern). */
         private StringStrategy stringStrategy = new StringStrategy();
 

@@ -17,6 +17,11 @@ import org.obliquid.datatype.strategy.StringStrategy;
 public class CountryTypeImpl implements CountryType {
 
         /**
+         * Universal serial identifier.
+         */
+        private static final long serialVersionUID = 1L;
+
+        /**
          * Basic String Strategy.
          */
         private StringStrategy stringStrategy = new StringStrategy();

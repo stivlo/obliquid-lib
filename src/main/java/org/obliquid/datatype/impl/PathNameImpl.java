@@ -16,6 +16,11 @@ import org.obliquid.datatype.strategy.StringStrategy;
 public class PathNameImpl implements PathName {
 
         /**
+         * Universal serial identifier.
+         */
+        private static final long serialVersionUID = 1L;
+
+        /**
          * External String Strategy implementation. (Strategy Pattern)
          */
         private StringStrategy stringStrategy = new StringStrategy();

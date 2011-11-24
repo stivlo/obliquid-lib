@@ -14,6 +14,11 @@ import org.obliquid.datatype.strategy.StringStrategy;
 public class ItalianPostCodeImpl implements ItalianPostCode {
 
         /**
+         * Universal serial identifier.
+         */
+        private static final long serialVersionUID = 1L;
+
+        /**
          * String strategy (strategy pattern).
          */
         private StringStrategy stringStrategy = new StringStrategy();
@@ -21,14 +26,14 @@ public class ItalianPostCodeImpl implements ItalianPostCode {
         /**
          * Expected length of an Italian post code.
          */
-        private final int expectedLength = 5;
+        private static final int EXPECTED_LENGTH = 5;
 
         @Override
         public final boolean isValid(final String theData) {
-                if (theData == null || theData.length() != expectedLength) {
+                if (theData == null || theData.length() != EXPECTED_LENGTH) {
                         return false;
                 }
-                for (int i = 0; i < expectedLength; i++) {
+                for (int i = 0; i < EXPECTED_LENGTH; i++) {
                         if (!Character.isDigit(theData.charAt(i))) {
                                 return false;
                         }

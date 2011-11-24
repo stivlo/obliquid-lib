@@ -15,6 +15,11 @@ import org.obliquid.datatype.strategy.StringStrategy;
  */
 public class IpAddressImpl implements IpAddress {
 
+        /**
+         * Universal serial identifier.
+         */
+        private static final long serialVersionUID = 1L;
+
         /** Basic strategy for Strings. */
         private StringStrategy stringStrategy = new StringStrategy();
 

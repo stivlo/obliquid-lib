@@ -1,5 +1,6 @@
 package org.obliquid.datatype;
 
+import java.io.Serializable;
 import java.util.Locale;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Locale;
  * @author stivlo
  * 
  */
-public interface DataType<T> {
+public interface DataType<T> extends Serializable {
 
         /**
          * Return the data formatted for displaying.

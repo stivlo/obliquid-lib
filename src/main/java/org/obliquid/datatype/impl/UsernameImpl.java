@@ -17,13 +17,18 @@ import org.obliquid.datatype.strategy.StringStrategy;
  */
 public class UsernameImpl implements Username {
 
+        /**
+         * Universal serial identifier.
+         */
+        private static final long serialVersionUID = 1L;
+
         /** A String Strategy, component of the Strategy Pattern. */
         private StringStrategy stringStrategy = new StringStrategy();
 
         /**
          * Validation pattern.
          */
-        private Pattern validationPattern = Pattern.compile("[A-Za-z0-9_]{2,30}+");
+        private static final Pattern VALID_PATTERN = Pattern.compile("[A-Za-z0-9_]{2,30}+");
 
         /**
          * Validation failed message.
@@ -45,7 +50,7 @@ public class UsernameImpl implements Username {
                 if (username == null || username.length() == 0) {
                         return false;
                 }
-                Matcher matcher = validationPattern.matcher(username);
+                Matcher matcher = VALID_PATTERN.matcher(username);
                 valid = matcher.find();
                 if (valid && (matcher.start() != 0 || matcher.end() != username.length())) {
                         return false;

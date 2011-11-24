@@ -17,6 +17,11 @@ import org.obliquid.helpers.BdHelper;
  */
 public class VatPercentImpl implements VatPercent {
 
+        /**
+         * Universal serial identifier.
+         */
+        private static final long serialVersionUID = 1L;
+
         /** Integer Strategy implementation (Strategy Pattern). */
         private IntegerStrategy integerStrategy = new IntegerStrategy();
 

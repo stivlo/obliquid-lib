@@ -14,6 +14,11 @@ import org.obliquid.datatype.impl.VatIdImpl;
  */
 public class ItalianCompanyTaxId extends CompanyTaxIdImpl {
 
+        /**
+         * Universal serial identifier.
+         */
+        private static final long serialVersionUID = 1L;
+
         /** Hold instances of Italian vatId and personalTaxId. */
         private final TaxId vatId, personalTaxId;
 

@@ -14,6 +14,11 @@ import org.obliquid.datatype.strategy.StringStrategy;
  */
 public abstract class PersonalTaxIdImpl implements TaxId {
 
+        /**
+         * Universal serial identifier.
+         */
+        private static final long serialVersionUID = 1L;
+
         /** StringStrategy algorithm. */
         private StringStrategy stringStrategy = new StringStrategy();
 

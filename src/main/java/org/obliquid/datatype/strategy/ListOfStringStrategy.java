@@ -16,6 +16,11 @@ import org.obliquid.datatype.DataType;
 public class ListOfStringStrategy implements DataType<List<String>> {
 
         /**
+         * Universal serial identifier.
+         */
+        private static final long serialVersionUID = 1L;
+
+        /**
          * The list of Strings.
          */
         private final List<String> list = new ArrayList<String>();

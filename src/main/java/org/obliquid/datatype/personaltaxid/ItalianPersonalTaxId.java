@@ -9,6 +9,11 @@ import org.obliquid.datatype.impl.PersonalTaxIdImpl;
  */
 public class ItalianPersonalTaxId extends PersonalTaxIdImpl {
 
+        /**
+         * Universal serial identifier.
+         */
+        private static final long serialVersionUID = 1L;
+
         /** Expected length of an Italian Personal Tax Id. */
         private static final int EXPECTED_LEN = 16;
 
@@ -40,7 +45,8 @@ public class ItalianPersonalTaxId extends PersonalTaxIdImpl {
         private char computeCheckDigit(final String taxId) {
                 final int lettersInAlphabet = 26;
                 final int maxOdd = 13, maxEven = 14;
-                final int[] setdisp = { 1, 0, 5, 7, 9, 13, 15, 17, 19, 21, 2, 4, 18, 20, 11, 3, 6, 8, 12, 14,
+                final int[] setdisp = { 1, 0, 5, 7, 9, 13, 15, 17, 19, 21, 2, 4, 18, 20, 11, 3, 6, 8, 12,
+                                14,
                                 16, 10, 22, 25, 24, 23 };
                 int charWeight = 0, aChar;
                 for (int i = 1; i <= maxOdd; i += 2) {

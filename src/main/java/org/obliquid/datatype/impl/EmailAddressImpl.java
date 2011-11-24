@@ -14,6 +14,11 @@ import org.obliquid.datatype.strategy.StringStrategy;
 public class EmailAddressImpl implements EmailAddress {
 
         /**
+         * Universal serial identifier.
+         */
+        private static final long serialVersionUID = 1L;
+
+        /**
          * String strategy implementation.
          */
         private StringStrategy stringStrategy = new StringStrategy();

@@ -10,6 +10,11 @@ import org.obliquid.datatype.impl.VatIdImpl;
  */
 public class SpanishVatId extends VatIdImpl {
 
+        /**
+         * Universal serial identifier.
+         */
+        private static final long serialVersionUID = 1L;
+
         /** Expected length of a Spanish Vat Id. */
         private static final int EXPECTED_LEN = 12;
 

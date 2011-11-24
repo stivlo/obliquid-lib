@@ -11,6 +11,11 @@ import org.obliquid.datatype.impl.VatIdImpl;
  */
 public class SpanishCompanyTaxId extends CompanyTaxIdImpl {
 
+        /**
+         * Universal serial identifier.
+         */
+        private static final long serialVersionUID = 1L;
+
         @Override
         public final boolean isValid(final String taxIdString) {
                 TaxId vatId = VatIdImpl.createInstance("ES");
