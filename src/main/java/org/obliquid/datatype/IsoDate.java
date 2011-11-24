@@ -1,5 +1,6 @@
 package org.obliquid.datatype;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Date;
  * @author stivlo
  * 
  */
-public interface IsoDate extends DataType<Date>, DataTypeValidator<Date> {
+public interface IsoDate extends DataType<Date>, DataTypeValidator<Date>, Serializable {
 
         /**
          * Computes the number of days in the year of the date of this object.

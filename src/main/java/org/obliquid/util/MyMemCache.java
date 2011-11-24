@@ -42,7 +42,7 @@ public final class MyMemCache implements OCache {
          * @param namespaceIn
          *                namespace prefix to avoid conflicts
          * @param memcachedAddressAndPort
-         *                on localhost it will be "127.0.0.1"
+         *                on localhost normally will be "127.0.0.1:11211"
          */
         public MyMemCache(final String namespaceIn, final String memcachedAddressAndPort) {
                 namespace = namespaceIn;

@@ -19,6 +19,11 @@ import org.obliquid.date.DateHelper;
 public class IsoDateImpl implements IsoDate {
 
         /**
+         * Universal serial identifier.
+         */
+        private static final long serialVersionUID = 1L;
+
+        /**
          * IsoDate Strategy.
          */
         private IsoDateStrategy isoDateStrategy = new IsoDateStrategy();
