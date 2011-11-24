@@ -36,15 +36,15 @@ public final class MyMemCache implements OCache {
         private static final Logger LOG = Logger.getLogger(MyMemCache.class);
 
         /**
-         * Private constructor creating maxConn clients (each one starts a
-         * thread and opens a connection to memcached server).
+         * Private constructor creating MAX_CONN clients (each one starts a
+         * thread and opens a connection to memCached server).
          * 
          * @param namespaceIn
          *                namespace prefix to avoid conflicts
          * @param memcachedAddressAndPort
-         *                on localhost it will be "127.0.0.1:"
+         *                on localhost it will be "127.0.0.1"
          */
-        private MyMemCache(final String namespaceIn, final String memcachedAddressAndPort) {
+        public MyMemCache(final String namespaceIn, final String memcachedAddressAndPort) {
                 namespace = namespaceIn;
                 m = new MemcachedClient[MAX_CONN];
                 for (int i = 0; i <= MAX_CONN - 1; i++) {
