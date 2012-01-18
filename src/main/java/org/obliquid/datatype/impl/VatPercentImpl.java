@@ -58,7 +58,7 @@ public class VatPercentImpl implements VatPercent {
 
         @Override
         public final int computeVatPercent(final String invoiceFromCountry, final String invoiceToCountry) {
-                final int italyVat = 20;
+                final int italyVat = 21;
                 if (invoiceFromCountry.equals("IT")) {
                         if (invoiceToCountry.equals("IT")) {
                                 return italyVat;
