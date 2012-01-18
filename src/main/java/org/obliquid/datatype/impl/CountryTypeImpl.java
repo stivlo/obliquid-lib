@@ -36,6 +36,7 @@ public class CountryTypeImpl implements CountryType {
                                         put("en", Collections.unmodifiableMap(new HashMap<String, String>() {
                                                 {
                                                         put("AU", "Australia");
+                                                        put("CH", "Switzerland");
                                                         put("CN", "China");
                                                         put("DE", "Germany");
                                                         put("ES", "Spain");
@@ -57,6 +58,7 @@ public class CountryTypeImpl implements CountryType {
                                         put("it", Collections.unmodifiableMap(new HashMap<String, String>() {
                                                 {
                                                         put("AU", "Australia");
+                                                        put("CH", "Svizzera");
                                                         put("CN", "Cina");
                                                         put("DE", "Germania");
                                                         put("ES", "Spagna");
