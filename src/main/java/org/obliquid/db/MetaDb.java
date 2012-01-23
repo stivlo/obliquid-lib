@@ -934,5 +934,11 @@ public interface MetaDb {
          *                 table doesn't exists
          */
         int newIdUsingSequence(String tablename) throws SQLException;
+        
+        /** 
+         * Set whether or not to use SELECT DISTINCT in queries (default: false).
+         * @param distinctStatus if true use DISTINCT 
+         */
+        void setDistinct(boolean distinctStatus);
 
 }
