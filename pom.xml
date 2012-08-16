@@ -1,327 +1,339 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    
-    <groupId>org.obliquid</groupId>
-    <artifactId>obliquid-lib</artifactId>
-    <version>0.9.14-SNAPSHOT</version>
-    
-    <packaging>jar</packaging>
-    <name>obliquid-lib</name>
-    <url>https://github.com/stivlo/obliquid-lib</url>
-    <description>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.obliquid</groupId>
+	<artifactId>obliquid-lib</artifactId>
+	<version>0.9.14-SNAPSHOT</version>
+
+	<packaging>jar</packaging>
+	<name>obliquid-lib</name>
+	<url>https://github.com/stivlo/obliquid-lib</url>
+	<description>
         obliquid-lib are Java classes that I use for my daily development and not bound to
         any specific application. This collection is released with LGPL3 licence. They are my
         personal code library that I've used in multiple projects. All classes are not meant
         to be comprehensive, but they contain what I need, YAGNI style.
     </description>
-    
-    <licenses>
-        <license>
-            <name>GNU Library or Lesser General Public License (LGPL)</name>
-            <url>http://www.gnu.org/licenses/lgpl.html</url>
-        </license>
-    </licenses>
-    
-    <issueManagement>
-        <system>github</system>
-        <url>https://github.com/stivlo/obliquid-lib/issues</url>
-    </issueManagement>
-    
-    <scm>
-        <connection>scm:git://github.com/stivlo/obliquid-lib.git</connection>
-        <url>https://github.com/stivlo/obliquid-lib</url>
-    </scm>
-     
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 
-    
-    <distributionManagement>
-    
-        <!-- Publish versioned releases here -->
-        <repository>
-            <id>obliquid</id>
-            <name>Obliquid releases</name>
-            <url>http://nexus.obliquid.com/nexus/content/repositories/releases</url>
-        </repository>
-        
-        <!-- Publish snapshots here -->
-        <snapshotRepository>
-            <id>obliquid</id>
-            <name>Obliquid snapshots</name>
-            <url>http://nexus.obliquid.com/nexus/content/repositories/snapshots</url>
-        </snapshotRepository>
-        
-   </distributionManagement>
-    
-    <repositories>
-        <repository>
-            <id>obliquid</id>
-            <name>Obliquid Public Repository</name>
-            <url>http://nexus.obliquid.com/nexus/content/groups/public</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-    
-    <pluginRepositories>
-        <pluginRepository>
-            <id>obliquid</id>
-            <name>obliquid</name>
-            <url>http://nexus.obliquid.com/nexus/content/groups/public</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
-    
-    <dependencies>
-        
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.10</version>
-            <scope>test</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>1.6.2</version>
-            <scope>compile</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-exec</artifactId>
-            <version>1.1</version>
-            <scope>compile</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.0.1</version>
-            <scope>compile</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.apache.geronimo.specs</groupId>
-            <artifactId>geronimo-servlet_3.0_spec</artifactId>
-            <version>1.0</version>
-            <scope>provided</scope>
-            <optional>true</optional>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.apache.geronimo.specs</groupId>
-            <artifactId>geronimo-jsp_2.2_spec</artifactId>
-            <version>1.0</version>
-            <scope>provided</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>commons-validator</groupId>
-            <artifactId>commons-validator</artifactId>
-            <version>1.3.1</version>
-            <scope>compile</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>oro</groupId>
-            <artifactId>oro</artifactId>
-            <version>2.0.8</version>
-            <scope>compile</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk</artifactId>
-            <version>1.2.12</version>
-            <scope>compile</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>spy</groupId>
-            <artifactId>spymemcached</artifactId>
-            <version>2.6</version>
-            <scope>compile</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>com.google.code.typica</groupId>
-            <artifactId>typica</artifactId>
-            <version>1.7.2</version>
-            <scope>compile</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>com.itextpdf</groupId>
-            <artifactId>itextpdf</artifactId>
-            <version>5.1.1</version>
-            <scope>compile</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-            <version>2.6</version>
-            <scope>compile</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>r09</version>
-            <scope>compile</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.18</version>
-            <scope>test</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.16</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>com.mortennobel</groupId>
-            <artifactId>java-image-scaling</artifactId>
-            <version>0.8.5</version>
-        </dependency>
+	<licenses>
+		<license>
+			<name>GNU Library or Lesser General Public License (LGPL)</name>
+			<url>http://www.gnu.org/licenses/lgpl.html</url>
+		</license>
+	</licenses>
 
-    </dependencies>
-    
-    <profiles>
-        <profile>
-            <id>release</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <version>2.1.2</version>
-                        <executions>
-                            <execution>
-                                <id>attach-sources</id>
-                                <goals>
-                                    <goal>jar-no-fork</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
-    
-    <build>
-        <finalName>obliquid-lib</finalName>
-        
-        <plugins>
-            
-            <plugin>
-                <artifactId>maven-eclipse-plugin</artifactId>
-                <version>2.8</version>
-                <configuration>
-                    <downloadSources>true</downloadSources>
-                    <downloadJavadocs>true</downloadJavadocs>
-                    <wtpversion>1.5</wtpversion>
-                </configuration>
-            </plugin>
-            
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
-            
-            <plugin>
-                <groupId>com.googlecode.t7mp</groupId>
-                <artifactId>maven-t7-plugin</artifactId>
-                <version>0.9.6</version>
-            </plugin>
-            
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.1.1</version>
-                <configuration>
-                    <packagingExcludes></packagingExcludes>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>lib/</classpathPrefix>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
-            
-        </plugins>
-        
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <artifactId>maven-site-plugin</artifactId>
-                    <version>3.0-beta-3</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-        
-    </build>
-    
-    <reporting>
-        <plugins>
-            
-            <plugin>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.8</version>
-            </plugin>
-            
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.4</version>
-            </plugin>
-            
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>cobertura-maven-plugin</artifactId>
-                <version>2.5.1</version>
-            </plugin>
-            
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <version>2.3.3-SNAPSHOT</version>
-                <configuration>
-                    <xmlOutput>true</xmlOutput>
-                    <!-- Optional directory to put findbugs xdoc xml report -->
-                    <xmlOutputDirectory>target/site</xmlOutputDirectory>
-                </configuration>
-            </plugin>
-            
-        </plugins>
-        
-    </reporting>
-    
+	<issueManagement>
+		<system>github</system>
+		<url>https://github.com/stivlo/obliquid-lib/issues</url>
+	</issueManagement>
+
+	<scm>
+		<connection>scm:git://github.com/stivlo/obliquid-lib.git</connection>
+		<url>https://github.com/stivlo/obliquid-lib</url>
+	</scm>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+
+	<distributionManagement>
+
+		<!-- Publish versioned releases here -->
+		<repository>
+			<id>obliquid</id>
+			<name>Obliquid releases</name>
+			<url>http://nexus.obliquid.com/nexus/content/repositories/releases</url>
+		</repository>
+
+		<!-- Publish snapshots here -->
+		<snapshotRepository>
+			<id>obliquid</id>
+			<name>Obliquid snapshots</name>
+			<url>http://nexus.obliquid.com/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+
+	</distributionManagement>
+
+	<repositories>
+
+		<repository>
+			<id>obliquid</id>
+			<name>Obliquid Public Repository</name>
+			<url>http://nexus.obliquid.com/nexus/content/groups/public</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+
+		<repository>
+			<id>spy</id>
+			<name>Spy Repository</name>
+			<layout>default</layout>
+			<url>http://files.couchbase.com/maven2/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+
+	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>obliquid</id>
+			<name>obliquid</name>
+			<url>http://nexus.obliquid.com/nexus/content/groups/public</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>1.6.2</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-exec</artifactId>
+			<version>1.1</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.0.1</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-servlet_3.0_spec</artifactId>
+			<version>1.0</version>
+			<scope>provided</scope>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-jsp_2.2_spec</artifactId>
+			<version>1.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-validator</groupId>
+			<artifactId>commons-validator</artifactId>
+			<version>1.3.1</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>oro</groupId>
+			<artifactId>oro</artifactId>
+			<version>2.0.8</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk</artifactId>
+			<version>1.2.12</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>spy</groupId>
+			<artifactId>spymemcached</artifactId>
+			<version>2.8.1</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.code.typica</groupId>
+			<artifactId>typica</artifactId>
+			<version>1.7.2</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.1.1</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>r09</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.18</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.16</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.mortennobel</groupId>
+			<artifactId>java-image-scaling</artifactId>
+			<version>0.8.5</version>
+		</dependency>
+
+	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<version>2.1.2</version>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<goals>
+									<goal>jar-no-fork</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+	<build>
+		<finalName>obliquid-lib</finalName>
+
+		<plugins>
+
+			<plugin>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.8</version>
+				<configuration>
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>true</downloadJavadocs>
+					<wtpversion>1.5</wtpversion>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>com.googlecode.t7mp</groupId>
+				<artifactId>maven-t7-plugin</artifactId>
+				<version>0.9.6</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1.1</version>
+				<configuration>
+					<packagingExcludes></packagingExcludes>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+
+		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>3.0-beta-3</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+	</build>
+
+	<reporting>
+		<plugins>
+
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.8</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>2.4</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>2.5.1</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>2.3.3-SNAPSHOT</version>
+				<configuration>
+					<xmlOutput>true</xmlOutput>
+					<!-- Optional directory to put findbugs xdoc xml report -->
+					<xmlOutputDirectory>target/site</xmlOutputDirectory>
+				</configuration>
+			</plugin>
+
+		</plugins>
+
+	</reporting>
+
 </project>
 
