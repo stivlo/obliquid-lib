@@ -59,6 +59,15 @@ public final class ClientFactory {
                 System.out.println("ClientFactory.createSimpleStorageServiceClient()");
                 return new AmazonS3Client(createAwsCredentials(), createClientConfiguration());
         }
+        
+        /**
+         * Creates an AmazonPostMan, in the future it should create either an Amazon PostMan,
+         * or another type (JavaMail, Google), according to configuration.
+         * @return an instance of PostMan
+         */
+        public static PostMan createPostMan() {
+        	return new AmazonPostMan();
+        }
 
         /**
          * Create an AmazonSimpleEmailService properly configured.
