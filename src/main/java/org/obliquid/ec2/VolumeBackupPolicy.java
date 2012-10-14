@@ -25,7 +25,7 @@ public class VolumeBackupPolicy {
         private static final int EVERY_HOW_MANY_DAYS_BIG_VOL = 14;
 
         /** Default value. */
-        private static final int HOW_MANY_DAYS_BEFORE_DEL = 15;
+        private static final int HOW_MANY_DAYS_BEFORE_DEL = 11;
 
         /**
          * A volume is considered small if is less or equal the thresholdGb.
@@ -45,7 +45,7 @@ public class VolumeBackupPolicy {
         /**
          * How many copies we should keep for small volumes.
          */
-        private int howManyCopiesForSmallVolumes = 2;
+        private int howManyCopiesForSmallVolumes = 1;
 
         /**
          * How many copies we should keep for big volumes.

@@ -87,7 +87,7 @@ public final class ClientFactory {
          * 
          * @return AWSCredentials Object
          */
-        private static AWSCredentials createAwsCredentials() {
+        public static AWSCredentials createAwsCredentials() {
                 AppConfig appConf = AppConfig.getInstance();
                 AWSCredentials credentials = new BasicAWSCredentials(appConf.getProperty("awsAccessKey"),
                                 appConf.getProperty("awsSecretKey"));
