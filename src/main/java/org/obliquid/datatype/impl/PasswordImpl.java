@@ -71,7 +71,7 @@ public class PasswordImpl implements Password {
         boolean valid = false;
         if (passwordClearText == null) {
             return false; // password is null
-        } else if (passwordClearText.length() == 0) {
+        } else if (passwordClearText.length() < 5) {
             return false; // password is empty
         } else {
             Matcher matcher = VALID_PATTERN.matcher(passwordClearText);
@@ -112,7 +112,7 @@ public class PasswordImpl implements Password {
     @Override
     public final void setData(final String passwordSha1) throws IllegalArgumentException {
         if (!isValid(passwordSha1)) {
-            //throw new IllegalArgumentException("Not a valid SHA-1 encoded password: '" + passwordSha1 + "'.");
+            throw new IllegalArgumentException("Not a valid SHA-1 encoded password: '" + passwordSha1 + "'.");
         }
         stringStrategy.setData(passwordSha1);
     }

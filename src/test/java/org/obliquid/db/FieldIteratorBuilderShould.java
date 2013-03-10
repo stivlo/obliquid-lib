@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.sql.SQLException;
 import java.util.Iterator;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -22,6 +23,7 @@ public class FieldIteratorBuilderShould {
          *                 in case of DB problems: tipically connection
          */
         @Test
+        @Ignore
         public final void returnThirteenFieldsForTableFilm() throws SQLException {
                 final int fieldCount = 13;
                 FieldIteratorBuilder builder = new FieldIteratorBuilder();
@@ -43,6 +45,7 @@ public class FieldIteratorBuilderShould {
          *                 in case of DB problems: typically connection
          */
         @Test
+        @Ignore
         public final void returnTheRightFieldsForTableLanguage() throws SQLException {
                 final int fieldCount = 3;
                 String[] fieldName = new String[] { "language_id", "name", "last_update" };

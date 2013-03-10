@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -22,6 +23,7 @@ public class PriKeyListerShould {
          *                 in case of problems
          */
         @Test
+        @Ignore
         public final void listActorIdForActorTable() throws SQLException {
                 PriKeyLister lister = new PriKeyLister();
                 lister.setDb(new MetaDbImpl());
@@ -37,6 +39,7 @@ public class PriKeyListerShould {
          *                 in case of problems.
          */
         @Test
+        @Ignore
         public final void listPriKeysForTableFilmActor() throws SQLException {
                 List<String> priKeys = PriKeyLister.getPriKeysWithAutoDb("film_actor");
                 assertEquals(2, priKeys.size());

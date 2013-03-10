@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.common.collect.ImmutableList;
@@ -26,6 +27,7 @@ public class TableIteratorBuilderShould {
          *                 in case of problems
          */
         @Test
+        @Ignore
         public final void returnSixteenTablesForDb2() throws SQLException {
                 final int expectedTables = 16;
                 TableIteratorBuilder builder = new TableIteratorBuilder();
@@ -47,6 +49,7 @@ public class TableIteratorBuilderShould {
          *                 in case of problems
          */
         @Test
+        @Ignore
         public final void returnZeroTablesForDb1() throws SQLException {
                 TableIteratorBuilder builder = new TableIteratorBuilder();
                 builder.setDb(new MetaDbImpl());
@@ -67,6 +70,7 @@ public class TableIteratorBuilderShould {
          *                 should be thrown
          */
         @Test(expected = SQLException.class)
+        @Ignore
         public final void throwExceptionForOtherDbs() throws SQLException {
                 TableIteratorBuilder builder = new TableIteratorBuilder();
                 try {
@@ -84,6 +88,7 @@ public class TableIteratorBuilderShould {
          *                 in case of problems
          */
         @Test
+        @Ignore
         public final void dbFieldShouldRecognizeTextTypes() throws SQLException {
                 Iterator<String> tableIt = TableIteratorBuilder.tableIteratorWithAutoDb();
                 boolean isText;

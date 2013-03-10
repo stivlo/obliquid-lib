@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -16,6 +17,7 @@ import org.junit.Test;
  * @author stivlo
  * 
  */
+@Ignore
 public class MetaDbShould {
 
         /**
